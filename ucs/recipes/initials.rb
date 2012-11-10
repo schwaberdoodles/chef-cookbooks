@@ -3,7 +3,7 @@
 # Recipe:: initial [Setup initial Environment]
 #
 # Copyright 2011, Murali Raju, murali.raju@appliv.com
-# Copyright 2012, Murali Raju, Velankani Information Systems, Inc
+# Copyright 2012, Velankani Information Systems, eng@velankani.net
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
