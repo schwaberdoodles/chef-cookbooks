@@ -23,6 +23,8 @@ default[:ucs][:ip] = '<ip>'
 default[:ucs][:username] = 'admin'
 default[:ucs][:password] = 'admin'
 
+This cookbook uses heavy use of data bags for feeding UCS config parameters.
+
 Usage
 =====
 
