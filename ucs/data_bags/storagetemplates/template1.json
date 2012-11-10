@@ -1,0 +1,9 @@
+{
+	"id": "template1",
+	"vhba_template_name": "VDI-A",
+	"description": "VHBA Template for the A side",
+	"wwpn_pool": "vdi-wwpn",
+	"switch": "A",
+	"vsan_name": "vsan100",
+	"org": "IT"
+}

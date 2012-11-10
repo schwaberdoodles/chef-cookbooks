@@ -1,0 +1,29 @@
+{
+    "name":"ucs",
+    "description":"Installs/Configures Cisco UCS",
+    "long_description":"Description\n===========\n\nA cookbook to deploy and configure Cisco UCS. The cookbook leverages ucslib and helps setup\na basic Cisco UCS deployment.\n\n\nRequirements\n============\n\n\n\nAttributes\n==========\n\nUsage\n=====\n\nEdit /etc/chef/node.json\n\n{\n\"run_list\" : [\"recipe[ucs::basic]\"]\n}\n\nEdit /etc/chef/solo.rb\n\ncookbook_path \"<path>\"\n\nfile_cache_path \"/var/chef-solo\" #Default\nrole_path \"/var/chef-solo/roles\" #Default\ndata_bag_path \"/var/chef-solo/data_bags\" #Default\ncookbook_path [\"/var/chef-solo/cookbooks\", \"/var/chef-solo/my-cookbooks\"] #Not default\njson_attribs \"/var/chef/node.json\" #Also not default\n\nToDo\n====\n\n1. Move authentication info to encrypted Data Bags. Currently uses attributes.",
+    "maintainer":"Murali Raju",
+    "maintainer_email":"murali.raju@appliv.com",
+    "license":"Apache 2.0",
+    "platforms":{
+    },
+    "dependencies":{
+    },
+    "recommendations":{
+    },
+    "suggestions":{
+    },
+    "conflicting":{
+    },
+    "providing":{
+    },
+    "replacing":{
+    },
+    "attributes":{
+    },
+    "groupings":{
+    },
+    "recipes":{
+    },
+    "version":"0.0.1"
+}
