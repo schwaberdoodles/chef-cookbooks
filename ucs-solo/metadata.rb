@@ -19,8 +19,8 @@
 #
 
 
-maintainer "Murali Raju"
-maintainer_email "murali.raju@appliv.com"
+maintainer "Velankani Information Systems, Inc"
+maintainer_email "eng@velankani.net"
 license "Apache 2.0"
 description "Installs/Configures Cisco UCS"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
