@@ -9,7 +9,7 @@ Requirements
 
 1. Chef Server - Either hosted or local http://wiki.opscode.com/display/chef/Chef+Server
 2. Chef workstation - Mac OS X or Linux
-3. A Chef node that abstracts and acts as a proxy for chef-client runs.
+3. A Chef node that abstracts and acts as a proxy for chef-client runs for UCS
 
 
 Attributes
