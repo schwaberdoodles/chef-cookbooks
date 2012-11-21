@@ -14,7 +14,7 @@ On Ubuntu 12.04, Debian 6 or Mac OS X 10.8.2, install Ruby 1.9.3. RVM is recomme
 On Ubuntu:
 
 	apt-get install ruby1.9.3
-	gem install chef --no-ri --no-rdoc 
+	sudo gem install chef --no-ri --no-rdoc 
 
 *Future iterations will have a distributed setup using chef-server
 
