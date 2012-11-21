@@ -231,12 +231,11 @@ To run recipes:
 
 
 License
-	Author:: Murali Raju murali.raju@appliv.com
 
 	Author:: Velankani Engineering Team eng@velankani.net
 
-	Copyright:: Copyright (c) 2012 Murali Raju. 
-	Copyright:: Copyright (c) Velankani Information Systems, Inc.
+	Copyright:: Copyright (c) 2011 Murali Raju, murali.raju@appliv.com
+	Copyright:: Copyright (c) 2012 Velankani Information Systems, Inc.
 
 License:: Apache License, Version 2.0
 
