@@ -18,7 +18,7 @@
 # limitations under the License.
 #
 
-#include_recipe 'ucs::default'
+#include_recipe 'ucs-solo::default'
 
 require 'ucslib'
 

@@ -1,6 +1,6 @@
 #
-# Cookbook Name:: ucs
-# Recipe:: basic [Setup Basic Environment]
+# Cookbook Name:: ucs-solo
+# Recipe:: package_install [Setup packages]
 #
 # Copyright 2011, Murali Raju, murali.raju@appliv.com
 # Copyright 2012, Velankani Information Systems, eng@velankani.net
@@ -23,4 +23,3 @@ package "libxslt1-dev"
 gem_package "ucslib"
 
 log "Installation of ucslib and dependencies"
-
