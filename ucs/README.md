@@ -7,17 +7,9 @@ A Chef cookbook (beta) to deploy and configure Cisco UCS. The cookbook leverages
 Requirements
 ============
 
-On Ubuntu 12.04, Debian 6 or Mac OS X 10.8.2, install Ruby 1.9.3. RVM is recommended - http://rvm.io
-
-Assuming knife.rb is setup on the Chef Workstation:
-
-1. Create and upload the data bags by running './create_data_bags.sh'
-2. Upload the ucs cookbook:
-
-3. Bootstrap the ucs proxy chef node (in this example the node is an Ubuntu 12.04 machine):
-	
-
-
+1. Chef Server - Either hosted or local http://wiki.opscode.com/display/chef/Chef+Server
+2. Chef workstation - Mac OS X or Linux
+3. A Chef node that abstracts and acts as a proxy for chef-client runs.
 
 
 Attributes
@@ -36,196 +28,355 @@ Usage
 
 **The following is a sample setup.
 
+Assuming knife.rb is setup on the Chef Workstation:
 
-Edit /etc/chef/solo.rb:
+1. Create and upload the data bags by running './create_data_bags.sh'
+2. Upload the ucs cookbook by running:
+	knife cookbook upload ucs
 
-	cookbook_path "/etc/chef/cookbooks"
-	file_cache_path "/etc/chef-solo" #Default
-	role_path "/etc/chef-solo/roles" #Default
-	data_bag_path "/etc/chef-solo/data_bags" #Default
-	json_attribs "/etc/chef/node.json" #Also not default
+	Uploading ucs            [0.0.1]
+	Uploaded 1 cookbook.
+
+3. Bootstrap the ucs proxy chef node (in this example the node is an Ubuntu 12.04 machine) by running:
+
+	knife bootstrap chef-ucsnode -x chef -P chef101 --sudo
+
+	If successful, the output should look similar to:
+
+	chef-ucsnode 57365 files and directories currently installed.)
+	chef-ucsnode 
+	chef-ucsnode Unpacking chef (from .../chef_10.16.2_amd64.deb) ...
+	chef-ucsnode 
+	chef-ucsnode Setting up chef (10.16.2-1.ubuntu.11.04) ...
+	chef-ucsnode 
+	chef-ucsnode Thank you for installing Chef!
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:28:31-05:00] INFO: *** Chef 10.16.2 ***
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:28:31-05:00] INFO: Client key /etc/chef/client.pem is not present - registering
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:28:32-05:00] INFO: HTTP Request Returned 404 Not Found: Cannot load node chef-ucsnode
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:28:32-05:00] INFO: Setting the run_list to [] from JSON
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:28:32-05:00] INFO: Run List is []
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:28:32-05:00] INFO: Run List expands to []
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:28:32-05:00] INFO: HTTP Request Returned 404 Not Found: No routes match the request: /reports/nodes/chef-ucsnode/runs
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:28:32-05:00] INFO: Starting Chef Run for chef-ucsnode
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:28:32-05:00] INFO: Running start handlers
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:28:32-05:00] INFO: Start handlers complete.
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:28:32-05:00] INFO: Loading cookbooks []
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:28:32-05:00] WARN: Node chef-ucsnode has an empty run list.
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:28:33-05:00] INFO: Chef Run complete in 0.966651101 seconds
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:28:33-05:00] INFO: Running report handlers
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:28:33-05:00] INFO: Report handlers complete
+	chef-ucsnode 
+
+4. Add recipes to run_list and run chef-client:
+
+	a. First install ucslib and dependencies by running:
+
+	knife node run_list add chef-ucsnode recipe[ucs::default]
+
+	knife ssh name:chef-ucsnode -u chef -P chef101 "sudo chef-client"
+
+	If successful, the chef-client run should end with:
+
+	-----snippet----
+	chef-ucsnode [2012-11-21T13:42:26-05:00] INFO: Processing package[libxml2-dev] action install (ucs::default line 21)
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:42:29-05:00] INFO: Processing package[libxslt1-dev] action install (ucs::default line 22)
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:42:31-05:00] INFO: Processing gem_package[ucslib] action install (ucs::default line 23)
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:42:41-05:00] INFO: Processing log[Installation of ucslib and dependencies] action write (ucs::default line 25)
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:42:41-05:00] INFO: Installation of ucslib and dependencies
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:42:42-05:00] INFO: Chef Run complete in 19.194063737 seconds
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:42:42-05:00] INFO: Running report handlers
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:42:42-05:00] INFO: Report handlers complete
 
 
-Edit /etc/chef/install.json:
+	b. Add the remaining recipes in the following order to complete the chef-client run:
 
-chef@chef-solo:~$sudo cat /etc/chef/install.json 
-{
-"run_list" : ["recipe[ucs-solo::default]"]
-            
-}
-chef@chef-solo:~$
+	knife node run_list add chef-ucsnode recipe[ucs::<recipe name>]
 
-
-Edit /etc/chef/run.json:
-
-chef@dev:~$sudo cat /etc/chef/run.json
-
-	{
-	"run_list" : [ 
-			      "recipe[ucs-solo::initials]",
-			      "recipe[ucs-solo::firmware]",
-			      "recipe[ucs-solo::ports]",
-			      "recipe[ucs-solo::policies]",
-			      "recipe[ucs-solo::pools]",
-			      "recipe[ucs-solo::network]",
-			      "recipe[ucs-solo::storage]",
-			      "recipe[ucs-solo::templates]",
-			      "recipe[ucs-solo::serviceprofiles]",
-			      "recipe[ucs-solo::manage]"
-			    ]
-	}
-
-chef@dev:~$
+	run_list: 
+	    recipe[ucs::default]
+	    recipe[ucs::initials]
+	    recipe[ucs::firmware]
+	    recipe[ucs::ports]
+	    recipe[ucs::policies]
+	    recipe[ucs::pools]
+	    recipe[ucs::network]
+	    recipe[ucs::storage]
+	    recipe[ucs::templates]
+	    recipe[ucs::serviceprofiles]
+	    recipe[ucs::manage]
 
 
-
-
-To install packages:
-
-	chef@chef-solo:~$ sudo chef-solo -j /etc/chef/install.json 
-	[2012-11-21T11:12:49-05:00] INFO: *** Chef 10.16.2 ***
-	[2012-11-21T11:12:49-05:00] INFO: Setting the run_list to ["recipe[ucs-solo::default]"] from JSON
-	[2012-11-21T11:12:49-05:00] INFO: Run List is [recipe[ucs-solo::default]]
-	[2012-11-21T11:12:49-05:00] INFO: Run List expands to [ucs-solo::default]
-	[2012-11-21T11:12:49-05:00] INFO: Starting Chef Run for chef-solo
-	[2012-11-21T11:12:49-05:00] INFO: Running start handlers
-	[2012-11-21T11:12:49-05:00] INFO: Start handlers complete.
-	[2012-11-21T11:12:49-05:00] INFO: Processing package[libxml2-dev] action install (ucs-solo::default line 21)
-	[2012-11-21T11:12:52-05:00] INFO: Processing package[libxslt1-dev] action install (ucs-solo::default line 22)
-	[2012-11-21T11:12:55-05:00] INFO: Processing gem_package[ucslib] action install (ucs-solo::default line 23)
-	[2012-11-21T11:13:07-05:00] INFO: Processing log[Installation of ucslib and dependencies] action write (ucs-solo::default line 25)
-	[2012-11-21T11:13:07-05:00] INFO: Installation of ucslib and dependencies
-	[2012-11-21T11:13:07-05:00] INFO: Chef Run complete in 17.577065844 seconds
-	[2012-11-21T11:13:07-05:00] INFO: Running report handlers
-	[2012-11-21T11:13:07-05:00] INFO: Report handlers complete
-
-To run recipes:
-
-	chef@chef-solo:~$ sudo chef-solo -j /etc/chef/run.json 
-	[2012-11-21T11:13:16-05:00] INFO: *** Chef 10.16.2 ***
-	[2012-11-21T11:13:16-05:00] INFO: Setting the run_list to ["recipe[ucs-solo::initials]", "recipe[ucs-solo::firmware]", "recipe[ucs-solo::ports]", "recipe[ucs-solo::policies]", "recipe[ucs-solo::pools]", "recipe[ucs-solo::network]", "recipe[ucs-solo::storage]", "recipe[ucs-solo::templates]", "recipe[ucs-solo::serviceprofiles]", "recipe[ucs-solo::manage]"] from JSON
-	[2012-11-21T11:13:16-05:00] INFO: Run List is [recipe[ucs-solo::initials], recipe[ucs-solo::firmware], recipe[ucs-solo::ports], recipe[ucs-solo::policies], recipe[ucs-solo::pools], recipe[ucs-solo::network], recipe[ucs-solo::storage], recipe[ucs-solo::templates], recipe[ucs-solo::serviceprofiles], recipe[ucs-solo::manage]]
-	[2012-11-21T11:13:16-05:00] INFO: Run List expands to [ucs-solo::initials, ucs-solo::firmware, ucs-solo::ports, ucs-solo::policies, ucs-solo::pools, ucs-solo::network, ucs-solo::storage, ucs-solo::templates, ucs-solo::serviceprofiles, ucs-solo::manage]
-	[2012-11-21T11:13:16-05:00] INFO: Starting Chef Run for chef-solo
-	[2012-11-21T11:13:16-05:00] INFO: Running start handlers
-	[2012-11-21T11:13:16-05:00] INFO: Start handlers complete.
-	[2012-11-21T11:13:26-05:00] INFO: Processing log[{"ntp_server":"192.168.207.250"}] action write (ucs-solo::initials line 67)
-	[2012-11-21T11:13:26-05:00] INFO: {"ntp_server":"192.168.207.250"}
-	[2012-11-21T11:13:26-05:00] INFO: Processing log[{"ntp_server":"192.168.207.251"}] action write (ucs-solo::initials line 67)
-	[2012-11-21T11:13:26-05:00] INFO: {"ntp_server":"192.168.207.251"}
-	[2012-11-21T11:13:26-05:00] INFO: Processing log[{"time_zone":"America/New_York"}] action write (ucs-solo::initials line 71)
-	[2012-11-21T11:13:26-05:00] INFO: {"time_zone":"America/New_York"}
-	[2012-11-21T11:13:26-05:00] INFO: Processing log[{"power_policy":"grid"}] action write (ucs-solo::initials line 74)
-	[2012-11-21T11:13:26-05:00] INFO: {"power_policy":"grid"}
-	[2012-11-21T11:13:26-05:00] INFO: Processing log[{"chassis_discovery_policy":"4-link"}] action write (ucs-solo::initials line 77)
-	[2012-11-21T11:13:26-05:00] INFO: {"chassis_discovery_policy":"4-link"}
-	[2012-11-21T11:13:26-05:00] INFO: Processing log[{"local_disk_policy":"any-configuration"}] action write (ucs-solo::initials line 80)
-	[2012-11-21T11:13:26-05:00] INFO: {"local_disk_policy":"any-configuration"}
-	[2012-11-21T11:13:26-05:00] INFO: Processing log[{"start_ip":"10.10.1.5","end_ip":"10.10.1.10","subnet_mask":"255.255.255.0","gateway":"10.10.1.1"}] action write (ucs-solo::initials line 83)
-	[2012-11-21T11:13:26-05:00] INFO: {"start_ip":"10.10.1.5","end_ip":"10.10.1.10","subnet_mask":"255.255.255.0","gateway":"10.10.1.1"}
-	[2012-11-21T11:13:26-05:00] INFO: Processing log[{"org":"HR","description":"HR Organization"}] action write (ucs-solo::initials line 92)
-	[2012-11-21T11:13:26-05:00] INFO: {"org":"HR","description":"HR Organization"}
-	[2012-11-21T11:13:26-05:00] INFO: Processing log[{"org":"IT","description":"IT Organization"}] action write (ucs-solo::initials line 92)
-	[2012-11-21T11:13:26-05:00] INFO: {"org":"IT","description":"IT Organization"}
-	[2012-11-21T11:13:26-05:00] INFO: Processing log[Created Host Firmware Package vdi-fw for N20-AC0002] action write (ucs-solo::firmware line 66)
-	[2012-11-21T11:13:26-05:00] INFO: Created Host Firmware Package vdi-fw for N20-AC0002
-	[2012-11-21T11:13:26-05:00] INFO: Processing log[Created Host Firmware Package vdi-fw for B230-BASE-M2] action write (ucs-solo::firmware line 66)
-	[2012-11-21T11:13:26-05:00] INFO: Created Host Firmware Package vdi-fw for B230-BASE-M2
-	[2012-11-21T11:13:26-05:00] INFO: Processing log[Created Host Firmware Package vdi-fw for B230-BASE-M2] action write (ucs-solo::firmware line 66)
-	[2012-11-21T11:13:26-05:00] INFO: Created Host Firmware Package vdi-fw for B230-BASE-M2
-	[2012-11-21T11:13:26-05:00] INFO: Processing log[Created Host Firmware Package vdi-fw for N20-AE0002] action write (ucs-solo::firmware line 66)
-	[2012-11-21T11:13:26-05:00] INFO: Created Host Firmware Package vdi-fw for N20-AE0002
-	[2012-11-21T11:13:26-05:00] INFO: Processing log[Created Host Firmware Package vdi-fw for N20-AQ0002] action write (ucs-solo::firmware line 66)
-	[2012-11-21T11:13:26-05:00] INFO: Created Host Firmware Package vdi-fw for N20-AQ0002
-	[2012-11-21T11:13:26-05:00] INFO: Processing log[Created Mgmt Firmware Package vdi-fw for B230-BASE-M2] action write (ucs-solo::firmware line 87)
-	[2012-11-21T11:13:26-05:00] INFO: Created Mgmt Firmware Package vdi-fw for B230-BASE-M2
-	[2012-11-21T11:13:26-05:00] INFO: Processing log[Created port 1 on Switch A and Slot 1] action write (ucs-solo::ports line 58)
-	[2012-11-21T11:13:26-05:00] INFO: Created port 1 on Switch A and Slot 1
-	[2012-11-21T11:13:26-05:00] INFO: Processing log[Created port 2 on Switch A and Slot 1] action write (ucs-solo::ports line 58)
-	[2012-11-21T11:13:26-05:00] INFO: Created port 2 on Switch A and Slot 1
-	[2012-11-21T11:13:26-05:00] INFO: Processing log[Created port 3 on Switch A and Slot 1] action write (ucs-solo::ports line 58)
-	[2012-11-21T11:13:26-05:00] INFO: Created port 3 on Switch A and Slot 1
-	[2012-11-21T11:13:26-05:00] INFO: Processing log[Created port 4 on Switch A and Slot 1] action write (ucs-solo::ports line 58)
-	[2012-11-21T11:13:26-05:00] INFO: Created port 4 on Switch A and Slot 1
-	[2012-11-21T11:13:26-05:00] INFO: Processing log[Created port 1 on Switch B and Slot 1] action write (ucs-solo::ports line 58)
-	[2012-11-21T11:13:26-05:00] INFO: Created port 1 on Switch B and Slot 1
-	[2012-11-21T11:13:26-05:00] INFO: Processing log[Created port 2 on Switch B and Slot 1] action write (ucs-solo::ports line 58)
-	[2012-11-21T11:13:26-05:00] INFO: Created port 2 on Switch B and Slot 1
-	[2012-11-21T11:13:26-05:00] INFO: Processing log[Created port 3 on Switch B and Slot 1] action write (ucs-solo::ports line 58)
-	[2012-11-21T11:13:26-05:00] INFO: Created port 3 on Switch B and Slot 1
-	[2012-11-21T11:13:26-05:00] INFO: Processing log[Created port 4 on Switch B and Slot 1] action write (ucs-solo::ports line 58)
-	[2012-11-21T11:13:26-05:00] INFO: Created port 4 on Switch B and Slot 1
-	[2012-11-21T11:13:26-05:00] INFO: Processing log[Created Port Channel PortChannel30 ID 30 on Switch A and Slot 1] action write (ucs-solo::ports line 76)
-	[2012-11-21T11:13:26-05:00] INFO: Created Port Channel PortChannel30 ID 30 on Switch A and Slot 1
-	[2012-11-21T11:13:26-05:00] INFO: Processing log[Created Port Channel PortChannel31 ID 31 on Switch B and Slot 1] action write (ucs-solo::ports line 76)
-	[2012-11-21T11:13:26-05:00] INFO: Created Port Channel PortChannel31 ID 31 on Switch B and Slot 1
-	[2012-11-21T11:13:26-05:00] INFO: Processing log[Created Uplink Port 31 on Switch A and Slot 1] action write (ucs-solo::ports line 98)
-	[2012-11-21T11:13:26-05:00] INFO: Created Uplink Port 31 on Switch A and Slot 1
-	[2012-11-21T11:13:26-05:00] INFO: Processing log[Created Uplink Port 32 on Switch A and Slot 1] action write (ucs-solo::ports line 98)
-	[2012-11-21T11:13:26-05:00] INFO: Created Uplink Port 32 on Switch A and Slot 1
-	[2012-11-21T11:13:26-05:00] INFO: Processing log[Created Uplink Port 31 on Switch B and Slot 1] action write (ucs-solo::ports line 98)
-	[2012-11-21T11:13:26-05:00] INFO: Created Uplink Port 31 on Switch B and Slot 1
-	[2012-11-21T11:13:26-05:00] INFO: Processing log[Created Uplink Port 32 on Switch B and Slot 1] action write (ucs-solo::ports line 98)
-	[2012-11-21T11:13:26-05:00] INFO: Created Uplink Port 32 on Switch B and Slot 1
-	[2012-11-21T11:13:26-05:00] INFO: Processing log[Created FC Uplink Port 1 on Switch A and Slot 2] action write (ucs-solo::ports line 123)
-	[2012-11-21T11:13:26-05:00] INFO: Created FC Uplink Port 1 on Switch A and Slot 2
-	[2012-11-21T11:13:26-05:00] INFO: Processing log[Created FC Uplink Port 2 on Switch A and Slot 2] action write (ucs-solo::ports line 123)
-	[2012-11-21T11:13:26-05:00] INFO: Created FC Uplink Port 2 on Switch A and Slot 2
-	[2012-11-21T11:13:26-05:00] INFO: Processing log[Created FC Uplink Port 3 on Switch A and Slot 2] action write (ucs-solo::ports line 123)
-	[2012-11-21T11:13:26-05:00] INFO: Created FC Uplink Port 3 on Switch A and Slot 2
-	[2012-11-21T11:13:26-05:00] INFO: Processing log[Created FC Uplink Port 4 on Switch A and Slot 2] action write (ucs-solo::ports line 123)
-	[2012-11-21T11:13:26-05:00] INFO: Created FC Uplink Port 4 on Switch A and Slot 2
-	[2012-11-21T11:13:26-05:00] INFO: Processing log[Created FC Uplink Port 1 on Switch B and Slot 2] action write (ucs-solo::ports line 123)
-	[2012-11-21T11:13:26-05:00] INFO: Created FC Uplink Port 1 on Switch B and Slot 2
-	[2012-11-21T11:13:26-05:00] INFO: Processing log[Created FC Uplink Port 2 on Switch B and Slot 2] action write (ucs-solo::ports line 123)
-	[2012-11-21T11:13:26-05:00] INFO: Created FC Uplink Port 2 on Switch B and Slot 2
-	[2012-11-21T11:13:26-05:00] INFO: Processing log[Created FC Uplink Port 3 on Switch B and Slot 2] action write (ucs-solo::ports line 123)
-	[2012-11-21T11:13:26-05:00] INFO: Created FC Uplink Port 3 on Switch B and Slot 2
-	[2012-11-21T11:13:26-05:00] INFO: Processing log[Created FC Uplink Port 4 on Switch B and Slot 2] action write (ucs-solo::ports line 123)
-	[2012-11-21T11:13:26-05:00] INFO: Created FC Uplink Port 4 on Switch B and Slot 2
-	[2012-11-21T11:13:26-05:00] INFO: Processing log[Created SAN boot policy SANBoot in org IT] action write (ucs-solo::policies line 63)
-	[2012-11-21T11:13:26-05:00] INFO: Created SAN boot policy SANBoot in org IT
-	[2012-11-21T11:13:26-05:00] INFO: Processing log[Created local boot policy LocalBoot in org IT] action write (ucs-solo::policies line 67)
-	[2012-11-21T11:13:26-05:00] INFO: Created local boot policy LocalBoot in org IT
-	[2012-11-21T11:13:26-05:00] INFO: Processing log[Created PXE boot policy PXEBoot in org IT] action write (ucs-solo::policies line 71)
-	[2012-11-21T11:13:26-05:00] INFO: Created PXE boot policy PXEBoot in org IT
-	[2012-11-21T11:13:26-05:00] INFO: Processing log[Created UUID Pool vdi-uuid from 0000-000000000001 to 0000-000000000020 in org IT] action write (ucs-solo::pools line 67)
-	[2012-11-21T11:13:26-05:00] INFO: Created UUID Pool vdi-uuid from 0000-000000000001 to 0000-000000000020 in org IT
-	[2012-11-21T11:13:26-05:00] INFO: Processing log[Created MAC Pool vdi-mac start 00:25:B5:00:00:00 end 00:25:B5:00:00:1F in org IT] action write (ucs-solo::pools line 68)
-	[2012-11-21T11:13:26-05:00] INFO: Created MAC Pool vdi-mac start 00:25:B5:00:00:00 end 00:25:B5:00:00:1F in org IT
-	[2012-11-21T11:13:26-05:00] INFO: Processing log[Created WWPN Pool vdi-wwpn from 20:00:00:25:B5:01:00:00 to 20:00:00:25:B5:01:00:3F in org IT] action write (ucs-solo::pools line 69)
-	[2012-11-21T11:13:26-05:00] INFO: Created WWPN Pool vdi-wwpn from 20:00:00:25:B5:01:00:00 to 20:00:00:25:B5:01:00:3F in org IT
-	[2012-11-21T11:13:26-05:00] INFO: Processing log[Created WWNN Pool vdi-wwnn from 20:00:00:25:B5:00:00:00 to 20:00:00:25:B5:00:00:3F in org IT] action write (ucs-solo::pools line 70)
-	[2012-11-21T11:13:26-05:00] INFO: Created WWNN Pool vdi-wwnn from 20:00:00:25:B5:00:00:00 to 20:00:00:25:B5:00:00:3F in org IT
-	[2012-11-21T11:13:26-05:00] INFO: Processing log[Created Server Pool VDI on chassis 1 using blades 1,3,4,2] action write (ucs-solo::pools line 71)
-	[2012-11-21T11:13:26-05:00] INFO: Created Server Pool VDI on chassis 1 using blades 1,3,4,2
-	[2012-11-21T11:13:26-05:00] INFO: Processing log[Created VLAN IT with ID 100] action write (ucs-solo::network line 50)
-	[2012-11-21T11:13:26-05:00] INFO: Created VLAN IT with ID 100
-	[2012-11-21T11:13:26-05:00] INFO: Processing log[Created VLAN HR with ID 200] action write (ucs-solo::network line 50)
-	[2012-11-21T11:13:26-05:00] INFO: Created VLAN HR with ID 200
-	[2012-11-21T11:13:26-05:00] INFO: Processing log[Created VSAN vsan100 with ID 100] action write (ucs-solo::storage line 51)
-	[2012-11-21T11:13:26-05:00] INFO: Created VSAN vsan100 with ID 100
-	[2012-11-21T11:13:26-05:00] INFO: Processing log[Created VSAN vsan200 with ID 200] action write (ucs-solo::storage line 51)
-	[2012-11-21T11:13:26-05:00] INFO: Created VSAN vsan200 with ID 200
-	[2012-11-21T11:13:26-05:00] INFO: Processing log[Created  vNIC Template VDI-A] action write (ucs-solo::templates line 56)
-	[2012-11-21T11:13:26-05:00] INFO: Created  vNIC Template VDI-A
-	[2012-11-21T11:13:26-05:00] INFO: Processing log[Created  vNIC Template VDI-B] action write (ucs-solo::templates line 56)
-	[2012-11-21T11:13:26-05:00] INFO: Created  vNIC Template VDI-B
-	[2012-11-21T11:13:26-05:00] INFO: Processing log[Created  vHBA Template VDI-A] action write (ucs-solo::templates line 75)
-	[2012-11-21T11:13:26-05:00] INFO: Created  vHBA Template VDI-A
-	[2012-11-21T11:13:26-05:00] INFO: Processing log[Created  vHBA Template VDI-B] action write (ucs-solo::templates line 75)
-	[2012-11-21T11:13:26-05:00] INFO: Created  vHBA Template VDI-B
-	[2012-11-21T11:13:26-05:00] INFO: Processing log[Created  Service Profile Template VDI-Template-1] action write (ucs-solo::templates line 104)
-	[2012-11-21T11:13:26-05:00] INFO: Created  Service Profile Template VDI-Template-1
-	[2012-11-21T11:13:26-05:00] INFO: Processing log[Created  Service Profiles SampleVDI01,SampleVDI02,SampleVDI03] action write (ucs-solo::serviceprofiles line 65)
-	[2012-11-21T11:13:26-05:00] INFO: Created  Service Profiles SampleVDI01,SampleVDI02,SampleVDI03
-	[2012-11-21T11:13:26-05:00] INFO: Processing log[{"service_profile_boot_policy":"PXEBoot","service_profile_host_fw_policy":"vdi-fw","service_profile_mgmt_fw_policy":"vdi-fw","service_profile_uuid_pool":"vdi-uuid","service_profile_template_to_bind":"VDI-Template-1","service_profile_server_pool":"VDI","org":"IT"}] action write (ucs-solo::manage line 54)
-	[2012-11-21T11:13:26-05:00] INFO: {"service_profile_boot_policy":"PXEBoot","service_profile_host_fw_policy":"vdi-fw","service_profile_mgmt_fw_policy":"vdi-fw","service_profile_uuid_pool":"vdi-uuid","service_profile_template_to_bind":"VDI-Template-1","service_profile_server_pool":"VDI","org":"IT"}
-	[2012-11-21T11:13:26-05:00] INFO: Chef Run complete in 10.259353197 seconds
-	[2012-11-21T11:13:26-05:00] INFO: Running report handlers
-	[2012-11-21T11:13:26-05:00] INFO: Report handlers complete
-	rajum@chef-solo:~$ 
+	knife ssh name:chef-ucsnode -u chef -P chef101 "sudo chef-client"
 	
-====
+	If successful, the output should look like the following. Check UCS Manager GUI to confirm!
 
-1. Move authentication info to encrypted Data Bags. Currently uses attributes.
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:29-05:00] INFO: *** Chef 10.16.2 ***
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:29-05:00] INFO: Run List is [recipe[ucs::default], recipe[ucs::initials], recipe[ucs::firmware], recipe[ucs::ports], recipe[ucs::policies], recipe[ucs::pools], recipe[ucs::network], recipe[ucs::storage], recipe[ucs::templates], recipe[ucs::serviceprofiles], recipe[ucs::manage]]
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:29-05:00] INFO: Run List expands to [ucs::default, ucs::initials, ucs::firmware, ucs::ports, ucs::policies, ucs::pools, ucs::network, ucs::storage, ucs::templates, ucs::serviceprofiles, ucs::manage]
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:30-05:00] INFO: HTTP Request Returned 404 Not Found: No routes match the request: /reports/nodes/chef-ucsnode/runs
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:30-05:00] INFO: Starting Chef Run for chef-ucsnode
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:30-05:00] INFO: Running start handlers
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:30-05:00] INFO: Start handlers complete.
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:30-05:00] INFO: Loading cookbooks [ucs]
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:44-05:00] INFO: Processing package[libxml2-dev] action install (ucs::default line 21)
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:44-05:00] INFO: Processing package[libxslt1-dev] action install (ucs::default line 22)
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:44-05:00] INFO: Processing gem_package[ucslib] action install (ucs::default line 23)
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Processing log[Installation of ucslib and dependencies] action write (ucs::default line 25)
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Installation of ucslib and dependencies
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Processing log[{"ntp_server":"192.168.207.250"}] action write (ucs::initials line 67)
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: {"ntp_server":"192.168.207.250"}
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Processing log[{"ntp_server":"192.168.207.251"}] action write (ucs::initials line 67)
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: {"ntp_server":"192.168.207.251"}
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Processing log[{"time_zone":"America/New_York"}] action write (ucs::initials line 71)
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: {"time_zone":"America/New_York"}
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Processing log[{"power_policy":"grid"}] action write (ucs::initials line 74)
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: {"power_policy":"grid"}
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Processing log[{"chassis_discovery_policy":"4-link"}] action write (ucs::initials line 77)
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: {"chassis_discovery_policy":"4-link"}
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Processing log[{"local_disk_policy":"any-configuration"}] action write (ucs::initials line 80)
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: {"local_disk_policy":"any-configuration"}
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Processing log[{"start_ip":"10.10.1.5","end_ip":"10.10.1.10","subnet_mask":"255.255.255.0","gateway":"10.10.1.1"}] action write (ucs::initials line 83)
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: {"start_ip":"10.10.1.5","end_ip":"10.10.1.10","subnet_mask":"255.255.255.0","gateway":"10.10.1.1"}
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Processing log[{"org":"HR","description":"HR Organization"}] action write (ucs::initials line 92)
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: {"org":"HR","description":"HR Organization"}
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Processing log[{"org":"IT","description":"IT Organization"}] action write (ucs::initials line 92)
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: {"org":"IT","description":"IT Organization"}
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Processing log[Created Host Firmware Package vdi-fw for N20-AQ0002] action write (ucs::firmware line 66)
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Created Host Firmware Package vdi-fw for N20-AQ0002
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Processing log[Created Host Firmware Package vdi-fw for N20-AE0002] action write (ucs::firmware line 66)
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Created Host Firmware Package vdi-fw for N20-AE0002
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Processing log[Created Host Firmware Package vdi-fw for B230-BASE-M2] action write (ucs::firmware line 66)
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Created Host Firmware Package vdi-fw for B230-BASE-M2
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Processing log[Created Host Firmware Package vdi-fw for N20-AC0002] action write (ucs::firmware line 66)
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Created Host Firmware Package vdi-fw for N20-AC0002
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Processing log[Created Host Firmware Package vdi-fw for B230-BASE-M2] action write (ucs::firmware line 66)
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Created Host Firmware Package vdi-fw for B230-BASE-M2
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Processing log[Created Mgmt Firmware Package vdi-fw for B230-BASE-M2] action write (ucs::firmware line 87)
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Created Mgmt Firmware Package vdi-fw for B230-BASE-M2
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Processing log[Created port 1 on Switch A and Slot 1] action write (ucs::ports line 58)
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Created port 1 on Switch A and Slot 1
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Processing log[Created port 2 on Switch A and Slot 1] action write (ucs::ports line 58)
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Created port 2 on Switch A and Slot 1
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Processing log[Created port 3 on Switch A and Slot 1] action write (ucs::ports line 58)
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Created port 3 on Switch A and Slot 1
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Processing log[Created port 4 on Switch A and Slot 1] action write (ucs::ports line 58)
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Created port 4 on Switch A and Slot 1
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Processing log[Created port 1 on Switch B and Slot 1] action write (ucs::ports line 58)
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Created port 1 on Switch B and Slot 1
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Processing log[Created port 2 on Switch B and Slot 1] action write (ucs::ports line 58)
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Created port 2 on Switch B and Slot 1
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Processing log[Created port 3 on Switch B and Slot 1] action write (ucs::ports line 58)
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Created port 3 on Switch B and Slot 1
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Processing log[Created port 4 on Switch B and Slot 1] action write (ucs::ports line 58)
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Created port 4 on Switch B and Slot 1
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Processing log[Created Port Channel PortChannel30 ID 30 on Switch A and Slot 1] action write (ucs::ports line 76)
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Created Port Channel PortChannel30 ID 30 on Switch A and Slot 1
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Processing log[Created Port Channel PortChannel31 ID 31 on Switch B and Slot 1] action write (ucs::ports line 76)
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Created Port Channel PortChannel31 ID 31 on Switch B and Slot 1
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Processing log[Created Uplink Port 31 on Switch A and Slot 1] action write (ucs::ports line 98)
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Created Uplink Port 31 on Switch A and Slot 1
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Processing log[Created Uplink Port 32 on Switch A and Slot 1] action write (ucs::ports line 98)
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Created Uplink Port 32 on Switch A and Slot 1
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Processing log[Created Uplink Port 31 on Switch B and Slot 1] action write (ucs::ports line 98)
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Created Uplink Port 31 on Switch B and Slot 1
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Processing log[Created Uplink Port 32 on Switch B and Slot 1] action write (ucs::ports line 98)
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Created Uplink Port 32 on Switch B and Slot 1
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Processing log[Created FC Uplink Port 1 on Switch A and Slot 2] action write (ucs::ports line 123)
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Created FC Uplink Port 1 on Switch A and Slot 2
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Processing log[Created FC Uplink Port 2 on Switch A and Slot 2] action write (ucs::ports line 123)
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Created FC Uplink Port 2 on Switch A and Slot 2
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Processing log[Created FC Uplink Port 3 on Switch A and Slot 2] action write (ucs::ports line 123)
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Created FC Uplink Port 3 on Switch A and Slot 2
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Processing log[Created FC Uplink Port 4 on Switch A and Slot 2] action write (ucs::ports line 123)
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Created FC Uplink Port 4 on Switch A and Slot 2
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Processing log[Created FC Uplink Port 1 on Switch B and Slot 2] action write (ucs::ports line 123)
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Created FC Uplink Port 1 on Switch B and Slot 2
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Processing log[Created FC Uplink Port 2 on Switch B and Slot 2] action write (ucs::ports line 123)
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Created FC Uplink Port 2 on Switch B and Slot 2
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Processing log[Created FC Uplink Port 3 on Switch B and Slot 2] action write (ucs::ports line 123)
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Created FC Uplink Port 3 on Switch B and Slot 2
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Processing log[Created FC Uplink Port 4 on Switch B and Slot 2] action write (ucs::ports line 123)
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Created FC Uplink Port 4 on Switch B and Slot 2
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Processing log[Created SAN boot policy SANBoot in org IT] action write (ucs::policies line 63)
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Created SAN boot policy SANBoot in org IT
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Processing log[Created local boot policy LocalBoot in org IT] action write (ucs::policies line 67)
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Created local boot policy LocalBoot in org IT
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Processing log[Created PXE boot policy PXEBoot in org IT] action write (ucs::policies line 71)
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Created PXE boot policy PXEBoot in org IT
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Processing log[Created UUID Pool vdi-uuid from 0000-000000000001 to 0000-000000000020 in org IT] action write (ucs::pools line 67)
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Created UUID Pool vdi-uuid from 0000-000000000001 to 0000-000000000020 in org IT
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Processing log[Created MAC Pool vdi-mac start 00:25:B5:00:00:00 end 00:25:B5:00:00:1F in org IT] action write (ucs::pools line 68)
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Created MAC Pool vdi-mac start 00:25:B5:00:00:00 end 00:25:B5:00:00:1F in org IT
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Processing log[Created WWPN Pool vdi-wwpn from 20:00:00:25:B5:01:00:00 to 20:00:00:25:B5:01:00:3F in org IT] action write (ucs::pools line 69)
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Created WWPN Pool vdi-wwpn from 20:00:00:25:B5:01:00:00 to 20:00:00:25:B5:01:00:3F in org IT
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Processing log[Created WWNN Pool vdi-wwnn from 20:00:00:25:B5:00:00:00 to 20:00:00:25:B5:00:00:3F in org IT] action write (ucs::pools line 70)
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Created WWNN Pool vdi-wwnn from 20:00:00:25:B5:00:00:00 to 20:00:00:25:B5:00:00:3F in org IT
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Processing log[Created Server Pool VDI on chassis 1 using blades 1,3,4,2] action write (ucs::pools line 71)
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Created Server Pool VDI on chassis 1 using blades 1,3,4,2
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Processing log[Created VLAN IT with ID 100] action write (ucs::network line 50)
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Created VLAN IT with ID 100
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Processing log[Created VLAN HR with ID 200] action write (ucs::network line 50)
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Created VLAN HR with ID 200
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Processing log[Created VSAN vsan100 with ID 100] action write (ucs::storage line 51)
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Created VSAN vsan100 with ID 100
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Processing log[Created VSAN vsan200 with ID 200] action write (ucs::storage line 51)
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Created VSAN vsan200 with ID 200
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Processing log[Created  vNIC Template VDI-B] action write (ucs::templates line 56)
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Created  vNIC Template VDI-B
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Processing log[Created  vNIC Template VDI-A] action write (ucs::templates line 56)
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Created  vNIC Template VDI-A
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Processing log[Created  vHBA Template VDI-A] action write (ucs::templates line 75)
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Created  vHBA Template VDI-A
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Processing log[Created  vHBA Template VDI-B] action write (ucs::templates line 75)
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Created  vHBA Template VDI-B
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Processing log[Created  Service Profile Template VDI-Template-1] action write (ucs::templates line 104)
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Created  Service Profile Template VDI-Template-1
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Processing log[Created  Service Profiles SampleVDI01,SampleVDI02,SampleVDI03] action write (ucs::serviceprofiles line 65)
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Created  Service Profiles SampleVDI01,SampleVDI02,SampleVDI03
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Processing log[{"service_profile_boot_policy":"PXEBoot","service_profile_host_fw_policy":"vdi-fw","service_profile_mgmt_fw_policy":"vdi-fw","service_profile_uuid_pool":"vdi-uuid","service_profile_template_to_bind":"VDI-Template-1","service_profile_server_pool":"VDI","org":"IT"}] action write (ucs::manage line 54)
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: {"service_profile_boot_policy":"PXEBoot","service_profile_host_fw_policy":"vdi-fw","service_profile_mgmt_fw_policy":"vdi-fw","service_profile_uuid_pool":"vdi-uuid","service_profile_template_to_bind":"VDI-Template-1","service_profile_server_pool":"VDI","org":"IT"}
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Chef Run complete in 15.78688605 seconds
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Running report handlers
+	chef-ucsnode 
+	chef-ucsnode [2012-11-21T13:49:45-05:00] INFO: Report handlers complete
+	chef-ucsnode  
+
