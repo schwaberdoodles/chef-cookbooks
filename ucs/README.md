@@ -1,7 +1,7 @@
 Description
 ===========
 
-A Chef cookbook (beta) to deploy and configure Cisco UCS. The cookbook leverages Chef Server, a chef-node (UCS Proxy) with ucslib and helps setup a basic Cisco UCS deployment. It acts as a template to highlight what's possible with the UCS API using Chef in a distributed enironment.
+A Chef cookbook (beta) to deploy and configure Cisco UCS. The cookbook leverages Chef Server, a chef-node (UCS Proxy) with ucslib and helps setup a basic Cisco UCS deployment. It acts as a template to highlight what's possible with the UCS API using Chef in a distributed environment.
 
 
 Requirements
@@ -12,7 +12,10 @@ On Ubuntu 12.04, Debian 6 or Mac OS X 10.8.2, install Ruby 1.9.3. RVM is recomme
 Assuming knife.rb is setup on the Chef Workstation:
 
 1. Create and upload the data bags by running './create_data_bags.sh'
+2. Upload the ucs cookbook:
 
+3. Bootstrap the ucs proxy chef node (in this example the node is an Ubuntu 12.04 machine):
+	
 
 
 
