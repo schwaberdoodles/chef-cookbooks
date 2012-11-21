@@ -17,9 +17,9 @@ Attributes
 
 Attributes are only used for auth info (for now):
 
-default[:ucs][:ip] = '<ip>'
-default[:ucs][:username] = '<username>'
-default[:ucs][:password] = '<password>'
+	default[:ucs][:ip] = '<ip>'
+	default[:ucs][:username] = '<username>'
+	default[:ucs][:password] = '<password>'
 
 This cookbook uses data bags for feeding UCS config parameters.
 
@@ -43,44 +43,44 @@ Assuming knife.rb is setup on the Chef Workstation:
 
 	If successful, the output should look similar to:
 
-	chef-ucsnode 57365 files and directories currently installed.)
-	chef-ucsnode 
-	chef-ucsnode Unpacking chef (from .../chef_10.16.2_amd64.deb) ...
-	chef-ucsnode 
-	chef-ucsnode Setting up chef (10.16.2-1.ubuntu.11.04) ...
-	chef-ucsnode 
-	chef-ucsnode Thank you for installing Chef!
-	chef-ucsnode 
-	chef-ucsnode [2012-11-21T13:28:31-05:00] INFO: *** Chef 10.16.2 ***
-	chef-ucsnode 
-	chef-ucsnode [2012-11-21T13:28:31-05:00] INFO: Client key /etc/chef/client.pem is not present - registering
-	chef-ucsnode 
-	chef-ucsnode [2012-11-21T13:28:32-05:00] INFO: HTTP Request Returned 404 Not Found: Cannot load node chef-ucsnode
-	chef-ucsnode 
-	chef-ucsnode [2012-11-21T13:28:32-05:00] INFO: Setting the run_list to [] from JSON
-	chef-ucsnode 
-	chef-ucsnode [2012-11-21T13:28:32-05:00] INFO: Run List is []
-	chef-ucsnode 
-	chef-ucsnode [2012-11-21T13:28:32-05:00] INFO: Run List expands to []
-	chef-ucsnode 
-	chef-ucsnode [2012-11-21T13:28:32-05:00] INFO: HTTP Request Returned 404 Not Found: No routes match the request: /reports/nodes/chef-ucsnode/runs
-	chef-ucsnode 
-	chef-ucsnode [2012-11-21T13:28:32-05:00] INFO: Starting Chef Run for chef-ucsnode
-	chef-ucsnode 
-	chef-ucsnode [2012-11-21T13:28:32-05:00] INFO: Running start handlers
-	chef-ucsnode 
-	chef-ucsnode [2012-11-21T13:28:32-05:00] INFO: Start handlers complete.
-	chef-ucsnode 
-	chef-ucsnode [2012-11-21T13:28:32-05:00] INFO: Loading cookbooks []
-	chef-ucsnode 
-	chef-ucsnode [2012-11-21T13:28:32-05:00] WARN: Node chef-ucsnode has an empty run list.
-	chef-ucsnode 
-	chef-ucsnode [2012-11-21T13:28:33-05:00] INFO: Chef Run complete in 0.966651101 seconds
-	chef-ucsnode 
-	chef-ucsnode [2012-11-21T13:28:33-05:00] INFO: Running report handlers
-	chef-ucsnode 
-	chef-ucsnode [2012-11-21T13:28:33-05:00] INFO: Report handlers complete
-	chef-ucsnode 
+		chef-ucsnode 57365 files and directories currently installed.)
+		chef-ucsnode 
+		chef-ucsnode Unpacking chef (from .../chef_10.16.2_amd64.deb) ...
+		chef-ucsnode 
+		chef-ucsnode Setting up chef (10.16.2-1.ubuntu.11.04) ...
+		chef-ucsnode 
+		chef-ucsnode Thank you for installing Chef!
+		chef-ucsnode 
+		chef-ucsnode [2012-11-21T13:28:31-05:00] INFO: *** Chef 10.16.2 ***
+		chef-ucsnode 
+		chef-ucsnode [2012-11-21T13:28:31-05:00] INFO: Client key /etc/chef/client.pem is not present - registering
+		chef-ucsnode 
+		chef-ucsnode [2012-11-21T13:28:32-05:00] INFO: HTTP Request Returned 404 Not Found: Cannot load node chef-ucsnode
+		chef-ucsnode 
+		chef-ucsnode [2012-11-21T13:28:32-05:00] INFO: Setting the run_list to [] from JSON
+		chef-ucsnode 
+		chef-ucsnode [2012-11-21T13:28:32-05:00] INFO: Run List is []
+		chef-ucsnode 
+		chef-ucsnode [2012-11-21T13:28:32-05:00] INFO: Run List expands to []
+		chef-ucsnode 
+		chef-ucsnode [2012-11-21T13:28:32-05:00] INFO: HTTP Request Returned 404 Not Found: No routes match the request: /reports/nodes/chef-ucsnode/runs
+		chef-ucsnode 
+		chef-ucsnode [2012-11-21T13:28:32-05:00] INFO: Starting Chef Run for chef-ucsnode
+		chef-ucsnode 
+		chef-ucsnode [2012-11-21T13:28:32-05:00] INFO: Running start handlers
+		chef-ucsnode 
+		chef-ucsnode [2012-11-21T13:28:32-05:00] INFO: Start handlers complete.
+		chef-ucsnode 
+		chef-ucsnode [2012-11-21T13:28:32-05:00] INFO: Loading cookbooks []
+		chef-ucsnode 
+		chef-ucsnode [2012-11-21T13:28:32-05:00] WARN: Node chef-ucsnode has an empty run list.
+		chef-ucsnode 
+		chef-ucsnode [2012-11-21T13:28:33-05:00] INFO: Chef Run complete in 0.966651101 seconds
+		chef-ucsnode 
+		chef-ucsnode [2012-11-21T13:28:33-05:00] INFO: Running report handlers
+		chef-ucsnode 
+		chef-ucsnode [2012-11-21T13:28:33-05:00] INFO: Report handlers complete
+		chef-ucsnode 
 
 4. Add recipes to run_list and run chef-client:
 
