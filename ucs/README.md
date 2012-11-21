@@ -112,7 +112,7 @@ Assuming knife.rb is setup on the Chef Workstation:
 
 	b. Add the remaining recipes in the following order to complete the chef-client run:
 
-	knife node run_list add chef-ucsnode recipe[ucs::<recipe name>]
+	knife node run_list add chef-ucsnode recipe[ucs::"recipe"]
 
 		run_list: 
 		    recipe[ucs::default]
