@@ -36,6 +36,15 @@ Usage
 **The following is a sample setup.
 
 
+Edit /etc/chef/solo.rb:
+
+	cookbook_path "/etc/chef/cookbooks"
+	file_cache_path "/etc/chef-solo" #Default
+	role_path "/etc/chef-solo/roles" #Default
+	data_bag_path "/etc/chef-solo/data_bags" #Default
+	json_attribs "/etc/chef/node.json" #Also not default
+
+
 Edit /etc/chef/install.json:
 
 chef@chef-solo:~$sudo cat /etc/chef/install.json 
@@ -68,13 +77,6 @@ chef@dev:~$sudo cat /etc/chef/run.json
 chef@dev:~$
 
 
-Edit /etc/chef/solo.rb
-
-	cookbook_path "/etc/chef/cookbooks"
-	file_cache_path "/etc/chef-solo" #Default
-	role_path "/etc/chef-solo/roles" #Default
-	data_bag_path "/etc/chef-solo/data_bags" #Default
-	json_attribs "/etc/chef/node.json" #Also not default
 
 
 To install packages:
