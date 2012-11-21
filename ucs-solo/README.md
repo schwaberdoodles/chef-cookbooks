@@ -22,7 +22,7 @@ On Ubuntu:
 Attributes
 ==========
 
-Attributes are only used for auth info fow now:
+Attributes are only used for auth info (for now):
 
 default[:ucs][:ip] = '<ip>'
 default[:ucs][:username] = '<username>'
