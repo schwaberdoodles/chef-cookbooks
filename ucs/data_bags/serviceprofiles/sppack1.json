@@ -1,0 +1,19 @@
+{
+	"id": "sppack1",
+	"service_profile_names": "SampleVDI01,SampleVDI02,SampleVDI03",
+	"service_profile_boot_policy": "PXEBoot",
+	"service_profile_host_fw_policy": "vdi-fw",
+	"service_profile_mgmt_fw_policy": "vdi-fw",
+	"service_profile_uuid_pool": "vdi-uuid",
+	"service_profile_vnics_a": "vNIC-A",
+	"service_profile_vnic_a_template": "VDI-A",
+	"service_profile_vnics_b": "vNIC-B",
+	"service_profile_vnic_b_template": "VDI-B",
+	"service_profile_wwnn_pool": "vdi-wwnn",
+	"service_profile_vhba_a": "vHBA-A",
+	"service_profile_vhba_a_template": "VDI-A",
+	"service_profile_vhba_b": "vHBA-B",
+	"service_profile_vhba_b_template": "VDI-B",
+	"service_profile_template_to_bind": "VDI-Template-1",
+	"org": "IT"
+}

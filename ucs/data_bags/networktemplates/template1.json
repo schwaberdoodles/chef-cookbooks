@@ -1,0 +1,10 @@
+{
+	"id": "template1",
+	"vnic_template_name": "VDI-A",
+	"vnic_template_mac_pool": "vdi-mac",
+	"switch": "A",
+	"vnic_template_VLANs": "HR,IT",
+	"vnic_template_native_VLAN": "IT",
+	"vnic_template_mtu": "1500",
+	"org": "IT"
+}

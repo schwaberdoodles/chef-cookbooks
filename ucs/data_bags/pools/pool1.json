@@ -1,0 +1,35 @@
+{
+    "id":"pool1",
+    "mac":{
+        "name":"vdi-mac",
+        "start":"00:25:B5:00:00:00",
+        "end":"00:25:B5:00:00:1F",
+        "org":"IT"
+    },
+    "uuid":{
+        "name":"vdi-uuid",
+        "from":"0000-000000000001",
+        "to":"0000-000000000020",
+        "org":"IT"
+    },
+    "wwpn":{
+        "name":"vdi-wwpn",
+        "from":"20:00:00:25:B5:01:00:00",
+        "to":"20:00:00:25:B5:01:00:3F",
+        "org":"IT"
+    },
+    "wwnn":{
+        "name":"vdi-wwnn",
+        "from":"20:00:00:25:B5:00:00:00",
+        "to":"20:00:00:25:B5:00:00:3F",
+        "org":"IT"
+    },
+    "server": {
+        "server_pool_name": "VDI",
+        "server_pool_description": "Pool1 for VDI Hosts",
+        "server_pool_chassis_id": "1",
+        "server_pool_blades": "1,3,4,2",
+        "org": "IT"
+
+    }
+}
