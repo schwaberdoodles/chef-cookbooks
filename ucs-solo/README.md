@@ -1,7 +1,7 @@
 Description
 ===========
 
-A Chef cookbook (beta) to deploy and configure Cisco UCS. The cookbook leverages ucs-sololib and helps setup
+A Chef cookbook (beta) to deploy and configure Cisco UCS. The cookbook leverages chef-solo with ucslib and helps setup
 a basic Cisco UCS deployment. It acts as a template to highlight what's possible with the UCS API.
 
 
@@ -10,6 +10,11 @@ Requirements
 ============
 
 On Ubuntu 12.04, Debian 6 or Mac OS X 10.8.2, install Ruby 1.9.3. RVM is recommended - http://rvm.io
+
+On Ubuntu:
+
+	apt-get install ruby1.9.3
+	gem install chef --no-ri --no-rdoc 
 
 *Future iterations will have a distributed setup using chef-server
 
