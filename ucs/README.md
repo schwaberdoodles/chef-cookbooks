@@ -382,7 +382,6 @@ Assuming knife.rb is setup on the Chef Workstation:
 
 
 License
-	Author:: Murali Raju murali.raju@appliv.com
 
 	Author:: Velankani Engineering Team eng@velankani.net
 
