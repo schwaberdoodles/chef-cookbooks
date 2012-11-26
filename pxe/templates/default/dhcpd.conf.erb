@@ -20,7 +20,7 @@ subnet <%= @node[:pxe][:dhcp][:subnet] %> netmask <%= @node[:pxe][:dhcp][:subnet
 
 <% @hosts.each do |host| -%>
 host <%= host %> {
-        hardware ethernet 00:25:B5:00:00:7F;
+        hardware ethernet <%= host['mac'] %>;
         fixed-address 10.10.143.2;
         option routers 10.10.143.1;
         option subnet-mask 255.255.255.0;
