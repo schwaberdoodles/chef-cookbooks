@@ -18,13 +18,19 @@ subnet <%= @node[:pxe][:dhcp][:subnet] %> netmask <%= @node[:pxe][:dhcp][:subnet
   }
 }
 
-<% @hosts.each do |host| -%>
-host <%= host %> {
-        hardware ethernet <%= host['mac'] %>;
-        fixed-address 10.10.143.2;
-        option routers 10.10.143.1;
-        option subnet-mask 255.255.255.0;
-        option broadcast-address 10.10.143.255;
-        option host-name "labesxivdi01.dc1.velankani.net";
-}
-<% end -%>
+
+<% serviceprofiles = data_bag('dhcp')-%>
+
+<% serviceprofiles.each do |service_profile| -%>
+  
+  <% host = data_bag_item('dhcp', service_profile_info) %>
+  host <%= host['id'] %> {
+         hardware ethernet 00:25:B5:00:00:7F;
+         fixed-address 10.10.143.2;
+         option routers 10.10.143.1;
+         option subnet-mask 255.255.255.0;
+         option broadcast-address 10.10.143.255;
+         option host-name "labesxivdi01.dc1.velankani.net";
+  }
+
+<% end-%>

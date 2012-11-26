@@ -43,10 +43,6 @@ template "/etc/dhcp/dhcpd.conf" do
   # variables({
   #   :hosts => node[:pxe][:dhcp][:hosts]
   # })
-
-  service_profiles = data_bag('dhcp')
-  variables({:hosts => service_profiles})
-
   notifies(:restart, resources(:service => "isc-dhcp-server"))
 end
 
