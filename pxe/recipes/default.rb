@@ -50,6 +50,7 @@ template "/etc/dhcp/dhcpd.conf" do
     variables({
       :ids => "#{host['id']}"
     })
+  end
 
   notifies(:restart, resources(:service => "isc-dhcp-server"))
 end
