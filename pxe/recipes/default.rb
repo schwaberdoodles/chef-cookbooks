@@ -27,7 +27,7 @@ end
 
 
 template "/etc/default/isc-dhcp-server" do
-  source "isc-dhcp3-server.erb"
+  source "isc-dhcp-server.erb"
   owner "root"
   group "root"
   mode 0644
