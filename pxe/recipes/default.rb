@@ -19,13 +19,30 @@
 #
 
 
-package "dhcp3-server"
+service "dhcp3-server"
 
-service "isc-dhcp-server" do
-  supports :status => true, :restart => true
-  action [:enable, :start]
+package "dhcp3-server" do 
+  if node[:dhcpd][:version]
+    version node[:dhcpd][:version]
+    action :install
+  else
+    action :install
+  end
+end
+
+
+template "/etc/default/isc-dhcp-server" do
+  source "isc-dhcp3-server.erb"
+  owner "root"
+  group "root"
+  mode 0644
+  notifies(:restart, resources(:service => "dhcp3-server"))
 end
 
 template "/etc/dhcp/dhcpd.conf" do
-  notifies :restart, "service[isc-dhcp-server]"
+  source "dhcpd.conf.erb"
+  owner "root"
+  group "root"
+  mode 0644
+  notifies(:restart, resources(:service => "dhcp3-server"))
 end
