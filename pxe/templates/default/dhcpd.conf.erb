@@ -18,15 +18,6 @@ subnet <%= @node[:pxe][:dhcp][:subnet] %> netmask <%= @node[:pxe][:dhcp][:subnet
   }
 }
 
-<!-- host labesxivdi01 {
-        hardware ethernet 00:25:B5:00:00:7F;
-        fixed-address 10.10.143.2;
-        option routers 10.10.143.1;
-        option subnet-mask 255.255.255.0;
-        option broadcast-address 10.10.143.255;
-        option host-name "labesxivdi01.dc1.velankani.net";
-} -->
-
 <% @hosts.each do |host| -%>
 host <%= host %> {
         hardware ethernet 00:25:B5:00:00:7F;
