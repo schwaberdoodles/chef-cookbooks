@@ -40,9 +40,17 @@ template "/etc/dhcp/dhcpd.conf" do
   owner "root"
   group "root"
   mode 0644
-  variables({
-    :hosts => node[:pxe][:dhcp][:hosts]
-  })
+  # variables({
+  #   :hosts => node[:pxe][:dhcp][:hosts]
+  # })
+
+  hosts = data_bag('dhcp')
+  hosts.each do |host_info|
+    host = data_bag_item('dhcp', host_info)
+    variables({
+      :ids => "#{host['id']}"
+    })
+
   notifies(:restart, resources(:service => "isc-dhcp-server"))
 end
 
