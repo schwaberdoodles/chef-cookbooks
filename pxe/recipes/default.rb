@@ -41,3 +41,4 @@ template "/etc/dhcp/dhcpd.conf" do
   mode 0644
   notifies(:restart, resources(:service => "isc-dhcp-server"))
 end
+

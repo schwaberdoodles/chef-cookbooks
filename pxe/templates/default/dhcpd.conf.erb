@@ -7,7 +7,7 @@ allow bootp;
 class "pxeclients" {
   match if substring(option vendor-class-identifier, 0, 9) = "PXEClient";
   next-server <%= @node[:pxe][:dhcp][:next_server] %>;
-  filename = "pxelinux.0";
+  filename = "<%= @node[:pxe][:dhcp][:filename] %>";
 
 }
 
