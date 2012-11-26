@@ -10,10 +10,10 @@
 package "dhcp3-server"
 
 service "isc-dhcp-server" do
-  supports :status => true, :restart => true, :reload => true
+  supports :status => true, :restart => true
   action [:enable, :start]
 end
 
 template "/etc/dhcp/dhcpd.conf" do
-  notifies :reload, "service[isc-dhcp-server]"
+  notifies :restart, "service[isc-dhcp-server]"
 end

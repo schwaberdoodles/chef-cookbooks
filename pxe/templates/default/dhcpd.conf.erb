@@ -1,20 +1,20 @@
 ddns-update-style none;
 default-lease-time 600;
-option domain-name-servers 10.187.18.46;
+option domain-name-servers <%= @node[:pxe][:dhcp][:dns_server] %>;
 max-lease-time 7200;
 allow booting;
 allow bootp;
 class "pxeclients" {
   match if substring(option vendor-class-identifier, 0, 9) = "PXEClient";
-  next-server 10.10.143.254;
+  next-server <%= @node[:pxe][:dhcp][:pxe_server] %>;
   filename = "pxelinux.0";
 
 }
 
-subnet 10.10.143.0 netmask 255.255.255.0 {
+subnet <%= @node[:pxe][:dhcp][:subnet] %> netmask <%= @node[:pxe][:dhcp][:subnet_mask] %> {
   pool {
     allow members of "pxeclients";
-    range 10.10.143.220 10.10.143.253;
+    range <%= @node[:pxe][:dhcp][:host_range] %>;
   }
 }
 
