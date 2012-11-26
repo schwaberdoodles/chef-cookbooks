@@ -25,6 +25,8 @@ package "dhcp3-server" do
     action :install
 end
 
+@sps = ['esxi1', 'esxi2']
+
 
 template "/etc/default/isc-dhcp-server" do
   source "isc-dhcp-server.erb"
@@ -40,7 +42,7 @@ template "/etc/dhcp/dhcpd.conf" do
   group "root"
   mode 0644
   variables({
-    :hosts => node[:pxe][:dhcp][:hosts]
+    :hosts => @sps
   })
   notifies(:restart, resources(:service => "isc-dhcp-server"))
 end
