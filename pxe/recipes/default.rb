@@ -21,13 +21,8 @@
 
 service "dhcp3-server"
 
-package "dhcp3-server" do 
-  if node[:dhcpd][:version]
-    version node[:dhcpd][:version]
+package "dhcp3-server" do
     action :install
-  else
-    action :install
-  end
 end
 
 
