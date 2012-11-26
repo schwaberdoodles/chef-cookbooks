@@ -19,7 +19,7 @@
 #
 
 
-service "dhcp3-server"
+service "isc-dhcp-server"
 
 package "dhcp3-server" do
     action :install
@@ -31,7 +31,7 @@ template "/etc/default/isc-dhcp-server" do
   owner "root"
   group "root"
   mode 0644
-  notifies(:restart, resources(:service => "dhcp3-server"))
+  notifies(:restart, resources(:service => "isc-dhcp-server"))
 end
 
 template "/etc/dhcp/dhcpd.conf" do
@@ -39,5 +39,5 @@ template "/etc/dhcp/dhcpd.conf" do
   owner "root"
   group "root"
   mode 0644
-  notifies(:restart, resources(:service => "dhcp3-server"))
+  notifies(:restart, resources(:service => "isc-dhcp-server"))
 end
