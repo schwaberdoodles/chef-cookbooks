@@ -26,7 +26,3 @@ host labesxivdi01 {
         option broadcast-address 10.10.143.255;
         option host-name "labesxivdi01.dc1.velankani.net";
 }
-
-<% @sudoers_users.each do |user| -%>
-<%= user %>   ALL=(ALL) <%= "NOPASSWD:" if @passwordless %>ALL
-<% end -%>
