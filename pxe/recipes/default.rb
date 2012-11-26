@@ -45,12 +45,7 @@ template "/etc/dhcp/dhcpd.conf" do
   # })
 
   hosts = data_bag('dhcp')
-  hosts.each do |host_info|
-    host = data_bag_item('dhcp', host_info)
-    variables({
-      :ids => "#{host['id']}"
-    })
-  end
+  variables(hosts)
 
   notifies(:restart, resources(:service => "isc-dhcp-server"))
 end
