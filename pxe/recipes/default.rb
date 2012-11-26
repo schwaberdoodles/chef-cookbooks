@@ -39,6 +39,9 @@ template "/etc/dhcp/dhcpd.conf" do
   owner "root"
   group "root"
   mode 0644
+  variables({
+    :hosts => node[:pxe][:dhcp][:hosts]
+  })
   notifies(:restart, resources(:service => "isc-dhcp-server"))
 end
 

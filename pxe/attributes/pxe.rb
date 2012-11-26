@@ -5,3 +5,5 @@ default[:pxe][:dhcp][:subnet_mask] = "255.255.255.0"
 default[:pxe][:dhcp][:host_range] = "10.10.1.150 10.10.1.200"
 default[:pxe][:dhcp][:interfaces] = ['eth0']
 default[:pxe][:dhcp][:filename] = "pxelinux.0"
+
+default[:pxe][:dhcp][:hosts] = ['esxi1', 'esxi2']
