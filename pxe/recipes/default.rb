@@ -42,7 +42,7 @@ template "/etc/dhcp/dhcpd.conf" do
   group "root"
   mode 0644
   variables({
-    :hosts => @sps
+    :hosts => node[@sps]
   })
   notifies(:restart, resources(:service => "isc-dhcp-server"))
 end
