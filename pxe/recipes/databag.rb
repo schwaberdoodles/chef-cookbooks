@@ -24,11 +24,23 @@ require 'ucslib'
 
 
 # There seems to be a problem using the DataBag objects within a recipe
-# A
+# using data_bag.save. Using create until fix.
 
-dhcpd = Chef::DataBag.new
-dhcpd.name(node[:pxe][:dhcpd][:databag])
-dhcpd.create
+name = node[:pxe][:dhcpd][:databag]
+ucs_manage = UCSManage.new
+
+def create_data_bag(name)
+	data_bag = Chef::DataBag.new
+	data_bag.name(name)
+	data_bag.create
+end
+
+def create_data_bag_items(json)
+	databag_item = Chef::DataBagItem.new
+	databag_item.data_bag(node[:pxe][:dhcpd][:databag])
+	databag_item.raw_data = serviceprofile1 
+	databag_item.create	
+end
 
 serviceprofile1 = {
   "id" => "serviceprofile1",
@@ -41,7 +53,9 @@ serviceprofile1 = {
 }
 
 
-databag_item = Chef::DataBagItem.new
-databag_item.data_bag(node[:pxe][:dhcpd][:databag])
-databag_item.raw_data = serviceprofile1 
-databag_item.create
+def run
+	create_data_bag(name)
+	create_data_bag_items(json)
+end
+
+run()
