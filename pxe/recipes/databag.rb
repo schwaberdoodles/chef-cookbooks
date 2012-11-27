@@ -23,8 +23,7 @@
 require 'ucslib'
 
 
-
 dhcpd = Chef::DataBag.new
-dhcpd.name("dhcpd")
+dhcpd.name(node[:pxe][:dhcpd][:databag])
 dhcpd.save
 
