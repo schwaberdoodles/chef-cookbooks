@@ -23,7 +23,25 @@
 require 'ucslib'
 
 
+# There seems to be a problem using the DataBag objects within a recipe
+# A
+
 dhcpd = Chef::DataBag.new
 dhcpd.name(node[:pxe][:dhcpd][:databag])
-dhcpd.save
+dhcpd.create
 
+serviceprofile1 = {
+  "id" => "serviceprofile1",
+  "mac_address" => "00:25:B5:00:00:7F",
+  "ip" => "10.10.143.2",
+  "gateway" => "10.10.143.1",
+  "mask" => "255.255.255.0",
+  "broadcast" => "10.10.143.255",
+  "host_name" => "serviceprofile1"
+}
+
+
+databag_item = Chef::DataBagItem.new
+databag_item.data_bag(node[:pxe][:dhcpd][:databag])
+databag_item.raw_data = serviceprofile1 
+databag_item.create
