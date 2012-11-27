@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: pxe
-# Recipe:: default [Setup packages, generate dhcpd.conf for each unique host]
+# Recipe:: default [Setup packages]
 #
 # Copyright 2012, Murali Raju, murali.raju@appliv.com
 # Copyright 2012, Velankani Information Systems, eng@velankani.net
@@ -18,41 +18,9 @@
 # limitations under the License.
 #
 
-
-service "isc-dhcp-server"
-
 package "libxml2-dev"
 package "libxslt1-dev"
 package "dhcp3-server"
 gem_package "ucslib"
 
 log "Installation of packages and dependencies"
-
-template "/etc/default/isc-dhcp-server" do
-  source "isc-dhcp-server.erb"
-  owner "root"
-  group "root"
-  mode 0644
-  notifies(:restart, resources(:service => "isc-dhcp-server"))
-end
-
-template "/etc/dhcp/dhcpd.conf" do
-  source "dhcpd.conf.erb"
-  owner "root"
-  group "root"
-  mode 0644
-  # variables({
-  #   :hosts => node[:pxe][:dhcp][:hosts]
-  # })
-  hosts = []
-  service_profiles = data_bag('dhcp')
-  service_profiles.each do |service_profile_info|
-    hosts << service_profile = data_bag_item('dhcp', service_profile_info)
-    variables({:hosts => hosts})
-  end
-  
-  notifies(:restart, resources(:service => "isc-dhcp-server"))
-end
-
-
-
