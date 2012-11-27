@@ -34,13 +34,15 @@ auth_json = {:ip => "#{node[:pxe][:ucs][:ip]}",
 #Initialize Objects
 ucs_session = UCSToken.new
 token_json = ucs_session.get_token(auth_json)
-ucs_manage = UCSManage.new(token_json)
+@ucs_manage = UCSManage.new(token_json)
 #Uncomment to debug
 #log token_json
 
 
 # There seems to be a problem using the DataBag objects within a recipe
-# using data_bag.save. Using create until fix.
+# using data_bag.save. Using data_bag.create until fix. This version is not robust
+# in terms of checking for existing data bags. Use knife commands to delete
+# existing data bags before running this recipe
 
 data_bag_name = "#{node[:pxe][:dhcpd][:databag]}"
 
@@ -50,6 +52,7 @@ def create_data_bag(data_bag_name)
 	data_bag.name(data_bag_name)
 	data_bag.create
 end
+
 
 def create_data_bag_items(data_bag_name)
 	serviceprofile1 = {
@@ -66,8 +69,6 @@ def create_data_bag_items(data_bag_name)
 	databag_item.raw_data = serviceprofile1 
 	databag_item.create	
 end
-
-
 
 
 def run(data_bag_name)
