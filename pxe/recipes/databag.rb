@@ -42,7 +42,7 @@ ucs_manage = UCSManage.new(token_json)
 # There seems to be a problem using the DataBag objects within a recipe
 # using data_bag.save. Using create until fix.
 
-data_bag_name = node[:pxe][:dhcpd][:databag]
+data_bag_name = "#{node[:pxe][:dhcpd][:databag]}"
 
 
 def create_data_bag(data_bag_name)
@@ -51,7 +51,7 @@ def create_data_bag(data_bag_name)
 	data_bag.create
 end
 
-def create_data_bag_items
+def create_data_bag_items(data_bag_name)
 	serviceprofile1 = {
 	  "id" => "serviceprofile1",
 	  "mac_address" => "00:25:B5:00:00:7F",
@@ -62,7 +62,7 @@ def create_data_bag_items
 	  "host_name" => "serviceprofile1"
 	}	
 	databag_item = Chef::DataBagItem.new
-	databag_item.data_bag(node[:pxe][:dhcpd][:databag])
+	databag_item.data_bag(data_bag_name)
 	databag_item.raw_data = serviceprofile1 
 	databag_item.create	
 end
@@ -70,9 +70,9 @@ end
 
 
 
-def run
-	create_data_bag(name)
-	create_data_bag_items(json)
+def run(data_bag_name)
+	create_data_bag(data_bag_name)
+	create_data_bag_items(data_bag_name)
 end
 
-run()
+run(data_bag_name)
