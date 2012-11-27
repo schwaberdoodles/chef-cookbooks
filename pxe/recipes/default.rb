@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: pxe
-# Recipe:: default [Setup packages]
+# Recipe:: default [Setup packages, generate dhcpd.conf for each unique host]
 #
 # Copyright 2012, Murali Raju, murali.raju@appliv.com
 # Copyright 2012, Velankani Information Systems, eng@velankani.net
@@ -20,6 +20,8 @@
 
 
 service "isc-dhcp-server"
+
+gem_package 'ucslib'
 
 package "dhcp3-server" do
     action :install
@@ -43,7 +45,13 @@ template "/etc/dhcp/dhcpd.conf" do
   # variables({
   #   :hosts => node[:pxe][:dhcp][:hosts]
   # })
+  hosts = []
   service_profiles = data_bag('dhcp')
+  service_profiles.each do |service_profile_info|
+    hosts << service_profile = data_bag_item('dhcp', service_profile_info)
+    variables({:hosts => hosts})
+  end
+  
   notifies(:restart, resources(:service => "isc-dhcp-server"))
 end
 
