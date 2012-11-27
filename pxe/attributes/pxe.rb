@@ -6,3 +6,8 @@ default[:pxe][:dhcpd][:host_range] = "10.10.1.150 10.10.1.200"
 default[:pxe][:dhcpd][:interfaces] = ['eth0']
 default[:pxe][:dhcpd][:filename] = "pxelinux.0"
 default[:pxe][:dhcpd][:databag] = "dhcpd"
+
+
+default[:pxe][:ucs][:ip] = '192.168.73.131'
+default[:pxe][:ucs][:username] = 'admin'
+default[:pxe][:ucs][:password] = 'admin'
