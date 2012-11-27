@@ -21,13 +21,12 @@
 
 service "isc-dhcp-server"
 
-gem_package 'ucslib'
+package "libxml2-dev"
+package "libxslt1-dev"
+package "dhcp3-server"
+gem_package "ucslib"
 
-package "dhcp3-server" do
-    action :install
-end
-
-
+log "Installation of packages and dependencies"
 
 template "/etc/default/isc-dhcp-server" do
   source "isc-dhcp-server.erb"
