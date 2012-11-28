@@ -55,6 +55,12 @@ end
 
 
 def create_data_bag_items(data_bag_name)
+	host_range = node[:pxe][:dhcpd][:host_range].split()
+	@start_ip = host_range[0]
+	@end_ip = host_range[1]
+	@start_ip_last_octet = host_range[0].split('.')[3].to_i
+	@end_ip_last_octet = host_range[1].split('.')[3].to_i
+
 	state = @ucs_manager.discover_state
 	state.xpath("configResolveClasses/outConfigs/macpoolPooled").each do |macpool|
 		#Check if service profile is assigned and we only select the vNIC A Mac address
