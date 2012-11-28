@@ -81,7 +81,7 @@ def create_data_bag_items(data_bag_name)
 				end
 			end
 		else
-			puts "Skipping #{@host} with mac address #{macpool.attributes["id"]}"
+			puts "Skipping mac address #{macpool.attributes["id"]}"
 		end
 	end	
 end
