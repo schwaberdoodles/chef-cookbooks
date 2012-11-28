@@ -57,21 +57,30 @@ end
 def create_data_bag_items(data_bag_name)
 	state = @ucs_manager.discover_state
 	state.xpath("configResolveClasses/outConfigs/macpoolPooled").each do |macpool|
-		while "#{macpool.attributes["assigned"]}" == 'yes'
-			name = "#{macpool.attributes["assignedToDn"].to_s.downcase.scan(/ls-(\w+)/)[0][0]}"
-			serviceprofile = {
-			  "id" => name,
-			  "mac_address" => "#{macpool.attributes["id"]}",
-			  "ip" => "10.10.143.2",
-			  "gateway" => "10.10.143.1",
-			  "mask" => "255.255.255.0",
-			  "broadcast" => "10.10.143.255",
-			  "host_name" => name
-			}	
-			databag_item = Chef::DataBagItem.new
-			databag_item.data_bag(data_bag_name)
-			databag_item.raw_data = serviceprofile 
-			databag_item.create
+		if "#{macpool.attributes["assigned"]}" == 'yes' and "#{macpool.attributes["assignedToDn"].to_s.scan(/ether-vNIC-(\w+)/)}" == '[["A"]]'
+			extracted_service_profile_name = "#{macpool.attributes["assignedToDn"]}"
+			service_profile_names = extracted_service_profile_name.to_s.scan(/ls-(\w+)/)
+			service_profile_names.each do |name|
+				hosts_names = name
+				hosts_names.each do |host_name|
+					@host = host_name.downcase
+					serviceprofile = {
+					  "id" => @host,
+					  "mac_address" => "#{macpool.attributes["id"]}",
+					  "ip" => "10.10.143.2",
+					  "gateway" => "10.10.143.1",
+					  "mask" => "255.255.255.0",
+					  "broadcast" => "10.10.143.255",
+					  "host_name" => @host
+					}	
+					databag_item = Chef::DataBagItem.new
+					databag_item.data_bag(data_bag_name)
+					databag_item.raw_data = serviceprofile 
+					databag_item.create
+				end
+			end
+		else
+			puts "Skipping #{@host} with mac address #{macpool.attributes["id"]}"
 		end
 	end	
 end
