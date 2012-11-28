@@ -36,7 +36,7 @@ template "/etc/dhcp/dhcpd.conf" do
   group "root"
   mode 0644
   hosts = []
-  service_profiles = data_bag(node[:pxe][:dhcp][:data_bag])
+  service_profiles = data_bag(node[:pxe][:dhcpd][:data_bag])
   service_profiles.each do |service_profile_info|
     hosts << service_profile = data_bag_item('dhcpd', service_profile_info)
     variables({:hosts => hosts})
