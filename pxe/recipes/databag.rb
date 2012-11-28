@@ -34,7 +34,7 @@ auth_json = {:ip => "#{node[:pxe][:ucs][:ip]}",
 #Initialize Objects
 ucs_session = UCSToken.new
 token_json = ucs_session.get_token(auth_json)
-@ucs_manage = UCSManage.new(token_json)
+@ucs_manager = UCSManage.new(token_json)
 #Uncomment to debug
 #log token_json
 
@@ -57,19 +57,21 @@ end
 def create_data_bag_items(data_bag_name)
 	state = @ucs_manager.discover_state
 	state.xpath("configResolveClasses/outConfigs/macpoolPooled").each do |macpool|
-		serviceprofile = {
-		  "id" => "serviceprofile1",
-		  "mac_address" => "00:25:B5:00:00:7F",
-		  "ip" => "10.10.143.2",
-		  "gateway" => "10.10.143.1",
-		  "mask" => "255.255.255.0",
-		  "broadcast" => "10.10.143.255",
-		  "host_name" => "serviceprofile1"
-		}	
-		databag_item = Chef::DataBagItem.new
-		databag_item.data_bag(data_bag_name)
-		databag_item.raw_data = serviceprofile 
-		databag_item.create
+		while "#{macpool.attributes["assigned"]}" == 'yes'
+			serviceprofile = {
+			  "id" => "#{macpool.attributes["assignedToDn"].to_s.scan(/ls-(\w+)/)}",
+			  "mac_address" => "#{macpool.attributes["id"]}",
+			  "ip" => "10.10.143.2",
+			  "gateway" => "10.10.143.1",
+			  "mask" => "255.255.255.0",
+			  "broadcast" => "10.10.143.255",
+			  "host_name" => "#{macpool.attributes["assignedToDn"].to_s.scan(/ls-(\w+)/)}"
+			}	
+			databag_item = Chef::DataBagItem.new
+			databag_item.data_bag(data_bag_name)
+			databag_item.raw_data = serviceprofile 
+			databag_item.create
+		end
 	end	
 end
 
