@@ -57,6 +57,7 @@ end
 def create_data_bag_items(data_bag_name)
 	state = @ucs_manager.discover_state
 	state.xpath("configResolveClasses/outConfigs/macpoolPooled").each do |macpool|
+		#Check if service profile is assigned and we only select the vNIC A Mac address
 		if "#{macpool.attributes["assigned"]}" == 'yes' and "#{macpool.attributes["assignedToDn"].to_s.scan(/ether-vNIC-(\w+)/)}" == '[["A"]]'
 			extracted_service_profile_name = "#{macpool.attributes["assignedToDn"]}"
 			service_profile_names = extracted_service_profile_name.to_s.scan(/ls-(\w+)/)
