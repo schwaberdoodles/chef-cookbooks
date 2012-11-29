@@ -1,4 +1,4 @@
-  ddns-update-style none;
+ddns-update-style none;
 default-lease-time 600;
 option domain-name-servers <%= @node[:pxe][:dhcpd][:dns_server] %>;
 max-lease-time 7200;
