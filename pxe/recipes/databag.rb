@@ -78,9 +78,9 @@ def create_data_bag_items(data_bag_name)
 					  "id" => @host,
 					  "mac_address" => "#{macpool.attributes["id"]}",
 					  "ip" => "#{first_3_octets_start_ip}"+"#{initial_last_octet}",
-					  "gateway" => "10.10.143.1",
-					  "mask" => "255.255.255.0",
-					  "broadcast" => "10.10.143.255",
+					  "gateway" => "#{node[:pxe][:dhcpd][:gateway]}",
+					  "mask" => "#{node[:pxe][:dhcpd][:subnet_mask]}",
+					  "broadcast" => "#{node[:pxe][:dhcpd][:broadcast]}",
 					  "host_name" => @host
 					}	
 					databag_item = Chef::DataBagItem.new
