@@ -21,6 +21,7 @@
 package "libxml2-dev"
 package "libxslt1-dev"
 package "dhcp3-server"
+package "tftpd-hpa"
 gem_package "ucslib"
 
 log "Installation of packages and dependencies"
