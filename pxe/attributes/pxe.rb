@@ -15,7 +15,7 @@ default[:pxe][:ucs][:username] = 'admin'
 default[:pxe][:ucs][:password] = 'admin'
 
 
-default[:pxe][:releases] = [
+default[:pxe][:linux][:releases] = [
     { :dist => "ubuntu-12.04", :path => "http://archive.ubuntu.com/ubuntu/dists/precise/main/installer-amd64/current/images/netboot/netboot.tar.gz" },
     { :dist => "debian-6.0.5", :path => "http://ftp.debian.org/debian/dists/squeeze/main/installer-amd64/current/images/netboot/netboot.tar.gz" }
 ]
@@ -24,7 +24,7 @@ default[:pxe][:preseed][:username] = "chef"
 default[:pxe][:preseed][:password] = "chef101"
 
 # add list(s) for your target node(s)
-default[:pxe][:servers] = [
-  { :mac => "00:50:56:3A:76:F0", :release => "ubuntu-12.04", :ip => "192.168.73.198", :hostname => "node1" },
-  { :mac => "00:1c:25:74:ef:79", :release => "debian-6.0.5", :ip => "192.168.73.190", :hostname => "node2" }
-]
+# default[:pxe][:servers] = [
+#   { :mac => "00:50:56:3A:76:F0", :release => "ubuntu-12.04", :ip => "192.168.73.198", :hostname => "node1" },
+#   { :mac => "00:1c:25:74:ef:79", :release => "debian-6.0.5", :ip => "192.168.73.190", :hostname => "node2" }
+# ]

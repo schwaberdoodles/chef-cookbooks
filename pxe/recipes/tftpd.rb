@@ -18,9 +18,26 @@
 # limitations under the License.
 #
 
+require 'ucslib'
+#Uncomment to debug
+#log "Using: #{node[:ucs][:ip]}, #{node[:ucs][:username]}, #{node[:ucs][:password]}"
+
+#JSON Definitions Start
+auth_json = {:ip => "#{node[:pxe][:ucs][:ip]}",
+             :username => "#{node[:pxe][:ucs][:username]}",
+             :password => "#{node[:pxe][:ucs][:password]}"}.to_json
+
+#JSON Definitions End
+
+#Initialize Objects
+ucs_session = UCSToken.new
+token_json = ucs_session.get_token(auth_json)
+@ucs_manager = UCSManage.new(token_json)
+#Uncomment to debug
+#log token_json
 
 
-node[:pxe][:releases].each do |release|
+node[:pxe][:linux][:releases].each do |release|
   dist = release[:dist]
   path = release[:path]
   case node['platform']
@@ -67,29 +84,12 @@ service "tftpd-hpa"  do
   supports :restart => true
 end
 
-# case node['platform']
-# when 'debian'
-#   template "/etc/dhcp3/dhcpd.conf" do
-#     source "dhcpd.conf.erb"
-#     owner "root"
-#     group "root"
-#     mode 0644
-#     variables({ :servers => node[:pxe][:servers] })
-#     notifies :restart, resources(:service => "isc-dhcp-server")
-#   end
-# when 'ubuntu'
-#   template "/etc/dhcp/dhcpd.conf" do
-#     source "dhcpd.conf.erb"
-#     owner "root"
-#     group "root"
-#     mode 0644
-#     variables({ :servers => node[:pxe][:servers] })
-#     notifies :restart, resources(:service => "isc-dhcp-server")
-#   end
-# end
 
-node[:pxe][:servers].each do |server|
-  mac = server[:mac].downcase.gsub(/:/, '-')
+#node[:pxe][:servers].each do |server|
+state = @ucs_manager.discover_state
+state.xpath("configResolveClasses/outConfigs/macpoolPooled").each do |macpool|
+  #mac = server[:mac].downcase.gsub(/:/, '-')
+  mac = "#{macpool.attributes["id"]}"
   case node['platform']
   when 'debian'
     case server[:release]
