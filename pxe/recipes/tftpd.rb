@@ -67,26 +67,26 @@ service "tftpd-hpa"  do
   supports :restart => true
 end
 
-case node['platform']
-when 'debian'
-  template "/etc/dhcp3/dhcpd.conf" do
-    source "dhcpd.conf.erb"
-    owner "root"
-    group "root"
-    mode 0644
-    variables({ :servers => node[:pxe][:servers] })
-    notifies :restart, resources(:service => "isc-dhcp-server")
-  end
-when 'ubuntu'
-  template "/etc/dhcp/dhcpd.conf" do
-    source "dhcpd.conf.erb"
-    owner "root"
-    group "root"
-    mode 0644
-    variables({ :servers => node[:pxe][:servers] })
-    notifies :restart, resources(:service => "isc-dhcp-server")
-  end
-end
+# case node['platform']
+# when 'debian'
+#   template "/etc/dhcp3/dhcpd.conf" do
+#     source "dhcpd.conf.erb"
+#     owner "root"
+#     group "root"
+#     mode 0644
+#     variables({ :servers => node[:pxe][:servers] })
+#     notifies :restart, resources(:service => "isc-dhcp-server")
+#   end
+# when 'ubuntu'
+#   template "/etc/dhcp/dhcpd.conf" do
+#     source "dhcpd.conf.erb"
+#     owner "root"
+#     group "root"
+#     mode 0644
+#     variables({ :servers => node[:pxe][:servers] })
+#     notifies :restart, resources(:service => "isc-dhcp-server")
+#   end
+# end
 
 node[:pxe][:servers].each do |server|
   mac = server[:mac].downcase.gsub(/:/, '-')

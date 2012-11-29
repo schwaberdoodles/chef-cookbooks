@@ -22,6 +22,6 @@ default[:pxe][:releases] = [
 
 # add list(s) for your target node(s)
 default[:pxe][:servers] = [
-  { :mac => "00:d0:59:cb:71:f3", :release => "ubuntu-12.04", :ip => "192.168.1.191", :hostname => "foo" },
-  { :mac => "00:1c:25:74:ef:79", :release => "debian-6.0.5", :ip => "192.168.1.190", :hostname => "watto" }
+  { :mac => "00:50:56:3A:76:F0", :release => "ubuntu-12.04", :ip => "192.168.73.191", :hostname => "node1" },
+  { :mac => "00:1c:25:74:ef:79", :release => "debian-6.0.5", :ip => "192.168.73.190", :hostname => "node2" }
 ]
