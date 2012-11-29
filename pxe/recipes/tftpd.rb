@@ -85,81 +85,22 @@ service "tftpd-hpa"  do
 end
 
 
-#node[:pxe][:servers].each do |server|
+
+
 state = @ucs_manager.discover_state
 state.xpath("configResolveClasses/outConfigs/macpoolPooled").each do |macpool|
-  node[:pxe][:os].each do |os|
-    if "#{macpool.attributes["assigned"]}" == 'yes' and "#{macpool.attributes["assignedToDn"].to_s.scan(/ether-vNIC-(\w+)/)}" == '[["A"]]'
-      mac = "#{macpool.attributes["id"]}"
-      case node['platform']
-      when 'debian'
-        case os[:release]
-        when 'ubuntu-12.04'
-          template "/srv/tftp/pxelinux.cfg/01-#{mac}" do # It looks for 01-#{mac} for some reason.
-            source "pxelinux.ubuntu.erb"
-            mode 0644
-            variables({
-              :mac => mac,
-              :release => os[:release]
-            })
-            notifies :restart, resources(:service => "tftpd-hpa"), :delayed
-          end
-        when 'debian-6.0.5'
-          template "/srv/tftp/pxelinux.cfg/01-#{mac}" do # It looks for 01-#{mac} for some reason.
-            source "pxelinux.debian.erb"
-            mode 0644
-            variables({
-              :mac => mac,
-              :release => os[:release]
-            })
-            notifies :restart, resources(:service => "tftpd-hpa"), :delayed
-          end
-        end
-      when 'ubuntu'
-        case os[:release]
-        when 'ubuntu-12.04'
-          template "/var/lib/tftpboot/pxelinux.cfg/01-#{mac}" do # It looks for 01-#{mac} for some reason.
-            source "pxelinux.ubuntu.erb"
-            mode 0644
-            variables({
-              :mac => mac,
-              :release => os[:release]
-            })
-            notifies :restart, resources(:service => "tftpd-hpa"), :delayed
-          end
-        when 'debian-6.0.5'
-          template "/var/lib/tftpboot/pxelinux.cfg/01-#{mac}" do # It looks for 01-#{mac} for some reason.
-            source "pxelinux.debian.erb"
-            mode 0644
-            variables({
-              :mac => mac,
-              :release => os[:release]
-            })
-            notifies :restart, resources(:service => "tftpd-hpa"), :delayed
-          end
-        end
-      end
+  if "#{macpool.attributes["assigned"]}" == 'yes' and "#{macpool.attributes["assignedToDn"].to_s.scan(/ether-vNIC-(\w+)/)}" == '[["A"]]'
+    mac = "#{macpool.attributes["id"]}"
+    template "/var/lib/tftpboot/pxelinux.cfg/01-#{mac}" do # It looks for 01-#{mac} for some reason.
+        source "pxelinux.ubuntu.erb"
+        mode 0644
+        variables({
+          :mac => mac,
+          :release => os[:release]
+        })
+        notifies :restart, resources(:service => "tftpd-hpa"), :delayed
     end
   end
 end
 
-case node['platform']
-when 'debian'
-  template "/srv/tftp/preseed.ubuntu.cfg" do
-    source "preseed.ubuntu.cfg.erb"
-    mode 0644
-  end
-  template "/srv/tftp/preseed.debian.cfg" do
-    source "preseed.debian.cfg.erb"
-    mode 0644
-  end
-when 'ubuntu'
-  template "/var/lib/tftpboot/preseed.ubuntu.cfg" do
-    source "preseed.ubuntu.cfg.erb"
-    mode 0644
-  end
-  template "/var/lib/tftpboot/preseed.debian.cfg" do
-    source "preseed.debian.cfg.erb"
-    mode 0644
-  end
-end
+

@@ -23,14 +23,11 @@ default[:pxe][:linux][:releases] = [
 default[:pxe][:preseed][:username] = "chef"
 default[:pxe][:preseed][:password] = "chef101"
 
-# # add list(s) for your target node(s)
-# default[:pxe][:servers] = [
-#   { :mac => "00:50:56:3A:76:F0", :release => "ubuntu-12.04", :ip => "192.168.73.198", :hostname => "node1" },
-#   { :mac => "00:1c:25:74:ef:79", :release => "debian-6.0.5", :ip => "192.168.73.190", :hostname => "node2" }
+
+#add list(s) for your target node(s) - tftpd-multi
+# default[:pxe][:os] = [
+#   { :release => "ubuntu-12.04"},
+#   { :release => "debian-6.0.5"}
 # ]
 
-# add list(s) for your target node(s)
-default[:pxe][:os] = [
-  { :release => "ubuntu-12.04"},
-  { :release => "debian-6.0.5"}
-]
+default[:pxe][:os][:release] = "ubuntu-12.04"
