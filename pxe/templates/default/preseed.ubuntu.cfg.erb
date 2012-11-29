@@ -52,9 +52,9 @@ d-i	passwd/root-login	boolean false
 #d-i	passwd/username	string chef
 #d-i	passwd/user-password-crypted	password [e210c1637a578dc8156eb0e807f2b4c5]
 d-i passwd/user-fullname string Chef
-d-i passwd/username string chef
-d-i passwd/user-password password chef101
-d-i passwd/user-password-again password chef101
+d-i passwd/username string <%= @node[:pxe][:preseed][:username] %>
+d-i passwd/user-password password <%= @node[:pxe][:preseed][:password] %>
+d-i passwd/user-password-again password <%= @node[:pxe][:preseed][:password] %>
 #d-i passwd/user-password-crypted password [e210c1637a578dc8156eb0e807f2b4c5]
 d-i	passwd/user-uid	string 
 d-i	user-setup/allow-password-weak	boolean true
