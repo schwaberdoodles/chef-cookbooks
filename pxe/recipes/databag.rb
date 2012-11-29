@@ -56,11 +56,14 @@ end
 
 def create_data_bag_items(data_bag_name)
 	host_range = node[:pxe][:dhcpd][:host_range].split()
-	@start_ip = host_range[0]
-	@end_ip = host_range[1]
-	@start_ip_last_octet = host_range[0].split('.')[3].to_i
-	@end_ip_last_octet = host_range[1].split('.')[3].to_i
+	first_3_octets_start_ip = "#{host_range[0].split('.')[0]}"+"." \
+							  +"#{host_range[0].split('.')[1]}"+"." \
+							  +"#{host_range[0].split('.')[2]}"+"."	
+	start_ip_last_octet = host_range[0].split('.')[3].to_i
+	end_ip_last_octet = host_range[1].split('.')[3].to_i
 
+	
+	initial_last_octet = start_ip_last_octet
 	state = @ucs_manager.discover_state
 	state.xpath("configResolveClasses/outConfigs/macpoolPooled").each do |macpool|
 		#Check if service profile is assigned and we only select the vNIC A Mac address
@@ -74,7 +77,7 @@ def create_data_bag_items(data_bag_name)
 					serviceprofile = {
 					  "id" => @host,
 					  "mac_address" => "#{macpool.attributes["id"]}",
-					  "ip" => "10.10.143.2",
+					  "ip" => "#{first_3_octets_start_ip}"+"#{initial_last_octet}",
 					  "gateway" => "10.10.143.1",
 					  "mask" => "255.255.255.0",
 					  "broadcast" => "10.10.143.255",
@@ -89,6 +92,7 @@ def create_data_bag_items(data_bag_name)
 		else
 			puts "Skipping mac address #{macpool.attributes["id"]}"
 		end
+		initial_last_octet += 1
 	end	
 end
 
