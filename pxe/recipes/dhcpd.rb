@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: pxe
-# Recipe:: dhcpd [Generate dhcpd.conf for each unique host]
+# Recipe:: dhcpd [Generate dhcpd.conf for each unique host via data_bags]
 #
 # Copyright 2012, Murali Raju, murali.raju@appliv.com
 # Copyright 2012, Velankani Information Systems, eng@velankani.net
