@@ -30,7 +30,7 @@ default[:pxe][:preseed][:password] = "chef101"
 # ]
 
 # add list(s) for your target node(s)
-default[:pxe][:servers] = [
+default[:pxe][:os] = [
   { :release => "ubuntu-12.04"},
   { :release => "debian-6.0.5"}
 ]
