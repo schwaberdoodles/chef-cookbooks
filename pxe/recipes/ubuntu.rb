@@ -40,19 +40,38 @@ token_json = ucs_session.get_token(auth_json)
 dist = node[:pxe][:linux][:release][:dist]
 path = node[:pxe][:linux][:release][:path]
 
-remote_file "/tmp/#{dist}.amd64.netboot.tar.gz" do
+remote_file "/tmp/#{dist}-server-i386.iso" do
   source "#{path}"
-  not_if { File.exists?("/var/lib/tftpboot/#{dist}") || File.exists?("/tmp/#{dist}.amd64.netboot.tar.gz") }
+  not_if { File.exists?("/tmp/#{dist}-server-i386.iso") }
 end
 
 
-script "copy netboot files" do
+script "copy install files from iso" do
   interpreter "bash"
   user "root"
   code <<-EOH
-  tar zxvf /tmp/#{dist}.amd64.netboot.tar.gz -C /var/lib/tftpboot/
+  mkdir /var/www/ubuntu/
+  mount -o loop /tmp/#{dist}-server-i386.iso /mnt
+  cp -a /mnt/* /var/www/ubuntu/
+  cp -a /mnt/install/netboot/* /var/lib/tftpboot/
   EOH
 end
+
+
+
+# remote_file "/tmp/#{dist}.amd64.netboot.tar.gz" do
+#   source "#{path}"
+#   not_if { File.exists?("/var/lib/tftpboot/#{dist}") || File.exists?("/tmp/#{dist}.amd64.netboot.tar.gz") }
+# end
+
+
+# script "copy netboot files" do
+#   interpreter "bash"
+#   user "root"
+#   code <<-EOH
+#   tar zxvf /tmp/#{dist}.amd64.netboot.tar.gz -C /var/lib/tftpboot/
+#   EOH
+# end
 
 
 service "networking" do
