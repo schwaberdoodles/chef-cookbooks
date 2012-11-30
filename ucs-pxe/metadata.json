@@ -1,6 +1,6 @@
 {
-  "name": "pxe",
-  "description": "Installs/Configures a PXE Appliance used for bare metal provisioning",
+  "name": "ucs-pxe",
+  "description": "Installs/Configures a PXE Appliance used for bare metal provisioning for Cisco UCS",
   "long_description": "Description\n===========\n\nRequirements\n============\n\nAttributes\n==========\n\nUsage\n=====\n\n",
   "maintainer": "Velankani Information Systems, Inc",
   "maintainer_email": "eng@velankani.net",
