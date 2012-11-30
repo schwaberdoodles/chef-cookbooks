@@ -70,7 +70,7 @@ d-i partman/default_filesystem string ext4
 # If you select ftp, the mirror/country string does not need to be set.
 #d-i mirror/protocol string ftp
 d-i mirror/country string manual
-d-i mirror/http/hostname string us.archive.ubuntu.com
+d-i mirror/http/hostname string archive.ubuntu.com
 d-i mirror/http/directory string /ubuntu
 d-i mirror/http/proxy string
 # Alternatively: by default, the installer uses CC.archive.ubuntu.com where
@@ -83,6 +83,16 @@ d-i mirror/http/proxy string
 #d-i mirror/udeb/suite string precise
 # Components to use for loading installer components (optional).
 #d-i mirror/udeb/components multiselect main, restricted
+
+
+# Network config
+# Any hostname and domain names assigned from dhcp take precedence over
+# values set here. However, setting the values still prevents the questions
+# from being shown, even if values come from dhcp.
+d-i netcfg/get_hostname string unassigned-hostname
+d-i netcfg/get_domain string unassigned-domain
+d-i netcfg/get_hostname seen true
+d-i netcfg/get_domain seen true
 
 d-i clock-setup/utc boolean true
 d-i	clock-setup/ntp	boolean true
