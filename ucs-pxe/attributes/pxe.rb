@@ -18,10 +18,6 @@ default[:pxe][:dhcpd][:filename] = "pxelinux.0"
 default[:pxe][:dhcpd][:databag] = "dhcpd"
 
 
-
-
-
-
 #OS 
 default[:pxe][:preseed][:username] = "chef"
 default[:pxe][:preseed][:password] = "chef101"
