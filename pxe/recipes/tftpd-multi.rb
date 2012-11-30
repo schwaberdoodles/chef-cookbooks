@@ -1,6 +1,7 @@
 #
 # Cookbook Name:: pxe
 # Recipe:: tftpd [Setup images for deployment via tftpd]
+# 
 #
 # Copyright 2012, Murali Raju, murali.raju@appliv.com
 # Copyright 2012, Velankani Information Systems, eng@velankani.net
@@ -17,6 +18,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+
+
+# ** This is still full of bugs**
 
 require 'ucslib'
 #Uncomment to debug

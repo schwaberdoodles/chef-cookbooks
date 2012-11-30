@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: pxe
-# Recipe:: tftpd [Setup Ubuntu install via tftpd]
+# Recipe:: tftpd [Setup Debian install via tftpd]
 #
 # Copyright 2012, Murali Raju, murali.raju@appliv.com
 # Copyright 2012, Velankani Information Systems, eng@velankani.net
@@ -40,17 +40,17 @@ token_json = ucs_session.get_token(auth_json)
 dist = node[:pxe][:linux][:release][:dist]
 path = node[:pxe][:linux][:release][:path]
 
+
 remote_file "/tmp/#{dist}.amd64.netboot.tar.gz" do
   source "#{path}"
-  not_if { File.exists?("/var/lib/tftpboot/#{dist}") || File.exists?("/tmp/#{dist}.amd64.netboot.tar.gz") }
+  not_if { File.exists?("/srv/tftp/#{dist}") || File.exists?("/tmp/#{dist}.amd64.netboot.tar.gz") }
 end
-
 
 script "copy netboot files" do
   interpreter "bash"
   user "root"
   code <<-EOH
-  tar zxvf /tmp/#{dist}.amd64.netboot.tar.gz -C /var/lib/tftpboot/
+  tar zxvf /tmp/#{dist}.amd64.netboot.tar.gz -C /srv/tftp/
   EOH
 end
 
@@ -72,8 +72,8 @@ state = @ucs_manager.discover_state
 state.xpath("configResolveClasses/outConfigs/macpoolPooled").each do |macpool|
   if "#{macpool.attributes["assigned"]}" == 'yes' and "#{macpool.attributes["assignedToDn"].to_s.scan(/ether-vNIC-(\w+)/)}" == '[["A"]]'
     mac = "#{macpool.attributes["id"]}"
-    template "/var/lib/tftpboot/pxelinux.cfg/01-#{mac}" do # It looks for 01-#{mac} for some reason.
-        source "pxelinux.ubuntu.erb"
+    template "/srv/tftp/pxelinux.cfg/01-#{mac}" do # It looks for 01-#{mac} for some reason.
+        source "pxelinux.debian.erb"
         mode 0644
         variables({
           :mac => mac,
@@ -84,12 +84,12 @@ state.xpath("configResolveClasses/outConfigs/macpoolPooled").each do |macpool|
   end
 end
 
-template "/var/lib/tftpboot/preseed.ubuntu.cfg" do
-  source "preseed.ubuntu.cfg.erb"
+template "/srv/tftp/preseed.debian.cfg" do
+  source "preseed.debian.cfg.erb"
   mode 0644
 end
 
-template "/var/lib/tftpboot/pxelinux.cfg/default" do
-  source "pxelinux.ubuntu.erb"
+template "/srv/tftp/pxelinux.cfg/default" do
+  source "pxelinux.debian.erb"
   mode 0644
 end
