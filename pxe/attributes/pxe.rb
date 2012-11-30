@@ -30,7 +30,7 @@ default[:pxe][:preseed][:password] = "chef101"
 #Ubuntu
 default[:pxe][:os][:release] = "ubuntu-12.04.1"
 default[:pxe][:linux][:release][:dist] = "ubuntu-12.04.1"
-default[:pxe][:linux][:release][:path] = "http://mirror.anl.gov/pub/ubuntu-iso/CDs/12.04/ubuntu-12.04.1-server-i386.iso"
+default[:pxe][:linux][:release][:path] = "http://mirror.anl.gov/pub/ubuntu-iso/CDs/12.04/ubuntu-12.04.1-server-amd64.iso"
 
 # #Debian
 # default[:pxe][:os][:release] = "debian-6.0.5"

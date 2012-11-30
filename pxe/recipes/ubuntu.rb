@@ -40,9 +40,9 @@ token_json = ucs_session.get_token(auth_json)
 dist = node[:pxe][:linux][:release][:dist]
 path = node[:pxe][:linux][:release][:path]
 
-remote_file "/tmp/#{dist}-server-i386.iso" do
+remote_file "/tmp/#{dist}-server-amd64.iso" do
   source "#{path}"
-  not_if { File.exists?("/tmp/#{dist}-server-i386.iso") }
+  not_if { File.exists?("/tmp/#{dist}-server-amd64.iso") }
 end
 
 
@@ -51,9 +51,10 @@ script "copy install files from iso" do
   user "root"
   code <<-EOH
   mkdir /var/www/ubuntu/
-  mount -o loop /tmp/#{dist}-server-i386.iso /mnt
+  mount -o loop /tmp/#{dist}-server-amd64.iso /mnt
   cp -a /mnt/* /var/www/ubuntu/
   cp -a /mnt/install/netboot/* /var/lib/tftpboot/
+  touch /var/www/ubuntu/dists/precise/restricted/binary-amd64/Packages
   EOH
 end
 
