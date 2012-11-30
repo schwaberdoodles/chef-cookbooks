@@ -15,10 +15,13 @@ default[:pxe][:ucs][:username] = 'admin'
 default[:pxe][:ucs][:password] = 'admin'
 
 
-default[:pxe][:linux][:releases] = [
-    { :dist => "ubuntu-12.04", :path => "http://archive.ubuntu.com/ubuntu/dists/precise/main/installer-amd64/current/images/netboot/netboot.tar.gz" },
-    { :dist => "debian-6.0.5", :path => "http://ftp.debian.org/debian/dists/squeeze/main/installer-amd64/current/images/netboot/netboot.tar.gz" }
-]
+# default[:pxe][:linux][:releases] = [
+#     { :dist => "ubuntu-12.04", :path => "http://archive.ubuntu.com/ubuntu/dists/precise/main/installer-amd64/current/images/netboot/netboot.tar.gz" },
+#     { :dist => "debian-6.0.5", :path => "http://ftp.debian.org/debian/dists/squeeze/main/installer-amd64/current/images/netboot/netboot.tar.gz" }
+# ]
+
+default[:pxe][:linux][:release][:dist] = "ubuntu-12.04"
+default[:pxe][:linux][:release][:path] = "http://archive.ubuntu.com/ubuntu/dists/precise/main/installer-amd64/current/images/netboot/netboot.tar.gz"
 
 default[:pxe][:preseed][:username] = "chef"
 default[:pxe][:preseed][:password] = "chef101"
