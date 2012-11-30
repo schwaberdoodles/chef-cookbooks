@@ -14,35 +14,41 @@ d-i netcfg/choose_interface select auto
 d-i netcfg/get_hostname string foo
 d-i netcfg/get_domain string foo
 d-i	clock-setup/utc	boolean true
-d-i 	partman-auto/method string lvm
 
-d-i partman-auto/expert_recipe string                         \
-      boot-root ::                                            \
-              40 50 100 ext2                                  \
-                      $primary{ } $bootable{ }                \
-                      method{ format } format{ }              \
-                      use_filesystem{ } filesystem{ ext2 }    \
-                      mountpoint{ /boot }                     \
-              .                                               \
-              500 10000 1000000000 ext4                       \
-                      $lvmok{ } lv_name{ root } $defaultignore{ } \
-                      method{ format } format{ }              \
-                      use_filesystem{ } filesystem{ ext4 }    \
-                      mountpoint{ / }                         \
-              .                                               \
-              64 512 300% linux-swap                          \
-                      $lvomok{ } lv_name{ swap_1 } $defaultignore{ } \
-                      method{ swap } format{ }                \
-              .
+#d-i partman-auto/method string regular
+d-i partman-auto/method string lvm
+d-i partman-auto/purge_lvm_from_device boolean true
+d-i partman-lvm/confirm boolean true
+d-i partman-auto/choose_recipe select atomic
+d-i partman/confirm_write_new_label boolean true
+d-i partman/confirm_nooverwrite boolean true
+d-i partman/choose_partition select finish
+d-i partman/confirm boolean true
+# Write the changes to disks and configure LVM?
+d-i partman-lvm/confirm boolean true
+d-i partman-lvm/device_remove_lvm boolean true
+d-i partman-lvm/confirm_nooverwrite boolean true
+d-i partman-auto-lvm/guided_size string max
+d-i partman/default_filesystem string ext4
 
-d-i 	partman-lvm/device_remove_lvm boolean true
-d-i 	partman-lvm/confirm boolean true
-d-i 	partman/confirm_write_new_label boolean true
-d-i 	partman/choose_partition select Finish partitioning and write changes to disk
-d-i 	partman/confirm boolean true
-d-i 	partman/confirm_nooverwrite boolean true
-d-i 	partman/default_filesystem string ext4
-d-i 	clock-setup/utc boolean true
+# If you select ftp, the mirror/country string does not need to be set.
+#d-i mirror/protocol string ftp
+d-i mirror/country string manual
+d-i mirror/http/hostname string us.archive.ubuntu.com
+d-i mirror/http/directory string /ubuntu
+d-i mirror/http/proxy string
+# Alternatively: by default, the installer uses CC.archive.ubuntu.com where
+# CC is the ISO-3166-2 code for the selected country. You can preseed this
+# so that it does so without asking.
+#d-i mirror/http/mirror select CC.archive.ubuntu.com
+# Suite to install.
+#d-i mirror/suite string precise
+# Suite to use for loading installer components (optional).
+#d-i mirror/udeb/suite string precise
+# Components to use for loading installer components (optional).
+#d-i mirror/udeb/components multiselect main, restricted
+
+d-i clock-setup/utc boolean true
 d-i	clock-setup/ntp	boolean true
 d-i	clock-setup/ntp-server	string ntp.ubuntu.com
 d-i	base-installer/kernel/image	string linux-server
