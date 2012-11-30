@@ -15,6 +15,42 @@ d-i netcfg/get_hostname string foo
 d-i netcfg/get_domain string foo
 d-i	clock-setup/utc	boolean true
 
+
+#Start sCustom partioning (not used for default install)
+#d-i   partman-auto/method string lvm
+#d-i partman-auto/expert_recipe string                         \
+#      boot-root ::                                            \
+#              40 50 100 ext2                                  \
+#                      $primary{ } $bootable{ }                \
+#                      method{ format } format{ }              \
+#                      use_filesystem{ } filesystem{ ext2 }    \
+#                      mountpoint{ /boot }                     \
+#              .                                               \
+#              500 10000 1000000000 ext4                       \
+#                      $lvmok{ } lv_name{ root } $defaultignore{ } \
+#                      method{ format } format{ }              \
+#                      use_filesystem{ } filesystem{ ext4 }    \
+#                      mountpoint{ / }                         \
+#              .                                               \
+#              64 512 300% linux-swap                          \
+#                      $lvomok{ } lv_name{ swap_1 } $defaultignore{ } \
+#                      method{ swap } format{ }                \
+#              .
+#
+#d-i   partman-lvm/device_remove_lvm boolean true
+#d-i   partman-lvm/confirm boolean true
+#d-i   partman/confirm_write_new_label boolean true
+#d-i   partman/choose_partition select Finish partitioning and write changes to disk
+#d-i   partman/confirm boolean true
+#d-i   partman/confirm_nooverwrite boolean true
+#d-i   partman/default_filesystem string ext4
+#End Custom paritioning
+
+
+
+
+
+
 #d-i partman-auto/method string regular
 d-i partman-auto/method string lvm
 d-i partman-auto/purge_lvm_from_device boolean true
