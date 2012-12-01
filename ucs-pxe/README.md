@@ -49,7 +49,10 @@ Attributes
 Usage
 =====
 
-Follows a convention. The run_list order using knife:
+Follows a convention. include_recipe considered harmful and therefore we do not use it as part of our philosophy. 
+We prefer more explicit ways to do things forcing us to declare all dependencies when orchestrating.
+
+The run_list order using knife:
 
 	1. Install packages
 
