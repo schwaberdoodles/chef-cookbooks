@@ -1,8 +1,8 @@
 Description
 ===========
 
-A Chef cookbook (beta) that builds a PXE appliance for Cisco UCS bare-metal deployment. This cookbook acts as as the stage 2 phase for DC Automation.
-As of the now, the recipes are tied specifically for the workflow defined by ucs or ucs-solo cookbooks.
+A Chef cookbook (beta) that builds a PXE appliance for Cisco UCS bare-metal deployment. This cookbook acts as the stage 2 phase for DC Automation.
+As of now, the recipes are tied specifically towards the workflow defined by ucs or ucs-solo cookbooks.
 
 Requirements
 ============
