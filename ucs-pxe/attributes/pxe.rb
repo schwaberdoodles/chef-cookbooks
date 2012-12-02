@@ -18,18 +18,24 @@ default[:pxe][:dhcpd][:filename] = "pxelinux.0"
 default[:pxe][:dhcpd][:databag] = "dhcpd"
 
 
-#OS 
+#OS/Hypervisor auth info 
 default[:pxe][:preseed][:username] = "chef"
 default[:pxe][:preseed][:password] = "chef101"
 
 
-#Ubuntu
-default[:pxe][:os][:release] = "ubuntu-12.04.1"
-default[:pxe][:linux][:release][:dist] = "ubuntu-12.04.1"
-default[:pxe][:linux][:release][:path] = "http://mirror.anl.gov/pub/ubuntu-iso/CDs/12.04/ubuntu-12.04.1-server-amd64.iso"
+# #Ubuntu
+# default[:pxe][:os][:release] = "ubuntu-12.04.1"
+# default[:pxe][:linux][:release][:dist] = "ubuntu-12.04.1"
+# default[:pxe][:linux][:release][:path] = "http://mirror.anl.gov/pub/ubuntu-iso/CDs/12.04/ubuntu-12.04.1-server-amd64.iso"
 
 # #Debian
 # default[:pxe][:os][:release] = "debian-6.0.5"
 # default[:pxe][:linux][:release][:dist] = "debian-6.0.5"
 # default[:pxe][:linux][:release][:path] = "http://ftp.debian.org/debian/dists/squeeze/main/installer-amd64/current/images/netboot/netboot.tar.gz"
 
+#ESXi - please rename VMware-VMvisor-Installer-5.1.0-799733.x86_64.iso to esxi-5.1.0.iso under /tmp
+default[:pxe][:esxi][:release] = "esxi-5.1.0"
+default[:pxe][:esxi][:release][:dist] = "esxi-5.1.0"
+default[:pxe][:esxi][:release][:path] = "http://<mirror>/VMware-VMvisor-Installer-5.1.0-799733.x86_64.iso"
+default[:pxe][:linux][:release][:dist] = "syslinux-s4.06"
+default[:pxe][:linux][:release][:path] = "http://www.kernel.org/pub/linux/utils/boot/syslinux/syslinux-4.06.tar.gz"
