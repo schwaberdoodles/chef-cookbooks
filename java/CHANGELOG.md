@@ -1,12 +1,47 @@
-# CHANGELOG for java
+## v1.6.4:
 
-This file is used to list changes made in each version of java.
+* [COOK-1930] - fixed typo in attribute for java 5 on i586
 
-## 0.1.0:
+## v1.6.2:
 
-* Initial release of java
+* whyrun support in `java_ark` LWRP
+* CHEF-1804 compatibility
+* [COOK-1786]- install Java 6u37 and Java 7u9
+* [COOK-1819] -incorrect warning text about
+  `node['java']['oracle']['accept_oracle_download_terms']`
 
-- - - 
-Check the [Markdown Syntax Guide](http://daringfireball.net/projects/markdown/syntax) for help with Markdown.
+## v1.6.0:
 
-The [Github Flavored Markdown page](http://github.github.com/github-flavored-markdown/) describes the differences between markdown on github and standard markdown.
+* [COOK-1218] - Install Oracle JDK from Oracle download directly
+* [COOK-1631] - set JAVA_HOME in openjdk recipe
+* [COOK-1655] - Install correct architecture on Amazon Linux
+
+## v1.5.4:
+
+* [COOK-885] - update alternatives called on wrong file
+* [COOK-1607] - use shellout instead of execute resource to update
+  alternatives
+
+## v1.5.2:
+
+* [COOK-1200] - remove sun-java6-jre on Ubuntu before installing
+  Oracle's Java
+* [COOK-1260] - fails on Ubuntu 12.04 64bit with openjdk7
+* [COOK-1265] - Oracle Java should symlink the jar command
+
+## v1.5.0:
+
+* [COOK-1146] - Oracle now prevents download of JDK via non-browser
+* [COOK-1114] - fix File.exists?
+
+## v1.4.2:
+
+* [COOK-1051] - fix attributes typo and platform case switch
+  consistency
+
+## v1.4.0:
+
+* [COOK-858] - numerous updates: handle jdk6 and 7, switch from sun to
+  oracle, make openjdk default, add `java_ark` LWRP.
+* [COOK-942] - FreeBSD support
+* [COOK-520] - ArchLinux support
