@@ -36,7 +36,6 @@ token_json = ucs_session.get_token(auth_json)
 #Uncomment to debug
 #log token_json
 
-
 dist = node[:pxe][:esxi][:release][:dist]
 path = node[:pxe][:esxi][:release][:path]
 syslinux = node[:pxe][:linux][:release][:dist]
@@ -48,7 +47,7 @@ remote_file "/tmp/#{dist}.iso" do
 end
 
 remote_file "/tmp/#{syslinux}.tar.gz" do
-  source "#{path}"
+  source "#{syslinux_path}"
   not_if { File.exists?("/tmp/#{syslinux}.tar.gz") }
 end
 
@@ -69,8 +68,6 @@ script "copy install files [syslinux and esxi]" do
   cp /var/lib/tftpboot/isolinux.cfg /var/lib/tftpboot/pxelinux.cfg
   EOH
 end
-
-
 
 
 service "networking" do
@@ -95,17 +92,13 @@ state.xpath("configResolveClasses/outConfigs/macpoolPooled").each do |macpool|
         mode 0644
         variables({
           :mac => mac,
-          :release => node[:pxe][:os][:release]
+          :release => node[:pxe][:esxi][:release]
         })
         notifies :restart, resources(:service => "tftpd-hpa"), :delayed
     end
   end
 end
 
-# template "/var/lib/tftpboot/preseed.ubuntu.cfg" do
-#   source "preseed.ubuntu.cfg.erb"
-#   mode 0644
-# end
 
 template "/var/www/esxi/ks.cfg" do
   source "kickstart.esxi.erb"
