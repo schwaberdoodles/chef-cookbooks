@@ -34,7 +34,10 @@ default[:pxe][:preseed][:password] = "chef101"
 # default[:pxe][:linux][:release][:path] = "http://ftp.debian.org/debian/dists/squeeze/main/installer-amd64/current/images/netboot/netboot.tar.gz"
 
 #ESXi - please rename VMware-VMvisor-Installer-5.1.0-799733.x86_64.iso to esxi-5.1.0.iso under /tmp
-default[:pxe][:esxi][:release] = "esxi-5.1.0"
-default[:pxe][:esxi][:path] = "http://example.com/VMware-VMvisor-Installer-5.1.0-799733.x86_64.iso"
+# default[:pxe][:esxi][:release] = "esxi-5.1.0"
+# default[:pxe][:esxi][:path] = "http://example.com/VMware-VMvisor-Installer-5.1.0-799733.x86_64.iso"
 
-
+#Suse Linux
+default[:pxe][:os][:release] = "SLES-11-SP2"
+default[:pxe][:linux][:release][:dist] = "SLES-11-SP2"
+default[:pxe][:linux][:release][:path] = "http://example.com/SLES-11-SP2-DVD-x86_64-GM-DVD1.iso"

@@ -1,0 +1,6 @@
+#default
+		label linux
+		kernel linux
+		append initrd=initrd ramdisk_size=65536
+		install=http://<%= @node[:pxe][:dhcpd][:next_server] %>/suse
+		autoyast=http://<%= @node[:pxe][:dhcpd][:next_server] %>/suse/autoinst.xml

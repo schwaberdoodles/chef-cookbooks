@@ -59,22 +59,6 @@ script "copy install files from iso" do
 end
 
 
-
-# remote_file "/tmp/#{dist}.amd64.netboot.tar.gz" do
-#   source "#{path}"
-#   not_if { File.exists?("/var/lib/tftpboot/#{dist}") || File.exists?("/tmp/#{dist}.amd64.netboot.tar.gz") }
-# end
-
-
-# script "copy netboot files" do
-#   interpreter "bash"
-#   user "root"
-#   code <<-EOH
-#   tar zxvf /tmp/#{dist}.amd64.netboot.tar.gz -C /var/lib/tftpboot/
-#   EOH
-# end
-
-
 service "networking" do
   supports :restart => true
 end

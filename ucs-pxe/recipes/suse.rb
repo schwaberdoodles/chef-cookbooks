@@ -50,29 +50,13 @@ script "copy install files from iso" do
   interpreter "bash"
   user "root"
   code <<-EOH
-  mkdir /var/www/ubuntu/
+  mkdir /var/www/suse/
+  mkdir /var/lib/tftpboot/
   mount -o loop /tmp/#{dist}-server-amd64.iso /mnt
-  cp -a /mnt/* /var/www/ubuntu/
-  cp -a /mnt/install/netboot/* /var/lib/tftpboot/
-  touch /var/www/ubuntu/dists/precise/restricted/binary-amd64/Packages
+  cp -a /mnt/* /var/www/suse/
+  cp /usr/lib/syslinux/pxelinux.0 /var/lib/tftpboot/pxelinux.0
   EOH
 end
-
-
-
-# remote_file "/tmp/#{dist}.amd64.netboot.tar.gz" do
-#   source "#{path}"
-#   not_if { File.exists?("/var/lib/tftpboot/#{dist}") || File.exists?("/tmp/#{dist}.amd64.netboot.tar.gz") }
-# end
-
-
-# script "copy netboot files" do
-#   interpreter "bash"
-#   user "root"
-#   code <<-EOH
-#   tar zxvf /tmp/#{dist}.amd64.netboot.tar.gz -C /var/lib/tftpboot/
-#   EOH
-# end
 
 
 service "networking" do
@@ -93,7 +77,7 @@ state.xpath("configResolveClasses/outConfigs/macpoolPooled").each do |macpool|
   if "#{macpool.attributes["assigned"]}" == 'yes' and "#{macpool.attributes["assignedToDn"].to_s.scan(/ether-vNIC-(\w+)/)}" == '[["A"]]'
     mac = "#{macpool.attributes["id"]}"
     template "/var/lib/tftpboot/pxelinux.cfg/01-#{mac}" do # It looks for 01-#{mac} for some reason.
-        source "pxelinux.ubuntu.erb"
+        source "isolinux.suse.cfg.erb"
         mode 0644
         variables({
           :mac => mac,
@@ -104,12 +88,12 @@ state.xpath("configResolveClasses/outConfigs/macpoolPooled").each do |macpool|
   end
 end
 
-template "/var/lib/tftpboot/preseed.ubuntu.cfg" do
-  source "preseed.ubuntu.cfg.erb"
+template "/var/www/suse/autoinst.xml" do
+  source "autoinst.xml.erb"
   mode 0644
 end
 
 template "/var/lib/tftpboot/pxelinux.cfg/default" do
-  source "pxelinux.ubuntu.erb"
+  source "isolinux.suse.cfg.erb"
   mode 0644
 end

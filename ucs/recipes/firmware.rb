@@ -71,24 +71,26 @@ hostfirmwares.each do |hostfirmware_info|
 end
 
 
-#Set Management Firmware - mgmt1.json
+#Uncomment for UCS versions 2.0
 
-mgmtfirmwares = data_bag("mgmtfirmwares")
-mgmtfirmwares.each do |mgmtfirmware_info|
+# #Set Management Firmware - mgmt1.json
 
-  mgmtfirmware = data_bag_item("mgmtfirmwares", mgmtfirmware_info)
-  mgmtfirmware_json = {:mgmt_firmware_pkg_name => "#{mgmtfirmware['mgmt_firmware_pkg_name']}",
-                       :mgmt_firmware_pkg_description => "#{mgmtfirmware['mgmt_firmware_pkg_description']}",
-                       :org => "#{mgmtfirmware['org']}", :hardware_model => "#{mgmtfirmware['hardware_model']}",
-                       :hardware_type => "#{mgmtfirmware['hardware_type']}", :hardware_vendor => "#{mgmtfirmware['hardware_vendor']}",
-                       :firmware_version => "#{mgmtfirmware['firmware_version']}"}.to_json
+# mgmtfirmwares = data_bag("mgmtfirmwares")
+# mgmtfirmwares.each do |mgmtfirmware_info|
 
-  ucs_provision.set_mgmt_firmware_package(mgmtfirmware_json)
-  log "Created Mgmt Firmware Package #{mgmtfirmware['mgmt_firmware_pkg_name']} for #{mgmtfirmware['hardware_model']}"
-  #Uncomment to debug
-  #log mgmtfirmware_json
+#   mgmtfirmware = data_bag_item("mgmtfirmwares", mgmtfirmware_info)
+#   mgmtfirmware_json = {:mgmt_firmware_pkg_name => "#{mgmtfirmware['mgmt_firmware_pkg_name']}",
+#                        :mgmt_firmware_pkg_description => "#{mgmtfirmware['mgmt_firmware_pkg_description']}",
+#                        :org => "#{mgmtfirmware['org']}", :hardware_model => "#{mgmtfirmware['hardware_model']}",
+#                        :hardware_type => "#{mgmtfirmware['hardware_type']}", :hardware_vendor => "#{mgmtfirmware['hardware_vendor']}",
+#                        :firmware_version => "#{mgmtfirmware['firmware_version']}"}.to_json
 
-end
+#   ucs_provision.set_mgmt_firmware_package(mgmtfirmware_json)
+#   log "Created Mgmt Firmware Package #{mgmtfirmware['mgmt_firmware_pkg_name']} for #{mgmtfirmware['hardware_model']}"
+#   #Uncomment to debug
+#   #log mgmtfirmware_json
+
+# end
 
 
 
