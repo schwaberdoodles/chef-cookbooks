@@ -1,0 +1,11 @@
+{
+    "id":"controller",
+    "host_firmware_pkg_name":"vdi-fw",
+    "host_firmware_pkg_description":"VDI Firmware",
+    "org":"IT",
+    "hardware_model":"B440-BASE-M2",
+    "hardware_type":"board-controller",
+    "hardware_vendor":"Cisco Systems Inc",
+    "firmware_version":"2.0(1m)"
+}
+
