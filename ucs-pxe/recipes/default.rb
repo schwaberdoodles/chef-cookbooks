@@ -23,6 +23,7 @@ package "libxslt1-dev"
 package "dhcp3-server"
 package "tftpd-hpa"
 package "apache2"
+package "syslinux"
 gem_package "ucslib"
 
 log "Installation of packages and dependencies"

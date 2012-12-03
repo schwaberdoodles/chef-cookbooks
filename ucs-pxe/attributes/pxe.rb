@@ -35,7 +35,6 @@ default[:pxe][:preseed][:password] = "chef101"
 
 #ESXi - please rename VMware-VMvisor-Installer-5.1.0-799733.x86_64.iso to esxi-5.1.0.iso under /tmp
 default[:pxe][:esxi][:release] = "esxi-5.1.0"
-default[:pxe][:esxi][:release][:dist] = "esxi-5.1.0"
-default[:pxe][:esxi][:release][:path] = "http://<mirror>/VMware-VMvisor-Installer-5.1.0-799733.x86_64.iso"
-default[:pxe][:linux][:release][:dist] = "syslinux-4.06"
-default[:pxe][:linux][:release][:path] = "http://www.kernel.org/pub/linux/utils/boot/syslinux/syslinux-4.06.tar.gz"
+default[:pxe][:esxi][:path] = "http://example.com/VMware-VMvisor-Installer-5.1.0-799733.x86_64.iso"
+
+

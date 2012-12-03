@@ -36,21 +36,13 @@ token_json = ucs_session.get_token(auth_json)
 #Uncomment to debug
 #log token_json
 
-dist = node[:pxe][:esxi][:release][:dist]
-path = node[:pxe][:esxi][:release][:path]
-syslinux = node[:pxe][:linux][:release][:dist]
-syslinux_path = node[:pxe][:linux][:release][:path]
+dist = node[:pxe][:esxi][:release]
+path = node[:pxe][:esxi][:path]
 
 remote_file "/tmp/#{dist}.iso" do
   source "#{path}"
   not_if { File.exists?("/tmp/#{dist}.iso") }
 end
-
-remote_file "/tmp/#{syslinux}.tar.gz" do
-  source "#{syslinux_path}"
-  not_if { File.exists?("/tmp/#{syslinux}.tar.gz") }
-end
-
 
 script "copy install files [syslinux and esxi]" do
   interpreter "bash"
@@ -58,14 +50,12 @@ script "copy install files [syslinux and esxi]" do
   code <<-EOH
   mkdir /var/www/esxi/
   mkdir /var/lib/tftpboot/pxelinux.cfg
+  mkdir /var/lib/tftpboot/esxi
   mount -o loop /tmp/#{dist}.iso /mnt
   cp -a /mnt/* /var/www/esxi/
-  cp -a /mnt/* /var/lib/tftpboot/
-  cd /tmp
-  tar -zxvf #{syslinux}.tar.gz
-  cd #{syslinux}
-  cp core/pxelinux.0 /var/lib/tftpboot/
-  cp /var/lib/tftpboot/isolinux.cfg /var/lib/tftpboot/pxelinux.cfg
+  cp -a /mnt/* /var/lib/tftpboot/esxi
+  cp /usr/lib/syslinux/pxelinux.0 /var/lib/tftpboot/pxelinux.0
+  cp /var/lib/tftpboot/esxi/isolinux.cfg /var/lib/tftpboot/pxelinux.cfg
   EOH
 end
 
@@ -88,7 +78,7 @@ state.xpath("configResolveClasses/outConfigs/macpoolPooled").each do |macpool|
   if "#{macpool.attributes["assigned"]}" == 'yes' and "#{macpool.attributes["assignedToDn"].to_s.scan(/ether-vNIC-(\w+)/)}" == '[["A"]]'
     mac = "#{macpool.attributes["id"]}"
     template "/var/lib/tftpboot/pxelinux.cfg/01-#{mac}" do # It looks for 01-#{mac} for some reason.
-        source "pxelinux.ubuntu.erb"
+        source "isolinux.esxi.cfg.erb"
         mode 0644
         variables({
           :mac => mac,
@@ -101,6 +91,11 @@ end
 
 
 template "/var/www/esxi/ks.cfg" do
-  source "kickstart.esxi.erb"
+  source "kickstart.esxi.cfg.erb"
+  mode 0644
+end
+
+template "/var/lib/tftpboot/esxi/boot.cfg" do
+  source "boot.esxi.cfg.erb"
   mode 0644
 end
