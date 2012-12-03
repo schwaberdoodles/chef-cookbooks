@@ -1,0 +1,4 @@
+LABEL ESXi5
+KERNEL mboot.c32
+APPEND -c boot.cfg pxebooting ks=http://<%= @node[:pxe][:dhcpd][:next_server] %>/esxi/ks.cfg +++
+IPAPPEND 1
