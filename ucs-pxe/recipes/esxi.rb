@@ -55,7 +55,6 @@ script "copy install files [syslinux and esxi]" do
   cp -a /mnt/* /var/www/esxi/
   cp -a /mnt/* /var/lib/tftpboot/esxi
   cp /usr/lib/syslinux/pxelinux.0 /var/lib/tftpboot/pxelinux.0
-  cp /var/lib/tftpboot/esxi/isolinux.cfg /var/lib/tftpboot/pxelinux.cfg
   EOH
 end
 
@@ -99,3 +98,9 @@ template "/var/lib/tftpboot/esxi/boot.cfg" do
   source "boot.esxi.cfg.erb"
   mode 0644
 end
+
+template "/var/lib/tftpboot/pxelinux.cfg/default" do
+  source "isolinux.esxi.cfg.erb"
+  mode 0644
+end
+

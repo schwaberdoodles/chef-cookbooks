@@ -12,7 +12,7 @@ network --bootproto=dhcp --device=vmnic0
 # Reboot after the installation
 #reboot
 
-%firstboot --unsupported --interpreter=busybox
+%firstboot --interpreter=busybox
 
 #cd /tmp
 #wget http://<%= @node[:pxe][:dhcpd][:next_server] %>/nfs_arp_table
