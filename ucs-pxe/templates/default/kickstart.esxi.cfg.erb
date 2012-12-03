@@ -1,18 +1,18 @@
 # Accept the VMware End User License Agreement
-vmaccepteula
+# vmaccepteula
 # Set the root password for the DCUI and Tech Support Mode
-rootpw <%= @node[:pxe][:preseed][:password] %>
+# rootpw <%= @node[:pxe][:preseed][:password] %>
 # Choose the first discovered disk to install onto
-autopart --firstdisk --overwritevmfs
+# autopart --firstdisk --overwritevmfs
 # The installation media is in the CD-ROM drive
-install url http://<%= @node[:pxe][:dhcpd][:next_server] %>/esxi
+# install url http://<%= @node[:pxe][:dhcpd][:next_server] %>/esxi/
 # Set the network to DHCP on teh first network adapater
-network --bootproto=dhcp --device=vmnic0
+# network --bootproto=dhcp --device=vmnic0
 
 # Reboot after the installation
 #reboot
 
-%firstboot --interpreter=busybox
+#%firstboot --interpreter=busybox
 
 #cd /tmp
 #wget http://<%= @node[:pxe][:dhcpd][:next_server] %>/nfs_arp_table
@@ -22,3 +22,16 @@ network --bootproto=dhcp --device=vmnic0
 
 # Reboot after the post configuration
 #reboot
+
+
+
+
+##Sample
+ 
+accepteula
+install --firstdisk --overwritevmfs
+rootpw chef101
+#reboot
+%firstboot --interpreter=busybox
+network --bootproto=dhcp --device=vmnic0
+ 
