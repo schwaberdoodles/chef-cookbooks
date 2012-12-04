@@ -53,10 +53,29 @@ Attributes
 	default[:pxe][:preseed][:password] = "chef101"
 
 
-	#Ubuntu
-	default[:pxe][:os][:release] = "ubuntu-12.04.1"
-	default[:pxe][:linux][:release][:dist] = "ubuntu-12.04.1"
-	default[:pxe][:linux][:release][:path] = "http://mirror.anl.gov/pub/ubuntu-iso/CDs/12.04/ubuntu-12.04.1-server-amd64.iso"
+	#OS/Hypervisor auth info 
+	default[:pxe][:preseed][:username] = "chef"
+	default[:pxe][:preseed][:password] = "chef101"
+
+
+	# #Ubuntu
+	# default[:pxe][:os][:release] = "ubuntu-12.04.1"
+	# default[:pxe][:linux][:release][:dist] = "ubuntu-12.04.1"
+	# default[:pxe][:linux][:release][:path] = "http://mirror.anl.gov/pub/ubuntu-iso/CDs/12.04/ubuntu-12.04.1-server-amd64.iso"
+
+	# #Debian
+	# default[:pxe][:os][:release] = "debian-6.0.5"
+	# default[:pxe][:linux][:release][:dist] = "debian-6.0.5"
+	# default[:pxe][:linux][:release][:path] = "http://ftp.debian.org/debian/dists/squeeze/main/installer-amd64/current/images/netboot/netboot.tar.gz"
+
+	#ESXi - please rename VMware-VMvisor-Installer-5.1.0-799733.x86_64.iso to esxi-5.1.0.iso under /tmp
+	# default[:pxe][:esxi][:release] = "esxi-5.1.0"
+	# default[:pxe][:esxi][:path] = "http://example.com/VMware-VMvisor-Installer-5.1.0-799733.x86_64.iso"
+
+	#Suse Linux
+	default[:pxe][:os][:release] = "SLES-11-SP2"
+	default[:pxe][:linux][:release][:dist] = "SLES-11-SP2"
+	default[:pxe][:linux][:release][:path] = "http://example.com/SLES-11-SP2-DVD-x86_64-GM-DVD1.iso"
 
 Usage
 =====
