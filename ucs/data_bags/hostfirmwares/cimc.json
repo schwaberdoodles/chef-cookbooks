@@ -4,7 +4,7 @@
     "host_firmware_pkg_description":"VDI Firmware",
     "org":"IT",
     "hardware_model":"B440-BASE-M2",
-    "hardware_type":"board-controller",
+    "hardware_type":"blade-controller",
     "hardware_vendor":"Cisco Systems Inc",
     "firmware_version":"2.0(1m)"
 }

@@ -71,7 +71,7 @@ hostfirmwares.each do |hostfirmware_info|
 end
 
 
-#Uncomment for UCS versions 2.0
+#Uncomment for UCS versions 2.0 versions. Version 2.1 no longer requires use of a Management firmware pack, but adds a CIMC requirement.
 
 # #Set Management Firmware - mgmt1.json
 
