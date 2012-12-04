@@ -1,6 +1,14 @@
-#default
-		label linux
-		kernel linux
-		append initrd=initrd ramdisk_size=65536
-		install=http://<%= @node[:pxe][:dhcpd][:next_server] %>/suse
-		autoyast=http://<%= @node[:pxe][:dhcpd][:next_server] %>/suse/autoinst.xml
+DEFAULT linux
+
+prompt 0
+
+timeout 5
+
+LABEL linux
+
+        menu default
+        menu label Linux
+        KERNEL linux
+        APPEND initrd=initrd ramdisk_size=65536
+        INSTALL=http://<%= @node[:pxe][:dhcpd][:next_server] %>/suse
+        AUTOYAST=http://<%= @node[:pxe][:dhcpd][:next_server] %>/suse/autoinst.xml

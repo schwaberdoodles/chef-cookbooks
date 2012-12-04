@@ -51,9 +51,11 @@ script "copy install files from iso" do
   user "root"
   code <<-EOH
   mkdir /var/www/suse/
-  mkdir /var/lib/tftpboot/
+  mkdir /var/lib/tftpboot/pxelinux.cfg
   mount -o loop /tmp/#{dist}-DVD-x86_64-GM-DVD1.iso /mnt
   cp -a /mnt/* /var/www/suse/
+  cp /mnt/boot/x86_64/loader/linux /var/lib/tftpboot/
+  cp /mnt/boot/x86_64/loader/initrd /var/lib/tftpboot/
   cp /usr/lib/syslinux/pxelinux.0 /var/lib/tftpboot/pxelinux.0
   EOH
 end
@@ -77,7 +79,7 @@ state.xpath("configResolveClasses/outConfigs/macpoolPooled").each do |macpool|
   if "#{macpool.attributes["assigned"]}" == 'yes' and "#{macpool.attributes["assignedToDn"].to_s.scan(/ether-vNIC-(\w+)/)}" == '[["A"]]'
     mac = "#{macpool.attributes["id"]}"
     template "/var/lib/tftpboot/pxelinux.cfg/01-#{mac}" do # It looks for 01-#{mac} for some reason.
-        source "isolinux.suse.cfg.erb"
+        source "suseboot.default.erb"
         mode 0644
         variables({
           :mac => mac,
