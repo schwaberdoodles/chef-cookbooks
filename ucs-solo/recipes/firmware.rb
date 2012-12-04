@@ -70,25 +70,26 @@ hostfirmwares.each do |hostfirmware_info|
   counter += 1
 end
 
+# Uncomment for UCS versions 2.0 versions. Version 2.1 no longer requires use of a Management firmware pack, but adds a CIMC requirement.
 
 #Set Management Firmware - mgmt1.json
 
-mgmtfirmwares = data_bag("mgmtfirmwares")
-mgmtfirmwares.each do |mgmtfirmware_info|
+# mgmtfirmwares = data_bag("mgmtfirmwares")
+# mgmtfirmwares.each do |mgmtfirmware_info|
 
-  mgmtfirmware = data_bag_item("mgmtfirmwares", mgmtfirmware_info)
-  mgmtfirmware_json = {:mgmt_firmware_pkg_name => "#{mgmtfirmware['mgmt_firmware_pkg_name']}",
-                       :mgmt_firmware_pkg_description => "#{mgmtfirmware['mgmt_firmware_pkg_description']}",
-                       :org => "#{mgmtfirmware['org']}", :hardware_model => "#{mgmtfirmware['hardware_model']}",
-                       :hardware_type => "#{mgmtfirmware['hardware_type']}", :hardware_vendor => "#{mgmtfirmware['hardware_vendor']}",
-                       :firmware_version => "#{mgmtfirmware['firmware_version']}"}.to_json
+#   mgmtfirmware = data_bag_item("mgmtfirmwares", mgmtfirmware_info)
+#   mgmtfirmware_json = {:mgmt_firmware_pkg_name => "#{mgmtfirmware['mgmt_firmware_pkg_name']}",
+#                        :mgmt_firmware_pkg_description => "#{mgmtfirmware['mgmt_firmware_pkg_description']}",
+#                        :org => "#{mgmtfirmware['org']}", :hardware_model => "#{mgmtfirmware['hardware_model']}",
+#                        :hardware_type => "#{mgmtfirmware['hardware_type']}", :hardware_vendor => "#{mgmtfirmware['hardware_vendor']}",
+#                        :firmware_version => "#{mgmtfirmware['firmware_version']}"}.to_json
 
-  ucs_provision.set_mgmt_firmware_package(mgmtfirmware_json)
-  log "Created Mgmt Firmware Package #{mgmtfirmware['mgmt_firmware_pkg_name']} for #{mgmtfirmware['hardware_model']}"
-  #Uncomment to debug
-  #log mgmtfirmware_json
+#   ucs_provision.set_mgmt_firmware_package(mgmtfirmware_json)
+#   log "Created Mgmt Firmware Package #{mgmtfirmware['mgmt_firmware_pkg_name']} for #{mgmtfirmware['hardware_model']}"
+#   #Uncomment to debug
+#   #log mgmtfirmware_json
 
-end
+# end
 
 
 
