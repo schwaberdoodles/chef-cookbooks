@@ -7,7 +7,10 @@ As of now, the recipes are tied specifically towards the workflow defined by ucs
 Requirements
 ============
 
-The PXE appliance is currently tested on Ubuntu 12.04.1 LTS. Other platform OSs as well as target OS's will be supported in the future.
+The PXE appliance is currently tested on Ubuntu 12.04.1 LTS with at least 20G of disk space. Other platform OSs as well as target OS's will be supported 
+in the future.
+
+
 
 Supported Targest OS Environments:
 	
