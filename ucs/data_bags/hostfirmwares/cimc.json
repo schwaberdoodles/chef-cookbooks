@@ -1,7 +1,7 @@
 {
     "id":"cimc",
-    "mgmt_firmware_pkg_name":"vdi-fw",
-    "mgmt_firmware_pkg_description":"VDI Firmware",
+    "host_firmware_pkg_name":"vdi-fw",
+    "host_firmware_pkg_description":"VDI Firmware",
     "org":"IT",
     "hardware_model":"B230-BASE-M2",
     "hardware_type":"blade-controller",
