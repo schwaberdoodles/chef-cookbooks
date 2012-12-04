@@ -1,14 +1,15 @@
-DEFAULT linux
+default install
+prompt   1
+timeout  30
 
-prompt 0
+# Install i386 Linux
+label install
+  kernel linux64
+  append initrd=initrd64 splash=silent vga=0x314 showopts install=http://<%= @node[:pxe][:dhcpd][:next_server] %>/suse autoyast=http://<%= @node[:pxe][:dhcpd][:next_server] %>/suse/autoinst.xml
+  
 
-timeout 5
-
-LABEL linux
-
-        menu default
-        menu label Linux
-        KERNEL linux
-        APPEND initrd=initrd ramdisk_size=65536
-        INSTALL=http://<%= @node[:pxe][:dhcpd][:next_server] %>/suse
-        AUTOYAST=http://<%= @node[:pxe][:dhcpd][:next_server] %>/suse/autoinst.xml
+# Install x86_64 Linux
+label install64
+  kernel linux64
+  append initrd=initrd64 splash=silent vga=0x314 showopts install=http://<%= @node[:pxe][:dhcpd][:next_server] %>/suse autoyast=http://<%= @node[:pxe][:dhcpd][:next_server] %>/suse/autoinst.xml
+  

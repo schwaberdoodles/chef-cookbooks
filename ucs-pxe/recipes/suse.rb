@@ -54,8 +54,8 @@ script "copy install files from iso" do
   mkdir /var/lib/tftpboot/pxelinux.cfg
   mount -o loop /tmp/#{dist}-DVD-x86_64-GM-DVD1.iso /mnt
   cp -a /mnt/* /var/www/suse/
-  cp /mnt/boot/x86_64/loader/linux /var/lib/tftpboot/
-  cp /mnt/boot/x86_64/loader/initrd /var/lib/tftpboot/
+  cp /mnt/boot/x86_64/loader/linux /var/lib/tftpboot/linux64
+  cp /mnt/boot/x86_64/loader/initrd /var/lib/tftpboot/initrd64
   cp /usr/lib/syslinux/pxelinux.0 /var/lib/tftpboot/pxelinux.0
   EOH
 end
