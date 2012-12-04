@@ -16,6 +16,7 @@ Supported Targest OS Environments:
 	
 	Ubuntu 12.04.1 LTS
 	VMware ESX 5.1.0
+	SuSE Enterprise Linux 11
 
 
 Limitations
