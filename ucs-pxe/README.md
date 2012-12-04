@@ -12,7 +12,7 @@ in the future.
 
 
 
-Supported Targest OS Environments:
+Supported Targest OS and Hypervisor Environments:
 	
 	Ubuntu 12.04.1 LTS
 	VMware ESX 5.1.0
