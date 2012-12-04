@@ -15,6 +15,13 @@ Supported Targest OS Environments:
 	VMware ESX 5.1.0
 
 
+Limitations
+============
+
+At this time the PXE appliance is built per recipe. i.e for Ubuntu, SuSE, Esxi, Windows, etc. Multi-OS support will be implemented in
+the future.
+
+
 Attributes
 ==========
 

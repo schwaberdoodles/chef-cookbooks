@@ -40,9 +40,9 @@ token_json = ucs_session.get_token(auth_json)
 dist = node[:pxe][:linux][:release][:dist]
 path = node[:pxe][:linux][:release][:path]
 
-remote_file "/tmp/#{dist}-server-amd64.iso" do
+remote_file "/tmp/#{dist}-DVD-x86_64-GM-DVD1.iso" do
   source "#{path}"
-  not_if { File.exists?("/tmp/#{dist}-server-amd64.iso") }
+  not_if { File.exists?("/tmp/#{dist}-DVD-x86_64-GM-DVD1.iso") }
 end
 
 
@@ -52,7 +52,7 @@ script "copy install files from iso" do
   code <<-EOH
   mkdir /var/www/suse/
   mkdir /var/lib/tftpboot/
-  mount -o loop /tmp/#{dist}-server-amd64.iso /mnt
+  mount -o loop /tmp/#{dist}-DVD-x86_64-GM-DVD1.iso /mnt
   cp -a /mnt/* /var/www/suse/
   cp /usr/lib/syslinux/pxelinux.0 /var/lib/tftpboot/pxelinux.0
   EOH
@@ -94,6 +94,6 @@ template "/var/www/suse/autoinst.xml" do
 end
 
 template "/var/lib/tftpboot/pxelinux.cfg/default" do
-  source "isolinux.suse.cfg.erb"
+  source "suseboot.default.erb"
   mode 0644
 end
