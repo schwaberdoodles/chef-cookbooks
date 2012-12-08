@@ -1,4 +1,4 @@
-A set of Chef Cookbooks used by Velankani Consulting Architects for Data Center Automation.
+A set of Chef Cookbooks used by Velankani Solution Architects for Data Center Automation.
 
 	ucs-solo - A Cookbook for UCS Deployment Automation using chef-solo.
 	ucs - A Cookbook for UCS Deployment Automation using a distributed setup with Chef Server.
