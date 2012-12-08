@@ -2,8 +2,8 @@ A set of Chef Cookbooks used by Velankani Consulting Architects for Data Center 
 
 	ucs-solo - A Cookbook for UCS Deployment Automation using chef-solo.
 	ucs - A Cookbook for UCS Deployment Automation using a distributed setup with Chef Server.
-	ucs-pxe - A Coobook for building a PXE Appliance used for OS provisioning based on a workflow - 
-			  assigned service profiles.
+	ucs-pxe - A Coobook for building a PXE Appliance used for OS provisioning based on workflows 
+			  defined in ucs and ucs-solo.
 
 Third-party cookbooks in this repository:
 
