@@ -40,5 +40,9 @@ ucs_manager = UCSManage.new(token_json)
 #log token_json
 
 #Update Boot Policy
+ops = data_bag("ops")
+
+
+
 
 
