@@ -35,7 +35,7 @@ auth_json = {:ip => "#{node[:ucs][:ip]}",
 #Initialize Objects
 ucs_session = UCSToken.new
 token_json = ucs_session.get_token(auth_json)
-ucs_manage = UCSManage.new(token_json)
+ucs_update = UCSUpdate.new(token_json)
 #Uncomment to debug
 #log token_json
 
@@ -51,7 +51,7 @@ ops.each do |op_info|
 						:service_profile_template_uuid_pool => "#{boot_policy['service_profile_template_uuid_pool']}"
 					}.to_json
 
-ucs_manage.update_boot_policy_on_service_profile_template(boot_policy_json)
+ucs_update.update_boot_policy_on_service_profile_template(boot_policy_json)
 log "Updated boot policy of Service Profile Template #{boot_policy['service_profile_template_name']} to #{boot_policy['service_profile_template_boot_policy']}"
 end
 
