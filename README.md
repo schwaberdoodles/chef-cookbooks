@@ -7,7 +7,7 @@ A set of Chef Cookbooks used by Velankani Consulting Architects for Data Center 
 
 Third-party cookbooks in this repository:
 
-	[install_from, jruby] by Infochimps
+	[install_from, jruby] by [Infochimps](https://github.com/infochimps-labs/ironfan-pantry)
 	[java] by Opscode
 
 For more information and customized Cookbook development for Data Center Automation around UCS and more, 
