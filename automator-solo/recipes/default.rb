@@ -16,3 +16,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+package "libxml2-dev"
+package "libxslt1-dev"
+package "apache2"
+package "git	"
+gem_package "chef"
+gem_package "ucslib"
+
+log "Installation of packages, gems and dependencies"
