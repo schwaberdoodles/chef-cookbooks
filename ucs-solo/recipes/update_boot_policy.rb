@@ -47,8 +47,8 @@ ops.each do |op_info|
 						:service_profile_template_mgmt_ip_pool => "#{boot_policy['service_profile_template_mgmt_ip_pool']}",
 						:service_profile_template_boot_policy => "#{boot_policy['service_profile_template_boot_policy']}",
 						:service_profile_template_host_fw_policy => "#{boot_policy['service_profile_template_host_fw_policy']}",
-						:service_profile_template_uuid_pool => "#{boot_policy['service_profile_template_uuid_pool']}".to_json
-					}
+						:service_profile_template_uuid_pool => "#{boot_policy['service_profile_template_uuid_pool']}"
+					}.to_json
 
 ucs_manage.update_boot_policy_on_service_profile_template(boot_policy_json)
 log "Updated boot policy of Service Profile Template #{boot_policy['service_profile_template_name']} to #{boot_policy['service_profile_template_boot_policy']}"
