@@ -35,6 +35,6 @@ script "Installing and starting rundeck" do
   code <<-EOH
   mkdir /usr/local/rundeck
   cp /tmp/#{dist}.jar /usr/local/rundeck
-  java -jar /usr/local/rundeck/#{dist}.jar
+  java -jar /usr/local/rundeck/#{dist}.jar 2>&1 /var/log/rundeck/rundeck.log &
   EOH
 end
