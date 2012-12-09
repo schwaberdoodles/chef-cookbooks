@@ -17,6 +17,11 @@ Supported Target OS and Hypervisor Environments:
 	Ubuntu 12.04.1 LTS
 	VMware ESX 5.1.0
 	SuSE Enterprise Linux 11
+	Debian 6.0.6 
+
+	***Important note***
+	The debian recipe builds a local debian mirror using debmirror. This requires close to 60G of disk space just for amd64. Please use this once you have a PXE node
+	with sufficient disk space. Do this only once to be sensitive to bandwidth usage (of course)!
 
 
 Limitations
