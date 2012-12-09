@@ -18,23 +18,20 @@
 #
 
 include_recipe "automator-solo::default"
-include_recipe "java::oracle"
 
 dist = node[:automator][:orchestrator][:dist]
 path = node[:automator][:orchestrator][:path]
 
-remote_file "/tmp/#{dist}.jar" do
+remote_file "/tmp/#{dist}.deb" do
   source "#{path}"
-  not_if { File.exists?("/tmp/#{dist}.jar") }
+  not_if { File.exists?("/tmp/#{dist}.deb") }
 end
 
 
-script "Installing and starting rundeck" do
+script "Installing Rundeck" do
   interpreter "bash"
   user "root"
   code <<-EOH
-  mkdir /usr/local/rundeck
-  cp /tmp/#{dist}.jar /usr/local/rundeck
-  java -jar /usr/local/rundeck/#{dist}.jar 2>&1 /var/log/rundeck/rundeck.log &
+  dpkg -i /tmp/#{dist}.deb
   EOH
 end

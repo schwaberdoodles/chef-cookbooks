@@ -19,7 +19,9 @@
 package "libxml2-dev"
 package "libxslt1-dev"
 package "apache2"
-package "git	"
+package "git"
+package "ruby1.9"
+package "openjdk-6-jre"
 gem_package "chef"
 gem_package "ucslib"
 
