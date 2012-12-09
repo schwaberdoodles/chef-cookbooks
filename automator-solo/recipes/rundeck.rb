@@ -35,3 +35,8 @@ script "Installing Rundeck" do
   dpkg -i /tmp/#{dist}.deb
   EOH
 end
+
+service "rundeckd"  do
+  supports :start => true, :status => true, :restart => true, :stop => true, :condrestart => true
+  action [:enable, :condsrestart]
+end
