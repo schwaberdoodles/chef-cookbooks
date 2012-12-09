@@ -23,4 +23,4 @@ package "git	"
 gem_package "chef"
 gem_package "ucslib"
 
-log "Installation of packages, gems and dependencies"
+log "Installation of packages, gems and their dependencies"
