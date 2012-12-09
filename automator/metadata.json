@@ -1,6 +1,6 @@
 {
   "name": "automator-solo/",
-  "description": "Installs/Configures automator-solo with chef-solo",
+  "description": "Installs/Configures automator with chef-solo",
   "long_description": "Description\n===========\n\nRequirements\n============\n\nAttributes\n==========\n\nUsage\n=====\n\n",
   "maintainer": "Velankani Information Systems, Inc",
   "maintainer_email": "eng@velankani.net",
