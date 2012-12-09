@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: automator-solo
-# Recipe:: [Setup packages]
+# Recipe:: [Setup packages and Start Rundeck]
 #
 # Copyright 2012, Velankani Information Systems, eng@velankani.net
 #
