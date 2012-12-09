@@ -1,10 +1,10 @@
-# CHANGELOG for automator
+# CHANGELOG for automator-solo
 
-This file is used to list changes made in each version of automator.
+This file is used to list changes made in each version of automator-solo.
 
 ## 0.1.0:
 
-* Initial release of automator
+* Initial release of automator-solo
 
 - - - 
 Check the [Markdown Syntax Guide](http://daringfireball.net/projects/markdown/syntax) for help with Markdown.
