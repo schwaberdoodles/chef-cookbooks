@@ -4,8 +4,8 @@ A set of Chef Cookbooks used by Velankani Solution Architects for Data Center Au
 	ucs - A Cookbook for UCS Deployment Automation using a distributed setup with Chef Server.
 	ucs-pxe - A Coobook for building a PXE Appliance used for OS provisioning based on workflows 
 			  defined in ucs and ucs-solo.
-	automator - A Cookbook to build a node or VM (laptop) for Orchestrating Automation - Deployment and Ops
-				using [Rundeck](http://rundeck.org)
+	automator - A Cookbook to build a node or VM (laptop) for Orchestration - Deployment and Ops
+				Automation using [Rundeck](http://rundeck.org)
 
 Third-party cookbooks in this repository:
 
