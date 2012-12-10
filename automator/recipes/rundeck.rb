@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-include_recipe "automator-solo::default"
+include_recipe "automator::default"
 
 dist = node[:automator][:orchestrator][:dist]
 path = node[:automator][:orchestrator][:path]
@@ -38,5 +38,5 @@ end
 
 service "rundeckd"  do
   supports :start => true, :status => true, :restart => true, :stop => true, :condrestart => true
-  action [:enable, :condsrestart]
+  action [:enable, :restart]
 end
