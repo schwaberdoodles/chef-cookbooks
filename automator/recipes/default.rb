@@ -1,8 +1,8 @@
 #
-# Cookbook Name:: automator-solo
+# Cookbook Name:: automator
 # Recipe:: [Setup packages]
 #
-# Copyright 2012, Velankani Information Systems, eng@velankani.net
+# Copyright 2012, Velankani Information Systems, Inc, eng@velankani.net
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
