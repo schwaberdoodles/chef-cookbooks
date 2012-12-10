@@ -21,12 +21,17 @@ include_recipe "automator::default"
 
 dist = node[:automator][:orchestrator][:dist]
 path = node[:automator][:orchestrator][:path]
+project = node[:automator][:orchestrator][:project]
 
 remote_file "/tmp/#{dist}.deb" do
   source "#{path}"
   not_if { File.exists?("/tmp/#{dist}.deb") }
 end
 
+template "/tmp/rundeckjobs.xml" do
+  source "rundeckjobs.xml.erb"
+  mode 0644
+end
 
 script "Installing Rundeck" do
   interpreter "bash"
@@ -35,6 +40,15 @@ script "Installing Rundeck" do
   dpkg -i /tmp/#{dist}.deb
   chown -R rundeck:rundeck /var/rundeck/
   chmod -R ug+rwx /var/rundeck/
+  EOH
+end
+
+script "Creating Default Project and Jobs" do
+  interpreter "bash"
+  user "root"
+  code <<-EOH
+  rd-project -p #{project} -a create
+  rd-jobs load --file /tmp/rundeckjobs.xml
   EOH
 end
 
