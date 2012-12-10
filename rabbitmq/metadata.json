@@ -2,8 +2,8 @@
   "name": "rabbitmq",
   "description": "Installs/Configures rabbitmq",
   "long_description": "Description\n===========\n\nRequirements\n============\n\nAttributes\n==========\n\nUsage\n=====\n\n",
-  "maintainer": "YOUR_COMPANY_NAME",
-  "maintainer_email": "YOUR_EMAIL",
+  "maintainer": "Velankani Information Systems, Inc",
+  "maintainer_email": "eng@velankani.net",
   "license": "All rights reserved",
   "platforms": {
   },
@@ -25,5 +25,5 @@
   },
   "recipes": {
   },
-  "version": "0.1.0"
+  "version": "0.0.1"
 }
