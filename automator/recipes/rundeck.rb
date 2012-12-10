@@ -43,16 +43,20 @@ script "Installing Rundeck" do
   EOH
 end
 
+service "rundeckd"  do
+  supports :start => true, :status => true, :restart => true, :stop => true, :condrestart => true
+  action [:enable, :restart]
+end
+
 script "Creating Default Project and Jobs" do
   interpreter "bash"
   user "root"
   code <<-EOH
   rd-project -p #{project} --action create
+  sleep 4
   rd-jobs load --file /tmp/rundeckjobs.xml
+  sleep 3
   EOH
 end
 
-service "rundeckd"  do
-  supports :start => true, :status => true, :restart => true, :stop => true, :condrestart => true
-  action [:enable, :restart]
-end
+
