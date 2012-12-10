@@ -35,3 +35,8 @@ script "Configuring chef-solo" do
   tar -zxvf /tmp/#{cookbooks}.tar.gz -C /etc/chef/
   EOH
 end
+
+template "/etc/chef/solo.rb" do
+  source "solo.rb.erb"
+  mode 0644
+end
