@@ -30,5 +30,10 @@ script "Installing Cloudera Hadoop CDH4" do
   user "root"
   code <<-EOH
   dpkg -i /tmp/#{dist}.deb
+  curl -s http://archive.cloudera.com/cdh4/ubuntu/precise/amd64/cdh/archive.key | apt-key add -
+  apt-get update
+  export JAVA_HOME=/usr/lib/jvm/jdk1.6.0_37/
+  apt-get install hadoop-0.20-conf-pseudo -y
+  sleep 5
   EOH
 end
