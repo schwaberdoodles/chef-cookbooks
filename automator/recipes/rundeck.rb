@@ -47,7 +47,7 @@ script "Creating Default Project and Jobs" do
   interpreter "bash"
   user "root"
   code <<-EOH
-  rd-project -p #{project} -a create
+  rd-project -p #{project} --action create
   rd-jobs load --file /tmp/rundeckjobs.xml
   EOH
 end
