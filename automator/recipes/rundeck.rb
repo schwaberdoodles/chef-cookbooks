@@ -33,6 +33,8 @@ script "Installing Rundeck" do
   user "root"
   code <<-EOH
   dpkg -i /tmp/#{dist}.deb
+  chown -R rundeck:rundeck /var/rundeck/
+  chmod -R ug+rwx /var/rundeck/
   EOH
 end
 
