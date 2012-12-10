@@ -40,3 +40,13 @@ template "/etc/chef/solo.rb" do
   source "solo.rb.erb"
   mode 0644
 end
+
+template "/etc/chef/initial.json" do
+  source "initial.json.erb"
+  mode 0644
+end
+
+template "/etc/chef/update_boot.json" do
+  source "update_boot.json.erb"
+  mode 0644
+end
