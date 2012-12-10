@@ -1,7 +1,7 @@
 {
 	"id": "template2",
-	"vnic_template_name": "VDI-B",
-	"vnic_template_mac_pool": "vdi-mac",
+	"vnic_template_name": "hadoop-B",
+	"vnic_template_mac_pool": "hadoop-mac",
 	"switch": "B",
 	"vnic_template_VLANs": "HR,IT",
 	"vnic_template_native_VLAN": "IT",

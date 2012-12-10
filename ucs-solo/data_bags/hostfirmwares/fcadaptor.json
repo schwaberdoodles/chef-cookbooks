@@ -1,7 +1,7 @@
 {
     "id":"fcadaptor",
-    "host_firmware_pkg_name":"vdi-fw",
-    "host_firmware_pkg_description":"VDI Firmware",
+    "host_firmware_pkg_name":"hadoop-fw",
+    "host_firmware_pkg_description":"hadoop Firmware",
     "org":"IT",
     "hardware_model":"N20-AE0002",
     "hardware_type":"host-hba",
