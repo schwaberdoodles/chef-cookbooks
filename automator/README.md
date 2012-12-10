@@ -26,10 +26,9 @@ Usage
 
 	knife bootstrap <node name> -x root -P <password>
 	knife node run_list add <node_name> recipe[automator::builder]
-	knide ssh name:<node name> -x root -P <password> "chef-client"
+	knife ssh name:<node name> -x root -P <password> "chef-client"
 
-
-	Log into rundeck using http://<node name>:4440 with username: admin password: admin
+	Login to rundeck using http://<node name>:4440 with username: admin password: admin
 
 License
 ======
