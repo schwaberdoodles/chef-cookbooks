@@ -17,8 +17,12 @@
 # limitations under the License.
 #
 
+#This recipe is for Cloudera Hadoop CDH4 on Ubuntu 12.04.LTS only
+
 dist = node[:bigdatadev][:hadoop][:dist]
 path = node[:bigdatadev][:hadoop][:path]
+java_home = node[:bigdatadev][:hadoop][:java_home]
+data_dir = node[:bigdatadev][:hadoop][:data_dir]
 
 remote_file "/tmp/#{dist}.deb" do
   source "#{path}"
@@ -29,11 +33,18 @@ script "Installing Cloudera Hadoop CDH4" do
   interpreter "bash"
   user "root"
   code <<-EOH
+  mkdir -p /#{data_dir}/cache
   dpkg -i /tmp/#{dist}.deb
   curl -s http://archive.cloudera.com/cdh4/ubuntu/precise/amd64/cdh/archive.key | apt-key add -
   apt-get update
-  export JAVA_HOME=/usr/lib/jvm/jdk1.6.0_37/
+  export JAVA_HOME=#{java_home}
   apt-get install hadoop-0.20-conf-pseudo -y
   sleep 5
   EOH
 end
+
+template "/etc/hadoop/conf.pseudo.mr1/hdfs-site.xml" do
+  source "hdfs-site.xml.erb"
+  mode 0644
+end
+
