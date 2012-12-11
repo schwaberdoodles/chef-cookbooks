@@ -29,6 +29,7 @@ user = node[:bigdatadev][:hadoop][:user]
 user node[:bigdatadev][:hadoop][:user] do
   action :create
   system true
+  home "/home/#{user}"
   shell "/bin/bash"
 end
 
