@@ -26,6 +26,12 @@ java_home = node[:bigdatadev][:hadoop][:java_home]
 data_dir = node[:bigdatadev][:hadoop][:data_dir]
 user = node[:bigdatadev][:hadoop][:user]
 
+user node[:bigdatadev][:hadoop][:user] do
+  action :create
+  system true
+  shell "/bin/bash"
+end
+
 remote_file "/tmp/#{dist}.deb" do
   source "#{path}"
   not_if { File.exists?("/tmp/#{dist}.deb") }
