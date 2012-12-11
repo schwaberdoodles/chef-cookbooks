@@ -27,10 +27,9 @@ data_dir = node[:bigdatadev][:hadoop][:data_dir]
 user = node[:bigdatadev][:hadoop][:user]
 
 user node[:bigdatadev][:hadoop][:user] do
-  action :create
-  mkdir "/home/#{user}"
-  home  "/home/#{user}"
-  shell "/bin/bash"
+  system true
+  comment "Hadoop User"
+  shell "/bin/false"
 end
 
 remote_file "/tmp/#{dist}.deb" do
@@ -45,6 +44,7 @@ script "Installing Cloudera Hadoop CDH4" do
   dpkg -i /tmp/#{dist}.deb
   curl -s http://archive.cloudera.com/cdh4/ubuntu/precise/amd64/cdh/archive.key | apt-key add -
   apt-get update
+  apt-get autoremove -y
   export JAVA_HOME=#{java_home}
   apt-get install hadoop-0.20-conf-pseudo -y
   sleep 5
