@@ -6,7 +6,7 @@ default[:pxe][:ucs][:password] = 'admin'
 
 
 #DHCP
-default[:pxe][:dhcpd][:dns_server] = "192.168.73.250"
+default[:pxe][:dhcpd][:dns_server] = "8.8.8.8"
 default[:pxe][:dhcpd][:next_server] = "192.168.73.136"
 default[:pxe][:dhcpd][:subnet] = "192.168.73.0"
 default[:pxe][:dhcpd][:subnet_mask] = "255.255.255.0"
