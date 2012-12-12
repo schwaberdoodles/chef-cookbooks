@@ -20,6 +20,7 @@
 # limitations under the License.
 #
 
+
 require 'ucslib'
 #Uncomment to debug
 #log "Using: #{node[:ucs][:ip]}, #{node[:ucs][:username]}, #{node[:ucs][:password]}"
