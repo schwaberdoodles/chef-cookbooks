@@ -18,6 +18,7 @@
 # limitations under the License.
 #
 
+include_recipe "ucs-pxe::dhcpd"
 
 require 'ucslib'
 #Uncomment to debug
@@ -60,19 +61,6 @@ script "copy install files from iso" do
 end
 
 
-service "networking" do
-  supports :restart => true
-end
-
-service "isc-dhcp-server"  do
-  supports :restart => true
-end
-
-service "tftpd-hpa"  do
-  supports :restart => true
-end
-
-
 state = @ucs_manager.discover_state
 state.xpath("configResolveClasses/outConfigs/macpoolPooled").each do |macpool|
   if "#{macpool.attributes["assigned"]}" == 'yes' and "#{macpool.attributes["assignedToDn"].to_s.scan(/ether-vNIC-(\w+)/)}" == '[["A"]]'
@@ -97,4 +85,16 @@ end
 template "/var/lib/tftpboot/pxelinux.cfg/default" do
   source "pxelinux.ubuntu.erb"
   mode 0644
+end
+
+service "networking" do
+  supports :restart => true
+end
+
+service "isc-dhcp-server"  do
+  supports :restart => true
+end
+
+service "tftpd-hpa"  do
+  supports :restart => true
 end

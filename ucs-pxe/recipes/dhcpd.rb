@@ -18,6 +18,7 @@
 # limitations under the License.
 #
 
+include_recipe "ucs-pxe::databag"
 
 service "isc-dhcp-server"
 
