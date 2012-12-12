@@ -6,12 +6,12 @@ default[:pxe][:ucs][:password] = 'admin'
 
 
 #DHCP
-default[:pxe][:dhcpd][:dns_server] = "8.8.8.8"
+default[:pxe][:dhcpd][:dns_server] = "192.168.73.2"
 default[:pxe][:dhcpd][:next_server] = "192.168.73.136"
 default[:pxe][:dhcpd][:subnet] = "192.168.73.0"
 default[:pxe][:dhcpd][:subnet_mask] = "255.255.255.0"
 default[:pxe][:dhcpd][:broadcast] = "192.168.73.255"
-default[:pxe][:dhcpd][:gateway] = "192.168.73.1"
+default[:pxe][:dhcpd][:gateway] = "192.168.73.2"
 default[:pxe][:dhcpd][:host_range] = "192.168.73.150 192.168.73.200"
 default[:pxe][:dhcpd][:interfaces] = ['eth0']
 default[:pxe][:dhcpd][:filename] = "pxelinux.0"
