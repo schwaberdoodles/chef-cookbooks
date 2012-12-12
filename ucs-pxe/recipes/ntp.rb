@@ -33,7 +33,7 @@ script "Removing ntpdate" do
   EOH
 end
 
-service "ntp"  do
+service "openntpd"  do
   supports :restart => true
 end
 

@@ -21,7 +21,7 @@
 package "libxml2-dev"
 package "libxslt1-dev"
 package "dhcp3-server"
-package "ntpd"
+package "openntpd"
 package "tftpd-hpa"
 package "apache2"
 package "syslinux"
