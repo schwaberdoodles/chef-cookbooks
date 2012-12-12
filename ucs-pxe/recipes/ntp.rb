@@ -1,6 +1,8 @@
 #
 # Cookbook Name:: pxe
-# Recipe:: default [Setup packages]
+# Recipe:: data_bags [Generate data_bags for use by recipe pxe::dhcpd]
+# Notes: This recipe is for Cisco UCS only as it relies no querying assigned
+#        MAC addresses on all Service Profiles
 #
 # Copyright 2012, Murali Raju, murali.raju@appliv.com
 # Copyright 2012, Velankani Information Systems, eng@velankani.net
@@ -18,14 +20,20 @@
 # limitations under the License.
 #
 
-package "libxml2-dev"
-package "libxslt1-dev"
-package "dhcp3-server"
-package "ntpd"
-package "tftpd-hpa"
-package "apache2"
-package "syslinux"
-package "debmirror"
-gem_package "ucslib"
+template "/etc/ntp.conf" do
+  source "ntp.conf.erb"
+  mode 0644
+end
 
-log "Installation of packages and dependencies"
+script "Removing ntpdate" do
+  interpreter "bash"
+  user "root"
+  code <<-EOH
+  apt-get remove ntpdate
+  EOH
+end
+
+service "ntp"  do
+  supports :restart => true
+end
+

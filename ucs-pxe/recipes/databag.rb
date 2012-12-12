@@ -20,6 +20,8 @@
 # limitations under the License.
 #
 
+include_recipe "ucs-pxe::ntp"
+
 require 'ucslib'
 #Uncomment to debug
 #log "Using: #{node[:ucs][:ip]}, #{node[:ucs][:username]}, #{node[:ucs][:password]}"
