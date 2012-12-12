@@ -48,6 +48,9 @@ service "rundeckd"  do
   action [:enable, :restart]
 end
 
+
+#The following is aesthetically displeasing and will be refactored a client library 
+# for RunDeck is available to use the API
 script "Creating Default Project and Jobs" do
   interpreter "bash"
   user "root"
