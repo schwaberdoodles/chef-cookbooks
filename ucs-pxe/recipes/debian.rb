@@ -77,7 +77,8 @@ script "Setting up local Debian Mirror" do
   cp /tmp/debian-archive-keyring.gpg /home/#{user}/.gnupg/
   mkdir -pv /var/www/debian/keyring/debian
   gpg --no-default-keyring --keyring /var/www/debian/keyring/debian/trustedkeys.gpg --import /tmp/debian-archive-keyring.gpg
-  debmirror --verbose --progress --method=http --host=ftp.us.debian.org --arch=amd64 --source --dist=squeeze --section=main,main/debian-installer,contrib,non-free --root=debian /var/www/debian
+  debmirror --verbose --progress --method=http --host=ftp.us.debian.org --arch=amd64 \
+  --source --dist=squeeze --section=main,main/debian-installer,contrib,non-free --root=debian /var/www/debian
   EOH
 end
 
