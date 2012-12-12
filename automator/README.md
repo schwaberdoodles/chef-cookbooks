@@ -1,7 +1,7 @@
 Description
 ===========
 
-This cookbook setups up an Automator node (Orchestration) or a VM in a laptop based on Debian Squeeze. The orchestration and command dispatch is 
+This cookbook that sets up an Automator node (Orchestration) or a VM in a laptop based on Debian Squeeze. The orchestration and command dispatch is 
 powered by Rundeck with chef-solo and the Velankani Chef Cookbooks. 
 
 Requirements
