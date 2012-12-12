@@ -25,11 +25,11 @@ template "/etc/ntp.conf" do
   mode 0644
 end
 
-script "Removing ntpdate" do
+script "Removing unwanted packages" do
   interpreter "bash"
   user "root"
   code <<-EOH
-  apt-get remove ntpdate
+  apt-get autoremove -y
   EOH
 end
 

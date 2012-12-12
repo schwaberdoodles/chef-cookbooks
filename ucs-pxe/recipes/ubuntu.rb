@@ -60,6 +60,17 @@ script "copy install files from iso" do
   EOH
 end
 
+service "networking" do
+  supports :restart => true
+end
+
+service "isc-dhcp-server"  do
+  supports :restart => true
+end
+
+service "tftpd-hpa"  do
+  supports :restart => true
+end
 
 state = @ucs_manager.discover_state
 state.xpath("configResolveClasses/outConfigs/macpoolPooled").each do |macpool|
@@ -87,14 +98,4 @@ template "/var/lib/tftpboot/pxelinux.cfg/default" do
   mode 0644
 end
 
-service "networking" do
-  supports :restart => true
-end
 
-service "isc-dhcp-server"  do
-  supports :restart => true
-end
-
-service "tftpd-hpa"  do
-  supports :restart => true
-end
