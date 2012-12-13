@@ -19,7 +19,7 @@
 #
 
 
-default[:ucs][:ip] = '192.168.73.131'
+default[:ucs][:ip] = '192.168.73.145'
 default[:ucs][:username] = 'admin'
 default[:ucs][:password] = 'admin'
 

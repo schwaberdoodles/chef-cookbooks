@@ -1,6 +1,6 @@
 {
 	"id": "sppack1",
-	"service_profile_names": "hadoop01,hadoop02,hadoop03",
+	"service_profile_names": "hadoop01,hadoop02,hadoop03,hadoop04,hadoop05,hadoop06,hadoop07,hadoop08,hadoop09,hadoop10,hadoop11,hadoop12",
 	"service_profile_boot_policy": "PXEBoot",
 	"service_profile_host_fw_policy": "hadoop-fw",
 	"service_profile_mgmt_fw_policy": "hadoop-fw",
