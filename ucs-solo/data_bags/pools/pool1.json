@@ -31,7 +31,7 @@
         "server_pool_blades": "1,2,3,4",
         "org": "IT"
 
-    }
+    },
     "server": {
         "server_pool_name": "hadoop",
         "server_pool_description": "Pool1 for hadoop Hosts",
@@ -39,7 +39,7 @@
         "server_pool_blades": "1,2,3,4",
         "org": "IT"
 
-    }
+    },
     "server": {
         "server_pool_name": "hadoop",
         "server_pool_description": "Pool1 for hadoop Hosts",
@@ -47,7 +47,7 @@
         "server_pool_blades": "1,2,3,4",
         "org": "IT"
 
-    }
+    },
     "server": {
         "server_pool_name": "hadoop",
         "server_pool_description": "Pool1 for hadoop Hosts",
