@@ -67,7 +67,7 @@ pools.each do |pool_info|
   ucs_provision.set_wwnn_pool(wwnn_pool_json)
   log "Created WWNN Pool #{pool['wwnn']['name']} from #{pool['wwnn']['from']} to #{pool['wwnn']['to']} in org #{pool['wwnn']['org']}"
   ucs_provision.set_server_pool(server_pool_json)
-  log "Created Server Pool #{pool['server']['server_pool_name']} on chassis #{pool['server']['server_pool_chassis_id']} using blades #{pool['server']['server_pool_blades']}"
+  log "Created Server Pool #{pool['server']['server_pool_name']} on chassis #{pool['server']['server_pool_chassis_ids']} using blades #{pool['server']['server_pool_blades']}"
   
   
 end
