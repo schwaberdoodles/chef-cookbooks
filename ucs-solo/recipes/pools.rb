@@ -55,21 +55,21 @@ pools.each do |pool_info|
                     :wwnn_to => "#{pool['wwnn']['to']}", :org => "#{pool['wwnn']['org']}"}.to_json
 
   server_pool_json = {:server_pool_name => "#{pool['server']['server_pool_name']}", :server_pool_description => "#{pool['server']['server_pool_description']}",
-                      :server_pool_chassis_id => "#{pool['server']['server_pool_chassis_id']}", :server_pool_blades => "#{pool['server']['server_pool_blades']}",
+                      :server_pool_chassis_id => "#{pool['server']['server_pool_chassis_ids']}", :server_pool_blades => "#{pool['server']['server_pool_blades']}",
                       :org => "#{pool['server']['org']}"}.to_json
 
   ucs_provision.set_uuid_pool(uuid_pool_json)
-  ucs_provision.set_mac_pool(mac_pool_json)
-  ucs_provision.set_wwpn_pool(wwpn_pool_json)
-  ucs_provision.set_wwnn_pool(wwnn_pool_json)
-  ucs_provision.set_server_pool(server_pool_json)
-  #uncomment to debug
   log "Created UUID Pool #{pool['uuid']['name']} from #{pool['uuid']['from']} to #{pool['uuid']['to']} in org #{pool['uuid']['org']}"
+  ucs_provision.set_mac_pool(mac_pool_json)
   log "Created MAC Pool #{pool['mac']['name']} start #{pool['mac']['start']} end #{pool['mac']['end']} in org #{pool['mac']['org']}"
+  ucs_provision.set_wwpn_pool(wwpn_pool_json)
   log "Created WWPN Pool #{pool['wwpn']['name']} from #{pool['wwpn']['from']} to #{pool['wwpn']['to']} in org #{pool['wwpn']['org']}"
+  ucs_provision.set_wwnn_pool(wwnn_pool_json)
   log "Created WWNN Pool #{pool['wwnn']['name']} from #{pool['wwnn']['from']} to #{pool['wwnn']['to']} in org #{pool['wwnn']['org']}"
-  log "Created Server Pool #{pool['server']['server_pool_name']} on chassis #{pool['server']['server_pool_chassis_id']} using blades #{pool['server']['server_pool_blades']}"
-  #log pool_json
 
+
+  ucs_provision.set_server_pool(server_pool_json)
+  log "Created Server Pool #{pool['server']['server_pool_name']} on chassis #{pool['server']['server_pool_chassis_id']} using blades #{pool['server']['server_pool_blades']}"
+  
   
 end
