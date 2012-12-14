@@ -5,11 +5,11 @@
     "chassis_discovery_policy":"4-link",
     "local_disk_policy":"any-configuration",
     "mgmt_ip_pool":{
-        "start_ip":"10.10.1.5",
-        "end_ip":"10.10.1.10",
+        "start_ip":"192.168.73.5",
+        "end_ip":"192.168.73.25",
         "subnet_mask":"255.255.255.0",
-        "gateway":"10.10.1.1"
+        "gateway":"192.168.73.2"
     },
-    "ntp":"192.168.207.250,192.168.207.251"
+    "ntp":"192.168.73.136,192.168.36.137"
 
 }
