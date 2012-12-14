@@ -57,8 +57,11 @@ initials.each do |initial_info|
   mgmt_ip_pool_json = {:start_ip => "#{initial['mgmt_ip_pool']['start_ip']}",
                        :end_ip => "#{initial['mgmt_ip_pool']['end_ip']}",
                        :subnet_mask => "#{initial['mgmt_ip_pool']['subnet_mask']}",
-                       :gateway => "#{initial['mgmt_ip_pool']['gateway']}"
-  }.to_json
+                       :gateway => "#{initial['mgmt_ip_pool']['gateway']}"}.to_json
+
+  syslog_json = {:syslog_server => "#{initial['syslog']['syslog_server']}",
+                 :facility => "#{initial['syslog']['facility']}",
+                 :severity => "#{initial['syslog']['severity']}"}.to_json
 
   ntp_servers = "#{initial['ntp']}".split(",")
   ntp_servers.each do |server|
@@ -82,6 +85,8 @@ initials.each do |initial_info|
   ucs_provision.set_management_ip_pool(mgmt_ip_pool_json)
   log mgmt_ip_pool_json
 
+  ucs_provision.set_syslog_server(syslog_json)
+  log syslog_json
 end
 
 orgs = data_bag("orgs")
