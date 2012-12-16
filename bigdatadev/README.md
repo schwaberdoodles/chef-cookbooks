@@ -13,15 +13,15 @@ An Ubuntu 12.0.4 LTS machine with at least 1G of RAM and 20G of disk space.
 Attributes
 ==========
 
-#Hadoop
-default[:bigdatadev][:hadoop][:dist] = "cdh4"
-default[:bigdatadev][:hadoop][:path] = "http://archive.cloudera.com/cdh4/one-click-install/precise/amd64/cdh4-repository_1.0_all.deb"
-default[:bigdatadev][:hadoop][:java_home] = "/usr/lib/jvm/jdk1.6.0_37"
-default[:bigdatadev][:hadoop][:user] = "cdhuser"
+	#Hadoop
+	default[:bigdatadev][:hadoop][:dist] = "cdh4"
+	default[:bigdatadev][:hadoop][:path] = "http://archive.cloudera.com/cdh4/one-click-install/precise/amd64/cdh4-repository_1.0_all.deb"
+	default[:bigdatadev][:hadoop][:java_home] = "/usr/lib/jvm/jdk1.6.0_37"
+	default[:bigdatadev][:hadoop][:user] = "cdhuser"
 
-#HBase
-default[:bigdatadev][:hbase][:dir] = "hbase"
-default[:bigdatadev][:hbase][:user] = "hbaseuser"
+	#HBase
+	default[:bigdatadev][:hbase][:dir] = "hbase"
+	default[:bigdatadev][:hbase][:user] = "hbaseuser"
 
 
 Usage
@@ -31,13 +31,13 @@ Create a a role that contains "recipe[bigdatadev::hadoop_pseudo_dist]" and "reci
 
 Example:
 
-chef_type:            role
-default_attributes:   {}
-description:          
-env_run_lists:        {}
-json_class:           Chef::Role
-name:                 bigdatadev
-override_attributes:  {}
-run_list:            
-    recipe[bigdatadev::hadoop_pseudo_dist]
-    recipe[bigdatadev::hbase_pseudo_dist]
+	chef_type:            role
+	default_attributes:   {}
+	description:          
+	env_run_lists:        {}
+	json_class:           Chef::Role
+	name:                 bigdatadev
+	override_attributes:  {}
+	run_list:            
+	    recipe[bigdatadev::hadoop_pseudo_dist]
+	    recipe[bigdatadev::hbase_pseudo_dist]
