@@ -20,7 +20,7 @@
 # This recipe is for Cloudera Hadoop CDH4 on Ubuntu 12.04.LTS only
 # Most of this will refactored in a later version
 
-package "zookeeper"
+package "zookeeper-server"
 package "hbase"
 package "hbase-master"
 package "hbase-rest"
@@ -42,6 +42,7 @@ script "Initiate and start Zookeeper for the first time" do
   interpreter "bash"
   user "root"
   code <<-EOH
+  sleep 5
   sudo service zookeeper-server init
   sudo service zookeeper-server start
   EOH
