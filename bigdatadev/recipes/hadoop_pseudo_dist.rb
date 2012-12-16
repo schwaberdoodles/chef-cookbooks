@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: bigdatadev
-# Recipe:: [Setup a Big Data Development Environment]
+# Recipe:: [Setup a Big Data Development Environment: Hadoop]
 #
 # Copyright 2012, Velankani Information Systems, Inc eng@velankani.net
 #
