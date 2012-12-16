@@ -20,8 +20,6 @@
 # This recipe is for Cloudera Hadoop CDH4 on Ubuntu 12.04.LTS only
 # Most of this will refactored in a later version
 
-include_recipe "bigdatadev::hadoop_pseudo_dist"
-
 package "zookeeper"
 package "hbase"
 package "hbase-master"
