@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: metalprov
-# Recipe:: [Setup a Bare Metal Provisioning Environment powered by Razor]
+# Recipe:: [Setup Razor]
 #
 # Copyright 2012, Velankani Information Systems, Inc eng@velankani.net
 #
@@ -35,6 +35,15 @@ gem_package "require_all"
 gem_package "syntax"
 gem_package "uuid"
 
+dist = node[:metalprov][:razor][:dist]
+path = node[:metalprov][:razor][:path]
+
+remote_file "/opt/razor/#{dist}" do
+  source "#{path}"
+  not_if { File.exists?("/opt/razor/#{dist}") }
+end
+
+
 
 script "Installing and starting Razor" do
   interpreter "bash"
@@ -44,8 +53,7 @@ script "Installing and starting Razor" do
   cd /opt/razor
   npm install express@2.5.11
   npm install mime
-  wget https://github.com/puppetlabs/Razor/archive/master.zip
-  unzip master.zip
+  unzip #{dist}
   /opt/razor/Razor-master/bin/razor_daemon.rb start
   echo "export PATH=/opt/razor/Razor-master/bin:$PATH" >> ~/.bashrc
   sleep 5s
