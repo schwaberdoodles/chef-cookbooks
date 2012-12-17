@@ -72,9 +72,9 @@ end
 #   mode 0644
 # end
 # 
-# template "/var/lib/tftpboot/pxelinux.cfg/default" do
-#   source "pxelinux.ubuntu.erb"
-#   mode 0644
-# end
+template "/var/lib/tftpboot/pxelinux.cfg/default" do
+  source "pxelinux.default.erb"
+  mode 0644
+end
 
 
