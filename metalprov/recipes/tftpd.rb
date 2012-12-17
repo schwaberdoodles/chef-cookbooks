@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-include_recipe "metasolv::dhcpd"
+include_recipe "metalprov::dhcpd"
 
 
 dist = node[:metalprov][:ipxe][:dist] 
