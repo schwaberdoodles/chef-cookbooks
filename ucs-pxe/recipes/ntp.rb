@@ -20,6 +20,8 @@
 # limitations under the License.
 #
 
+include_recipe "ucs-pxe::install"
+
 template "/etc/ntp.conf" do
   source "ntp.conf.erb"
   mode 0644
