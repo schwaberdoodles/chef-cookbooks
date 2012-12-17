@@ -33,7 +33,7 @@ remote_file "/tmp/#{dist}.iso" do
   not_if { File.exists?("/tmp/#{dist}.iso") }
 end
 
-remote_file "/tmp/#{disk_usb}.lkrn" do
+remote_file "/tmp/#{dist_usb}.lkrn" do
   source "#{path_usb}"
   not_if { File.exists?("/tmp/#{dist_usb}.lkrn") }
 end
