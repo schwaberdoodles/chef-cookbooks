@@ -24,6 +24,9 @@ package "python"
 package "libssl-dev"
 package "unzip"
 package "isc-dhcp-server"
+package "openntpd"
+package "tftpd-hpa"
+package "syslinux"
 
 template "/etc/apt/sources.list.d/10gen.list" do
   source "10gen.list.erb"

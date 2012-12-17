@@ -1,6 +1,13 @@
 #Razor
 default[:metalprov][:razor][:dist] = "master.zip"
 default[:metalprov][:razor][:path] = "https://github.com/puppetlabs/Razor/archive/master.zip"
+default[:metalprov][:ipxe][:dist] = "ipxe"
+default[:metalprov][:ipxe][:path] = "https://s3.amazonaws.com/velankanidownloads/ipxe.iso"
+default[:metalprov][:ipxe][:dist_usb] = "ipxeusb"
+default[:metalprov][:ipxe][:path_usb] = "https://s3.amazonaws.com/velankanidownloads/ipxe.usb"
+default[:metalprov][:ipxe][:dist_misc] = "undionly"
+default[:metalprov][:ipxe][:path_misc] = "https://s3.amazonaws.com/velankanidownloads/undionly.kpxe"
+
 
 #DHCP
 default[:metalprov][:dhcpd][:dns_server] = "192.168.73.2"

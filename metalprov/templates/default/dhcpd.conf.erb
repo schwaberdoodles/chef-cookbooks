@@ -4,8 +4,8 @@ option domain-name-servers <%= @node[:metalprov][:dhcpd][:dns_server] %>;
 max-lease-time 7200;
 allow booting;
 allow bootp;
-class "metalprovclients" {
-  match if substring(option vendor-class-identifier, 0, 9) = "metalprovClient";
+class "pxeclients" {
+  match if substring(option vendor-class-identifier, 0, 9) = "PXEClient";
   next-server <%= @node[:metalprov][:dhcpd][:next_server] %>;
   filename = "<%= @node[:metalprov][:dhcpd][:filename] %>";
 
@@ -13,7 +13,7 @@ class "metalprovclients" {
 
 subnet <%= @node[:metalprov][:dhcpd][:subnet] %> netmask <%= @node[:metalprov][:dhcpd][:subnet_mask] %> {
   pool {
-    allow members of "metalprovclients";
+    allow members of "pxeclients";
     range <%= @node[:metalprov][:dhcpd][:host_range] %>;
   }
 }
