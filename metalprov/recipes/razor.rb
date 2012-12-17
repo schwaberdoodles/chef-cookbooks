@@ -47,6 +47,7 @@ script "Installing and starting Razor" do
   wget https://github.com/puppetlabs/Razor/archive/master.zip
   unzip master.zip
   /opt/razor/Razor-master/bin/razor_daemon.rb start
+  echo "export PATH=/opt/razor/Razor-master/bin:$PATH" >> ~/.bashrc
   sleep 5s
   EOH
 end
