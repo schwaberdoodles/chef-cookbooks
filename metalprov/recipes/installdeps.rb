@@ -1,6 +1,6 @@
 #
-# Cookbook Name:: razor
-# Recipe:: [Setup a Razor environment for bare metal provisoning]
+# Cookbook Name:: metalprov
+# Recipe:: [Setup a Bare Metal Provisioning Environment powered by Razor]
 #
 # Copyright 2012, Velankani Information Systems, Inc eng@velankani.net
 #
@@ -49,9 +49,11 @@ script "Installing Node.js" do
   user "root"
   code <<-EOH
   cd /usr/local/src
-  mkdir node
   wget http://nodejs.org/dist/v0.9.3/node-v0.9.3.tar.gz
-  
+  tar -xzvf node-v0.9.3.tar.gz
+  cd node-v0.9.3
+  make && make install
   sleep 5s
   EOH
 end
+

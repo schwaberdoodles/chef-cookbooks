@@ -1,6 +1,6 @@
 #
-# Cookbook Name:: razor
-# Recipe:: [Setup a Razor environment for bare metal provisoning]
+# Cookbook Name:: metalprov
+# Recipe:: [Setup a Bare Metal Provisioning Environment powered by Razor]
 #
 # Copyright 2012, Velankani Information Systems, Inc eng@velankani.net
 #
