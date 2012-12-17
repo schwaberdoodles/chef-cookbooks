@@ -23,6 +23,7 @@ package "ruby1.9.3"
 package "python" 
 package "libssl-dev"
 package "unzip"
+package "isc-dhcp-server"
 
 template "/etc/apt/sources.list.d/10gen.list" do
   source "10gen.list.erb"

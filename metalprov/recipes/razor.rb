@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-include_recipe "metalprov::installdeps"
+include_recipe "metalprov::dhcpd"
 
 gem_package "autotest"
 gem_package "base62"
