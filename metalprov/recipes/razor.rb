@@ -46,7 +46,7 @@ script "Installing and starting Razor" do
   npm install mime
   wget https://github.com/puppetlabs/Razor/archive/master.zip
   unzip master.zip
-  /opt/razor/bin/razor_daemon.rb start
+  /opt/razor/Razor-master/bin/razor_daemon.rb start
   sleep 5s
   EOH
 end
