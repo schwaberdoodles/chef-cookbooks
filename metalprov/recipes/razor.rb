@@ -45,7 +45,7 @@ script "Installing and starting Razor" do
   npm install express@2.5.11
   npm install mime
   wget https://github.com/puppetlabs/Razor/archive/master.zip
-  unzip master
+  unzip master.zip
   /opt/razor/bin/razor_daemon.rb start
   sleep 5s
   EOH
