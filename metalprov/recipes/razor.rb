@@ -43,8 +43,6 @@ remote_file "/opt/razor/#{dist}" do
   not_if { File.exists?("/opt/razor/#{dist}") }
 end
 
-
-
 script "Installing and starting Razor" do
   interpreter "bash"
   user "root"
