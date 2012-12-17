@@ -38,22 +38,21 @@ gem_package "uuid"
 dist = node[:metalprov][:razor][:dist]
 path = node[:metalprov][:razor][:path]
 
-remote_file "/opt/razor/#{dist}" do
+remote_file "/opt/#{dist}" do
   source "#{path}"
-  not_if { File.exists?("/opt/razor/#{dist}") }
+  not_if { File.exists?("/opt/#{dist}") }
 end
 
 script "Installing and starting Razor" do
   interpreter "bash"
   user "root"
   code <<-EOH
-  mkdir /opt/razor
-  cd /opt/razor
+  cd /opt
   npm install express@2.5.11
   npm install mime
   unzip #{dist}
-  /opt/razor/Razor-master/bin/razor_daemon.rb start
-  echo "export PATH=/opt/razor/Razor-master/bin:$PATH" >> ~/.bashrc
+  /opt/Razor-master/bin/razor_daemon.rb start
+  echo "export PATH=/opt/Razor-master/bin:$PATH" >> ~/.bashrc
   sleep 5s
   EOH
 end
