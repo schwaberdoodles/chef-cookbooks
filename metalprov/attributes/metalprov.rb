@@ -11,5 +11,5 @@ default[:metalprov][:dhcpd][:broadcast] = "192.168.73.255"
 default[:metalprov][:dhcpd][:gateway] = "192.168.73.2"
 default[:metalprov][:dhcpd][:host_range] = "192.168.73.150 192.168.73.200"
 default[:metalprov][:dhcpd][:interfaces] = ['eth0']
-default[:metalprov][:dhcpd][:filename] = "metalprovlinux.0"
+default[:metalprov][:dhcpd][:filename] = "pxelinux.0"
 
