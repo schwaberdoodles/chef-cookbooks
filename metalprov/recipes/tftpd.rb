@@ -52,7 +52,6 @@ script "Copy files to tftp root" do
   cp /tmp/#{dist_misc}.kpxe /var/lib/tftpboot/
   cp /usr/lib/syslinux/pxelinux.0 /var/lib/tftpboot/
   cp /usr/lib/syslinux/menu.c32 /var/lib/tftpboot/
-  mkdir /var/lib/tftpboot/pxelinux.cfg
   EOH
 end
 
