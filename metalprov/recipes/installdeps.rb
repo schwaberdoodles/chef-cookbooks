@@ -19,7 +19,6 @@
 
 
 package "build-essential"
-package "git"
 package "ruby1.9.3"
 package "python" 
 package "libssl-dev"
