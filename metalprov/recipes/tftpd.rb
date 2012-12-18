@@ -47,6 +47,7 @@ script "Copy files to tftp root" do
   interpreter "bash"
   user "root"
   code <<-EOH
+  mkdir /var/lib/tftpboot/pxelinux.cfg
   cp /tmp/#{dist}.iso /var/lib/tftpboot/
   cp /tmp/#{dist_usb}.lkrn /var/lib/tftpboot/
   cp /tmp/#{dist_misc}.kpxe /var/lib/tftpboot/
