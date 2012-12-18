@@ -55,17 +55,6 @@ script "Copy files to tftp root" do
   EOH
 end
 
-service "networking" do
-  supports :restart => true
-end
-
-service "isc-dhcp-server"  do
-  supports :restart => true
-end
-
-service "tftpd-hpa"  do
-  supports :restart => true
-end
 
 # template "/var/lib/tftpboot/preseed.ubuntu.cfg" do
 #   source "preseed.ubuntu.cfg.erb"
@@ -76,5 +65,14 @@ template "/var/lib/tftpboot/pxelinux.cfg/default" do
   source "pxelinux.default.erb"
   mode 0644
 end
+service "networking" do
+  supports :restart => true
+end
 
+service "tftpd-hpa"  do
+  supports :restart => true
+end
 
+service "isc-dhcp-server"  do
+  supports :restart => true
+end
