@@ -14,7 +14,7 @@ Vagrant::Config.run do |config|
   config.vm.define :node01 do |node01_config|
 	node01_config.vm.box = "node01"
 	node01_config.vm.box_url = "http://files.vagrantup.com/precise64.box"
-	node01_config.vm.network :hostonly
+	node01_config.vm.network :hostonly, "172.16.10.6"
   end
 
 
