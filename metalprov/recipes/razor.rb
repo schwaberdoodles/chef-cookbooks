@@ -57,4 +57,4 @@ script "Installing and starting Razor" do
   EOH
 end
 
-
+#razor -v -d image add -t mk -p /tmp/rz_mk_dev-image.0.9.3.0.iso
