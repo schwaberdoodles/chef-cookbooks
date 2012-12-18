@@ -58,3 +58,4 @@ script "Installing and starting Razor" do
 end
 
 #razor -v -d image add -t mk -p /tmp/rz_mk_dev-image.0.9.3.0.iso
+#razor -v -d image add -t os -p /tmp/ubuntu-12.04.1-server-amd64.iso -n ubuntu_precise -v 12.04
