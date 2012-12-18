@@ -8,15 +8,15 @@ Vagrant::Config.run do |config|
   config.vm.define :metalprov do |metalprov_config|
 	metalprov_config.vm.box = "metalprov"
 	metalprov_config.vm.host_name = "metalprov"
-	metalprov_config.vm.box_url = "http://files.vagrantup.com/precise64.box"
+	metalprov_config.vm.box_url = "precise64.box"
 	metalprov_config.vm.network :hostonly, "172.16.10.5"
   end
 
-  config.vm.define :node01 do |node01_config|
-	node01_config.vm.box = "node01"
-	node01_config.vm.host_name = "node01"
-	node01_config.vm.box_url = "http://files.vagrantup.com/precise64.box"
-	node01_config.vm.network :hostonly, "172.16.10.6"
+  config.vm.define :automator do |automator_config|
+	automator_config.vm.box = "automator"
+	automator_config.vm.host_name = "automator"
+	automator_config.vm.box_url = "precise64.box"
+	automator_config.vm.network :hostonly, "172.16.10.6"
   end
 
 
