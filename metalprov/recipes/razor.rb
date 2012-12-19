@@ -68,7 +68,7 @@ script "Adding Micro Kernel Image" do
   interpreter "bash"
   user "root"
   code <<-EOH
-  razor -v -d image add -t mk -p /tmp/#{mk}.iso
+  /opt/Razor-master/bin/razor -v -d image add -t mk -p /tmp/#{mk}.iso
   EOH
 end
 
