@@ -7,8 +7,8 @@ default[:metalprov][:ipxe][:dist_usb] = "ipxe"
 default[:metalprov][:ipxe][:path_usb] = "https://s3.amazonaws.com/velankanidownloads/ipxe.usb"
 default[:metalprov][:ipxe][:dist_misc] = "undionly"
 default[:metalprov][:ipxe][:path_misc] = "https://s3.amazonaws.com/velankanidownloads/undionly.kpxe"
-default[:metalprov][:razor][:mk] = "rz_mk_dev-image.0.9.3.0"
-default[:metalprov][:razor][:mk_path] = "https://github.com/downloads/puppetlabs/Razor-Microkernel/rz_mk_dev-image.0.9.3.0.iso"
+default[:metalprov][:razor][:mk] = "rz_mk_prod-image.0.9.3.0"
+default[:metalprov][:razor][:mk_path] = "https://github.com/downloads/puppetlabs/Razor-Microkernel/rz_mk_prod-image.0.9.3.0.iso"
 
 
 
