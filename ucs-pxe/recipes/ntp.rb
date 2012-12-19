@@ -1,9 +1,6 @@
 #
 # Cookbook Name:: pxe
-# Recipe:: data_bags [Generate data_bags for use by recipe pxe::dhcpd]
-# Notes: This recipe is for Cisco UCS only as it relies no querying assigned
-#        MAC addresses on all Service Profiles
-#
+# Recipe:: ntp [Setup local NTP server for PXE installs]
 # Copyright 2012, Murali Raju, murali.raju@appliv.com
 # Copyright 2012, Velankani Information Systems, eng@velankani.net
 #

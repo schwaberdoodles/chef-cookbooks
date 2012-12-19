@@ -1,7 +1,8 @@
 #
 # Cookbook Name:: metalprov
-# Recipe:: dhcpd [Generate dhcpd.conf Razor]
+# Recipe:: ntp [Setup local NTP server for PXE installs]
 #
+# Copyright 2012, Murali Raju, murali.raju@appliv.com
 # Copyright 2012, Velankani Information Systems, eng@velankani.net
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,25 +18,22 @@
 # limitations under the License.
 #
 
-include_recipe "metalprov::ntp"
+include_recipe "metalprov::installdeps"
 
-service "isc-dhcp-server"
-
-template "/etc/default/isc-dhcp-server" do
-  source "isc-dhcp-server.erb"
-  owner "root"
-  group "root"
+template "/etc/ntp.conf" do
+  source "ntp.conf.erb"
   mode 0644
-  notifies(:restart, resources(:service => "isc-dhcp-server"))
 end
 
-template "/etc/dhcp/dhcpd.conf" do
-  source "dhcpd.conf.erb"
-  owner "root"
-  group "root"
-  mode 0644
-  notifies(:restart, resources(:service => "isc-dhcp-server"))
+script "Removing unwanted packages" do
+  interpreter "bash"
+  user "root"
+  code <<-EOH
+  apt-get autoremove -y
+  EOH
 end
 
-
+service "openntpd"  do
+  supports :restart => true
+end
 
