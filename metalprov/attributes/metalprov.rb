@@ -11,7 +11,7 @@ default[:metalprov][:ipxe][:path_misc] = "https://s3.amazonaws.com/velankanidown
 
 #DHCP
 default[:metalprov][:dhcpd][:dns_server] = "172.16.10.2"
-default[:metalprov][:dhcpd][:next_server] = "172.16.10.136"
+default[:metalprov][:dhcpd][:next_server] = "172.16.10.5"
 default[:metalprov][:dhcpd][:subnet] = "172.16.10.0"
 default[:metalprov][:dhcpd][:subnet_mask] = "255.255.255.0"
 default[:metalprov][:dhcpd][:broadcast] = "172.16.10.255"
