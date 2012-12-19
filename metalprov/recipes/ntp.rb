@@ -25,14 +25,6 @@ template "/etc/ntp.conf" do
   mode 0644
 end
 
-script "Removing unwanted packages" do
-  interpreter "bash"
-  user "root"
-  code <<-EOH
-  apt-get autoremove -y
-  EOH
-end
-
 service "openntpd"  do
   supports :restart => true
 end
