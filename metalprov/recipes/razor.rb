@@ -59,6 +59,7 @@ script "Installing and starting Razor" do
   npm install mime
   unzip #{dist}
   /opt/Razor-master/bin/razor_daemon.rb start
+  /opt/Razor-master/bin/razor config ipxe > /var/lib/tftpboot/razor.ipxe 
   echo "export PATH=/opt/Razor-master/bin:$PATH" >> ~/.bashrc
   sleep 5s
   EOH
