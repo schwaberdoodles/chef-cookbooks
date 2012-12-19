@@ -8,7 +8,7 @@ Vagrant::Config.run do |config|
   config.vm.define :metalprov do |metalprov_config|
 	metalprov_config.vm.box = "metalprov"
 	metalprov_config.vm.host_name = "metalprov"
-	metalprov_config.vm.box_url = "precise64.box"
+	metalprov_config.vm.box_url = "ubuntu12.0.4.1.LTS.box"
 	metalprov_config.vm.network :hostonly, "172.16.10.5"
 	metalprov_config.vm.customize [
                         "modifyvm", :id,
@@ -20,7 +20,7 @@ Vagrant::Config.run do |config|
   config.vm.define :automator do |automator_config|
 	automator_config.vm.box = "automator"
 	automator_config.vm.host_name = "automator"
-	automator_config.vm.box_url = "precise64.box"
+	automator_config.vm.box_url = "ubuntu12.0.4.1.LTS.box"
 	automator_config.vm.network :hostonly, "172.16.10.6"
 	automator_config.vm.customize [
                         "modifyvm", :id,
