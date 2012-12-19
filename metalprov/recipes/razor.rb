@@ -37,10 +37,17 @@ gem_package "uuid"
 
 dist = node[:metalprov][:razor][:dist]
 path = node[:metalprov][:razor][:path]
+mk = node[:metalprov][:razor][:mk]
+mk_path = node[:metalprov][:razor][:mk_path]
 
 remote_file "/opt/#{dist}" do
   source "#{path}"
   not_if { File.exists?("/opt/#{dist}") }
+end
+
+remote_file "/tmp/#{mk}.iso" do
+  source "#{mk_path}"
+  not_if { File.exists?("/tmp/#{mk}.iso") }
 end
 
 script "Installing and starting Razor" do
@@ -54,6 +61,14 @@ script "Installing and starting Razor" do
   /opt/Razor-master/bin/razor_daemon.rb start
   echo "export PATH=/opt/Razor-master/bin:$PATH" >> ~/.bashrc
   sleep 5s
+  EOH
+end
+
+script "Adding Micro Kernel Image" do
+  interpreter "bash"
+  user "root"
+  code <<-EOH
+  razor -v -d image add -t mk -p /tmp/#{mk}.iso
   EOH
 end
 
