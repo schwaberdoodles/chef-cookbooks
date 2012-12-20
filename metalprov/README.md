@@ -3,7 +3,7 @@ Description
 
 A cookbook to setup a hardware agnostic provisioning node powered by Razor with the Razor Micro Kernel image imported. 
 This cookbook falls under stage 1-3 for Data Center Automation. Stage 3 (Service Provisioning) can be configured to execute
-post OS install. The Chef Broker hand off to chef to run respective service cookbooks.
+post OS install. The Chef Broker hand off to chef to run any respective cookbooks (Hadoop, OpenStack, CloudStack, etc).
 
 
 Requirements
