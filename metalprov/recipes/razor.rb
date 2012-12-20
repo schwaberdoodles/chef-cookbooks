@@ -76,14 +76,17 @@ end
 
 service "networking" do
   supports :restart => true
+  action :restart
 end
 
 service "tftpd-hpa"  do
   supports :restart => true
+  action :restart
 end
 
 service "isc-dhcp-server"  do
   supports :restart => true
+  action :restart
 end
 
 #razor -v -d image add -t mk -p /tmp/rz_mk_dev-image.0.9.3.0.iso
