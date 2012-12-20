@@ -44,7 +44,7 @@ Usage
 
 	knife node run_list add <node> recipe[metalprov::razor]
 
-	Example: Create a model, policy, and attach to a Chef Broker for stage 3 (hand off) for deploying Ubuntu 12.0.4.1 
+	Example: Deploying Ubuntu 12.0.4.1 - Create a model, policy, and attach to a Chef Broker for stage 3 (hand off).
 
 	Once installed:
 
