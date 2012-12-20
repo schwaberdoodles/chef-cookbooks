@@ -16,6 +16,5 @@ Third-party cookbooks in this repository:
 
 [java] by [Opscode](https://github.com/opscode/cookbooks)
 
-For more information and customized Cookbook development for Data Center Automation around UCS and more, 
-talk to us via consulting@velankani.net
+For more information and customized Cookbook development for Data Center Automation, talk to us via consulting@velankani.net
 
