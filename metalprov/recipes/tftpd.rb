@@ -68,14 +68,3 @@ template "/var/lib/tftpboot/pxelinux.cfg/default" do
   mode 0644
 end
 
-service "networking" do
-  supports :restart => true
-end
-
-service "tftpd-hpa"  do
-  supports :restart => true
-end
-
-service "isc-dhcp-server"  do
-  supports :restart => true
-end

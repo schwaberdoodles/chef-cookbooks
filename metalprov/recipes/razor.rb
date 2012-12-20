@@ -74,6 +74,18 @@ script "Adding Micro Kernel Image" do
   EOH
 end
 
+service "networking" do
+  supports :restart => true
+end
+
+service "tftpd-hpa"  do
+  supports :restart => true
+end
+
+service "isc-dhcp-server"  do
+  supports :restart => true
+end
+
 #razor -v -d image add -t mk -p /tmp/rz_mk_dev-image.0.9.3.0.iso
 #razor -v -d image add -t os -p /tmp/ubuntu-12.04.1-server-amd64.iso -n ubuntu_precise -v 12.04
 #razor model add -t ubuntu_precise -l install_precise -i 2WdVsigEAlEmdHmqSY4ew7
