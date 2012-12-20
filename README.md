@@ -6,6 +6,9 @@ A set of Chef Cookbooks used by Velankani Solution Architects for Data Center Au
 			  defined in ucs and ucs-solo.
 	automator - A Cookbook to build a node or VM (laptop) for Orchestration - Deployment and Ops
 				Automation using [Rundeck](http://rundeck.org)
+	metalprov - A Cookbook for building a node for hardware agnostic provisioning powered by Razor.
+				This cookbook supports both Stage 1 (hardware setup) and Stage 2 (OS Provisioning).
+				Even more powerful - hand off to a Chef Broker (Hosted or Private) for Stage 3 (Service)
 
 Third-party cookbooks in this repository:
 
