@@ -68,11 +68,6 @@ template "/var/lib/tftpboot/pxelinux.cfg/default" do
   mode 0644
 end
 
-template "/var/lib/tftpboot/razor.ipxe" do
-  source "razor.ipxe.erb"
-  mode 0644
-end
-
 service "networking" do
   supports :restart => true
 end
