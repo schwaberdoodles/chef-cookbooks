@@ -76,4 +76,11 @@ end
 #razor -v -d image add -t mk -p /tmp/rz_mk_dev-image.0.9.3.0.iso
 #razor -v -d image add -t os -p /tmp/ubuntu-12.04.1-server-amd64.iso -n ubuntu_precise -v 12.04
 #razor model add -t ubuntu_precise -l install_precise -i 2WdVsigEAlEmdHmqSY4ew7
-#razor policy add --template linux_deploy --label precise --model-uuid 5Bv1pMbFHVLIzdaj1vYFt5 --tags cpus_2,memsize_1GiB,vmware_vm --enabled true
+#razor policy add --template linux_deploy --label precise --model-uuid 5Bv1pMbFHVLIzdaj1vYFt5
+#razor broker add -p chef -n Chef_1 -d Development
+#razor policy update 5QaDlx486C0siF8RTsRcpC -l precise -m 2GEEDmZGgy1zIKgM2b94UA -b 6oqpqUGGsTczJjBiCIPytC 
+
+
+
+
+
