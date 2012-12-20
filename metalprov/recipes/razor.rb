@@ -60,22 +60,8 @@ script "Installing Razor" do
   unzip #{dist}
   /opt/Razor-master/bin/razor_daemon.rb start
   /opt/Razor-master/bin/razor config ipxe > /var/lib/tftpboot/razor.ipxe 
+  chmod -R 655 /var/lib/tftpboot
   echo "export PATH=/opt/Razor-master/bin:$PATH" >> ~/.bashrc
-  sleep 5s
-  EOH
-end
-
-
-template "/opt/Razor-master/conf/razor_server.conf" do
-  source "razor_server.conf.erb"
-  mode 0655
-end
-
-script "Starting Razor" do
-  interpreter "bash"
-  user "root"
-  code <<-EOH
-  /opt/Razor-master/bin/razor_daemon.rb start
   sleep 5s
   EOH
 end
