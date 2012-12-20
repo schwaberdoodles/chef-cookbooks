@@ -50,7 +50,7 @@ remote_file "/tmp/#{mk}.iso" do
   not_if { File.exists?("/tmp/#{mk}.iso") }
 end
 
-script "Installing and starting Razor" do
+script "Installing Razor" do
   interpreter "bash"
   user "root"
   code <<-EOH
@@ -61,6 +61,21 @@ script "Installing and starting Razor" do
   /opt/Razor-master/bin/razor_daemon.rb start
   /opt/Razor-master/bin/razor config ipxe > /var/lib/tftpboot/razor.ipxe 
   echo "export PATH=/opt/Razor-master/bin:$PATH" >> ~/.bashrc
+  sleep 5s
+  EOH
+end
+
+
+template "/opt/Razor-master/conf/razor_server.conf" do
+  source "razor_server.conf.erb"
+  mode 0655
+end
+
+script "Starting Razor" do
+  interpreter "bash"
+  user "root"
+  code <<-EOH
+  /opt/Razor-master/bin/razor_daemon.rb start
   sleep 5s
   EOH
 end
