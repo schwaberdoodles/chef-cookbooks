@@ -11,6 +11,23 @@ Requirements
 
 Ubuntu 12.0.4.1 LTS as the install platorm. Others will be supported in the future. All target OS platforms supported by Razor.
 
+	Template Name                Description            
+
+	debian_wheezy           Debian Wheezy Model             
+	opensuse_12             OpenSuSE Suse 12 Model          
+	redhat_6                RedHat 6 Model                  
+	sles_11                 SLES 11 Model                   
+	ubuntu_oneiric          Ubuntu Oneiric Model            
+	ubuntu_precise          Ubuntu Precise Model            
+	ubuntu_precise_ip_pool  Ubuntu Precise Model (IP Pool)  
+	vmware_esxi_5           VMware ESXi 5 Deployment        
+	centos_6                CentOS 6 Model                  
+	oraclelinux_6           Oracle Linux 6 Model   
+
+*For debian, use the mini.iso for netboot         
+
+
+
 Attributes
 ==========
 
