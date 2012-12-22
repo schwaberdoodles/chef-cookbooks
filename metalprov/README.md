@@ -24,7 +24,18 @@ Ubuntu 12.0.4.1 LTS as the install platorm. Others will be supported in the futu
 	centos_6                CentOS 6 Model                  
 	oraclelinux_6           Oracle Linux 6 Model   
 
-*For debian, use the mini.iso for netboot         
+*For debian, use the mini.iso for netboot
+
+Chef Broker:
+
+Success (node registration):
+
+Ubuntu 12.0.4.1 LTS
+
+Failure (node registration):
+
+Debian Wheezy
+
 
 
 
