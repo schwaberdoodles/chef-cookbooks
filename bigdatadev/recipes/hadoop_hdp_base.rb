@@ -20,6 +20,22 @@
 # This recipe is for Cloudera Hadoop CDH4 on Ubuntu 12.04.LTS only
 # Most of this will refactored in a later version
 
-include_recipe "java::oracle"
+
+repo_path = node[:bigdatadev][:hadoop][:yum_repo_path]
+
+user node[:bigdatadev][:hadoop][:user] do
+  system true
+  comment "Hadoop User"
+  shell "/bin/false"
+end
+
+script "Preparing environment for HDP" do
+  interpreter "bash"
+  user "root"
+  code <<-EOH
+  wget -nv #{repo_path} -O /etc/yum.repos.d/hdp.repo
+  sleep 5
+  EOH
+end
 
 
