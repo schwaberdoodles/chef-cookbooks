@@ -10,6 +10,7 @@ default[:bigdatadev][:hadoop][:user] = "cdhuser"
 # default[:bigdatadev][:hadoop][:yum_repo_path] = "http://public-repo-1.hortonworks.com/HDP-1.2.0/repos/centos6/hdp.repo"
 # default[:bigdatadev][:hadoop][:java_home] = "/usr/lib/jvm/jdk1.6.0_37"
 # default[:bigdatadev][:hadoop][:user] = "hdpuser"
+# default[:bigdatadev][:hadoop][:jdk] = "http://public-repo-1.hortonworks.com/ARTIFACTS/jdk-6u31-linux-x64.bin"
 
 #HBase
 default[:bigdatadev][:hbase][:dir] = "hbase"
