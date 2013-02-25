@@ -31,43 +31,24 @@ java_home = node[:bigdatadev][:hadoop][:java_home]
 data_dir = node[:bigdatadev][:hadoop][:data_dir]
 user = node[:bigdatadev][:hadoop][:user]
 
-user node[:bigdatadev][:hadoop][:user] do
-  system true
-  comment "Hadoop User"
-  shell "/bin/false"
-end
+# user node[:bigdatadev][:hadoop][:user] do
+#   system true
+#   comment "Hadoop User"
+#   shell "/bin/false"
+# end
 
-remote_file "/tmp/#{jdk}" do
-  source "#{jdk_path}"
-  not_if { File.exists?("/tmp/#{jdk}") }
-end
 
 script "Installing HDP 1.2 pseudo dist" do
   interpreter "bash"
   user "root"
   code <<-EOH
   wget -nv http://public-repo-1.hortonworks.com/HDP-1.2.0/repos/centos6/hdp.repo -O /etc/yum.repos.d/hdp.repo
-  yum repolist
-  yum install hadoop-conf-pseudo.x86_64
+  sleep 5
+  echo "Installing HDP 1.2. Please wait...."
+  yum install hadoop-conf-pseudo.x86_64 -y
   EOH
 end
 
-# script "Setup JDK" do
-#   interpreter "bash"
-#   user "root"
-#   code <<-EOH
-#   mkdir /usr/jdk1.6.0_31
-#   cd /usr/jdk1.6.0_31
-#   chmod u+x /tmp/#{jdk}
-#   /tmp/#{jdk}
-#   sleep 10
-#   mkdir /usr/java
-#   ln -s /usr/jdk1.6.0_31/jdk1.6.0_31 /usr/java/default
-#   ln -s /usr/java/default/bin/java /usr/bin/java
-#   export JAVA_HOME=/usr/java/default
-#   export PATH=$JAVA_HOME/bin:$PATH
-#   EOH
-# end
 
 template "/etc/hadoop/conf/hdfs-site.xml" do
   source "hdfs-site.xml.erb"
@@ -88,7 +69,8 @@ script "Setting up and starting HDP 1.2 services" do
   interpreter "bash"
   user "root"
   code <<-EOH
-  sudo -u hdfs hadoop namenode -format
+  export JAVA_HOME=/usr/lib/jvm/jdk1.6.0_37/
+  sudo -iu hdfs hadoop namenode -format
   /etc/init.d/hadoop-namenode start
   /etc/init.d/hadoop-secondarynamenode start
   /etc/init.d/hadoop-datanode start
@@ -99,19 +81,19 @@ script "Setting up and starting HDP 1.2 MapReduce" do
   interpreter "bash"
   user "root"
   code <<-EOH
-  sudo -u hdfs hadoop fs -mkdir /tmp
-  sudo -u hdfs hadoop fs -chmod -R 1777 /tmp
-  sudo -u hdfs hadoop fs -mkdir /var
-  sudo -u hdfs hadoop fs -mkdir /var/lib
-  sudo -u hdfs hadoop fs -mkdir /var/lib/hadoop-hdfs
-  sudo -u hdfs hadoop fs -mkdir /var/lib/hadoop-hdfs/cache
-  sudo -u hdfs hadoop fs -mkdir /var/lib/hadoop-hdfs/cache/mapred
-  sudo -u hdfs hadoop fs -mkdir /var/lib/hadoop-hdfs/cache/mapred/mapred
-  sudo -u hdfs hadoop fs -mkdir /var/lib/hadoop-hdfs/cache/mapred/mapred/staging
-  sudo -u hdfs hadoop fs -chmod 1777 /var/lib/hadoop-hdfs/cache/mapred/mapred/staging
-  sudo -u hdfs hadoop fs -chown -R mapred /var/lib/hadoop-hdfs/cache/mapred
+  sudo -iu hdfs hadoop fs -mkdir /tmp
+  sudo -iu hdfs hadoop fs -chmod -R 1777 /tmp
+  sudo -iu hdfs hadoop fs -mkdir /var
+  sudo -iu hdfs hadoop fs -mkdir /var/lib
+  sudo -iu hdfs hadoop fs -mkdir /var/lib/hadoop-hdfs
+  sudo -iu hdfs hadoop fs -mkdir /var/lib/hadoop-hdfs/cache
+  sudo -iu hdfs hadoop fs -mkdir /var/lib/hadoop-hdfs/cache/mapred
+  sudo -iu hdfs hadoop fs -mkdir /var/lib/hadoop-hdfs/cache/mapred/mapred
+  sudo -iu hdfs hadoop fs -mkdir /var/lib/hadoop-hdfs/cache/mapred/mapred/staging
+  sudo -iu hdfs hadoop fs -chmod 777 /var/lib/hadoop-hdfs/cache/mapred/mapred/staging
+  sudo -iu hdfs hadoop fs -chown -R mapred /var/lib/hadoop-hdfs/cache/mapred
   echo "Verifying HDFS file structure"
-  sudo -u hdfs hadoop fs -ls -R /
+  sudo -iu hdfs hadoop fs -ls -R /
   sleep 3
   /etc/init.d/hadoop-jobtracker start
   /etc/init.d/hadoop-tasktracker start
@@ -122,8 +104,8 @@ script "Setting up home directories" do
   interpreter "bash"
   user "root"
   code <<-EOH
-  sudo -u hdfs hadoop fs -mkdir  /user/#{user}
-  sudo -u hdfs hadoop fs -chown #{user} /user/#{user}
+  sudo -iu hdfs hadoop fs -mkdir  /user/#{user}
+  sudo -iu hdfs hadoop fs -chown #{user} /user/#{user}
   EOH
 end
 
