@@ -88,7 +88,7 @@ script "Setting up and starting HDP 1.2 services" do
   interpreter "bash"
   user "root"
   code <<-EOH
-  hadoop namenode -format
+  sudo -u hdfs hadoop namenode -format
   /etc/init.d/hadoop-namenode start
   /etc/init.d/hadoop-secondarynamenode start
   /etc/init.d/hadoop-datanode start
