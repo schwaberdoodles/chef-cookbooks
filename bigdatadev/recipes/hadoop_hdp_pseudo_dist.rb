@@ -61,7 +61,7 @@ template "/usr/lib/hadoop/libexec/hadoop-config.sh" do
 end
 
 template "/usr/lib/hadoop/bin/hadoop-config.sh" do
-  source "hadoop-config-map-reduce.sh.erb"
+  source "hadoop-config.sh.erb"
   mode 0644
 end
 
