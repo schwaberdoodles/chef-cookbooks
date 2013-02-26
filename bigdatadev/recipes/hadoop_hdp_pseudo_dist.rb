@@ -75,6 +75,7 @@ script "Setting up and starting HDP 1.2 HDFS" do
   interpreter "bash"
   user "#{install_user}"
   code <<-EOH
+  sudo chown -R hdfs:hdfs /var/lib/hadoop*
   sudo -iu hdfs hadoop namenode -format
   sleep 10
   sudo /usr/lib/hadoop/bin/hadoop-daemon.sh --config /etc/hadoop/conf start namenode
