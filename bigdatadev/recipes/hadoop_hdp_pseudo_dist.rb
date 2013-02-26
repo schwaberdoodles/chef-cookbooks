@@ -55,6 +55,11 @@ template "/etc/hadoop/conf/hdfs-site.xml" do
   mode 0644
 end
 
+template "/etc/hadoop/conf/hadoop-env.sh" do
+  source "hadoop-env-hdp.sh.erb"
+  mode 0644
+end
+
 template "/usr/lib/hadoop/libexec/hadoop-config.sh" do
   source "hadoop-config-hdp-libexec.sh.erb"
   mode 0644
