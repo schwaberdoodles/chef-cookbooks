@@ -34,7 +34,7 @@ user = node[:bigdatadev][:hadoop][:user]
 user node[:bigdatadev][:hadoop][:user] do
   system true
   comment "Hadoop User"
-  shell "/bin/false"
+  shell "/bin/bash"
 end
 
 
