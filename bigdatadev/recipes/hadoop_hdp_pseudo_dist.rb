@@ -65,7 +65,7 @@ template "/usr/lib/hadoop/bin/hadoop-config.sh" do
   mode 0644
 end
 
-script "Setting up and starting HDP 1.2 services" do
+script "Setting up and starting HDP 1.2 HDFS" do
   interpreter "bash"
   user "root"
   code <<-EOH
