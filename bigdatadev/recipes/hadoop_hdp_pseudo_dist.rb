@@ -56,12 +56,12 @@ template "/etc/hadoop/conf/hdfs-site.xml" do
 end
 
 template "/usr/lib/hadoop/libexec/hadoop-config.sh" do
-  source "hadoop-config.sh.erb"
+  source "hadoop-config-hdp-libexec.sh.erb"
   mode 0644
 end
 
 template "/usr/lib/hadoop/bin/hadoop-config.sh" do
-  source "hadoop-config.sh.erb"
+  source "hadoop-config-hdp.sh.erb"
   mode 0644
 end
 
@@ -90,7 +90,6 @@ script "Setting up and starting HDP 1.2 MapReduce" do
   sudo -iu hdfs hadoop fs -mkdir /var/lib/hadoop-hdfs/cache/mapred/mapred
   sudo -iu hdfs hadoop fs -mkdir /var/lib/hadoop-hdfs/cache/mapred/mapred/staging
   sudo -iu hdfs hadoop fs -chmod 777 /var/lib/hadoop-hdfs/cache/mapred/mapred/staging
-  sudo -iu hdfs hadoop fs -chown -R mapred /var/lib/hadoop-hdfs/cache/mapred
   echo "Verifying HDFS file structure"
   sudo -iu hdfs hadoop fs -ls -R /
   sleep 3
