@@ -31,11 +31,11 @@ java_home = node[:bigdatadev][:hadoop][:java_home]
 data_dir = node[:bigdatadev][:hadoop][:data_dir]
 user = node[:bigdatadev][:hadoop][:user]
 
-# user node[:bigdatadev][:hadoop][:user] do
-#   system true
-#   comment "Hadoop User"
-#   shell "/bin/false"
-# end
+user node[:bigdatadev][:hadoop][:user] do
+  system true
+  comment "Hadoop User"
+  shell "/bin/false"
+end
 
 
 script "Installing HDP 1.2 pseudo dist" do
@@ -69,11 +69,10 @@ script "Setting up and starting HDP 1.2 services" do
   interpreter "bash"
   user "root"
   code <<-EOH
-  export JAVA_HOME=/usr/lib/jvm/jdk1.6.0_37/
   sudo -iu hdfs hadoop namenode -format
-  /etc/init.d/hadoop-namenode start
-  /etc/init.d/hadoop-secondarynamenode start
-  /etc/init.d/hadoop-datanode start
+  sudo /usr/lib/hadoop/bin/hadoop-daemon.sh --config /etc/hadoop/conf start namenode
+  sudo /usr/lib/hadoop/bin/hadoop-daemon.sh --config /etc/hadoop/conf start secondarynamenode
+  sudo /usr/lib/hadoop/bin/hadoop-daemon.sh --config /etc/hadoop/conf start datanode
   EOH
 end
 
@@ -82,7 +81,7 @@ script "Setting up and starting HDP 1.2 MapReduce" do
   user "root"
   code <<-EOH
   sudo -iu hdfs hadoop fs -mkdir /tmp
-  sudo -iu hdfs hadoop fs -chmod -R 1777 /tmp
+  sudo -iu hdfs hadoop fs -chmod -R 777 /tmp
   sudo -iu hdfs hadoop fs -mkdir /var
   sudo -iu hdfs hadoop fs -mkdir /var/lib
   sudo -iu hdfs hadoop fs -mkdir /var/lib/hadoop-hdfs
@@ -95,8 +94,8 @@ script "Setting up and starting HDP 1.2 MapReduce" do
   echo "Verifying HDFS file structure"
   sudo -iu hdfs hadoop fs -ls -R /
   sleep 3
-  /etc/init.d/hadoop-jobtracker start
-  /etc/init.d/hadoop-tasktracker start
+  sudo /usr/lib/hadoop/bin/hadoop-daemon.sh --config /etc/hadoop/conf start jobtracker
+  sudo /usr/lib/hadoop/bin/hadoop-daemon.sh --config /etc/hadoop/conf start tasktracker
   EOH
 end
 
