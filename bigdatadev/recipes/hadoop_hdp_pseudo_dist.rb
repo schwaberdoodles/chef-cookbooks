@@ -70,6 +70,7 @@ script "Setting up and starting HDP 1.2 HDFS" do
   user "root"
   code <<-EOH
   sudo -iu hdfs hadoop namenode -format
+  sleep 10
   sudo /usr/lib/hadoop/bin/hadoop-daemon.sh --config /etc/hadoop/conf start namenode
   sudo /usr/lib/hadoop/bin/hadoop-daemon.sh --config /etc/hadoop/conf start secondarynamenode
   sudo /usr/lib/hadoop/bin/hadoop-daemon.sh --config /etc/hadoop/conf start datanode
