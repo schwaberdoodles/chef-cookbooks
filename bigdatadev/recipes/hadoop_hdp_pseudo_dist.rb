@@ -30,6 +30,7 @@ jdk = node[:bigdatadev][:hadoop][:jdk]
 java_home = node[:bigdatadev][:hadoop][:java_home]
 data_dir = node[:bigdatadev][:hadoop][:data_dir]
 user = node[:bigdatadev][:hadoop][:user]
+install_user = node[:bigdatadev][:hadoop][:install_user]
 
 user node[:bigdatadev][:hadoop][:user] do
   system true
@@ -40,12 +41,12 @@ end
 
 script "Installing HDP 1.2 pseudo dist" do
   interpreter "bash"
-  user "root"
+  user "#{install_user}"
   code <<-EOH
-  wget -nv http://public-repo-1.hortonworks.com/HDP-1.2.0/repos/centos6/hdp.repo -O /etc/yum.repos.d/hdp.repo
+  sudo wget -nv http://public-repo-1.hortonworks.com/HDP-1.2.0/repos/centos6/hdp.repo -O /etc/yum.repos.d/hdp.repo
   sleep 5
-  echo "Installing HDP 1.2. Please wait...."
-  yum install hadoop-conf-pseudo.x86_64 -y
+  echo "Installing HDP 1.2. Please wait..."
+  sudo yum install hadoop-conf-pseudo.x86_64 -y
   EOH
 end
 
@@ -72,7 +73,7 @@ end
 
 script "Setting up and starting HDP 1.2 HDFS" do
   interpreter "bash"
-  user "root"
+  user "#{install_user}"
   code <<-EOH
   sudo -iu hdfs hadoop namenode -format
   sleep 10
@@ -84,7 +85,7 @@ end
 
 script "Setting up and starting HDP 1.2 MapReduce" do
   interpreter "bash"
-  user "root"
+  user "#{install_user}"
   code <<-EOH
   sudo -iu hdfs hadoop fs -mkdir /tmp
   sudo -iu hdfs hadoop fs -chmod -R 777 /tmp
@@ -106,7 +107,7 @@ end
 
 script "Setting up home directories" do
   interpreter "bash"
-  user "root"
+  user "#{install_user}"
   code <<-EOH
   sudo -iu hdfs hadoop fs -mkdir  /user/#{user}
   sudo -iu hdfs hadoop fs -chown #{user} /user/#{user}
