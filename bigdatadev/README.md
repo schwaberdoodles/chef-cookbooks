@@ -4,6 +4,7 @@ Description
 A Cookbook to setup a development environment to work with Big Data. Current features:
 
 * Setup a Cloudera (CHD4) Hadoop and HBase environment in pseudo distributed mode
+* Setup a HortonWorks (HDP1.2) Hadoop environment in pseudo distributed mode
 
 Requirements
 ============
