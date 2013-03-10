@@ -78,9 +78,9 @@ script "Setting up and starting HDP 1.2 HDFS" do
   sudo chown -R hdfs:hdfs /var/lib/hadoop*
   sudo -iu hdfs hadoop namenode -format
   sleep 10
-  sudo /usr/lib/hadoop/bin/hadoop-daemon.sh --config /etc/hadoop/conf start namenode
-  sudo /usr/lib/hadoop/bin/hadoop-daemon.sh --config /etc/hadoop/conf start secondarynamenode
-  sudo /usr/lib/hadoop/bin/hadoop-daemon.sh --config /etc/hadoop/conf start datanode
+  sudo -u hdfs /usr/lib/hadoop/bin/hadoop-daemon.sh --config /etc/hadoop/conf start namenode
+  sudo -u hdfs /usr/lib/hadoop/bin/hadoop-daemon.sh --config /etc/hadoop/conf start secondarynamenode
+  sudo -u hdfs /usr/lib/hadoop/bin/hadoop-daemon.sh --config /etc/hadoop/conf start datanode
   EOH
 end
 
@@ -101,8 +101,8 @@ script "Setting up and starting HDP 1.2 MapReduce" do
   echo "Verifying HDFS file structure"
   sudo -iu hdfs hadoop fs -ls -R /
   sleep 3
-  sudo /usr/lib/hadoop/bin/hadoop-daemon.sh --config /etc/hadoop/conf start jobtracker
-  sudo /usr/lib/hadoop/bin/hadoop-daemon.sh --config /etc/hadoop/conf start tasktracker
+  sudo -u mapred /usr/lib/hadoop/bin/hadoop-daemon.sh --config /etc/hadoop/conf start jobtracker
+  sudo -u mapred /usr/lib/hadoop/bin/hadoop-daemon.sh --config /etc/hadoop/conf start tasktracker
   EOH
 end
 
