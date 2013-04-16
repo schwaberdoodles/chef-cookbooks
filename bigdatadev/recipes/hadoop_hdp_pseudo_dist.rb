@@ -51,6 +51,11 @@ script "Installing HDP 1.2 pseudo dist" do
   EOH
 end
 
+template "/etc/hadoop/conf/core-site.xml" do
+  source "core-site.xml.erb"
+  mode 0644
+end
+
 
 template "/etc/hadoop/conf/hdfs-site.xml" do
   source "hdfs-site.xml.erb"
@@ -77,7 +82,7 @@ script "Setting up and starting HDP 1.2 HDFS" do
   #user "#{user}"
   code <<-EOH
   chown -R hdfs:hdfs /var/lib/hadoop
-  sudo -iu hdfs hadoop namenode -format
+  hadoop namenode -format
   sleep 10
   sudo -u hdfs /usr/lib/hadoop/bin/hadoop-daemon.sh --config /etc/hadoop/conf start namenode
   sleep 5

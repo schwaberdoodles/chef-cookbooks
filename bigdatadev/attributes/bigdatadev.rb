@@ -14,6 +14,8 @@ default[:bigdatadev][:hadoop][:user] = "vagrant"
 default[:bigdatadev][:hadoop][:install_user] = "root"
 default[:bigdatadev][:hadoop][:jdk_path] = "http://public-repo-1.hortonworks.com/ARTIFACTS/jdk-6u31-linux-x64.bin"
 default[:bigdatadev][:hadoop][:jdk] = "jdk-6u31-linux-x64"
+#default[:bigdatadev][:hadoop][:tmp_dir] = "/var/lib/hadoop/cache/${user.name}"
+default[:bigdatadev][:hadoop][:tmp_dir] = "/tmp"
 
 #HBase
 default[:bigdatadev][:hbase][:dir] = "hbase"
