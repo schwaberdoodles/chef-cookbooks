@@ -82,12 +82,10 @@ script "Setting up and starting HDP 1.2 HDFS" do
   #user "#{user}"
   code <<-EOH
   chown -R hdfs:hdfs /var/lib/hadoop
-  hadoop namenode -format
+  sudo -u hdfs hadoop namenode -format
   sleep 10
   sudo -u hdfs /usr/lib/hadoop/bin/hadoop-daemon.sh --config /etc/hadoop/conf start namenode
-  sleep 5
   sudo -u hdfs /usr/lib/hadoop/bin/hadoop-daemon.sh --config /etc/hadoop/conf start secondarynamenode
-  sleep 5
   sudo -u hdfs /usr/lib/hadoop/bin/hadoop-daemon.sh --config /etc/hadoop/conf start datanode
   EOH
 end
@@ -118,6 +116,7 @@ script "Setting up home directories" do
   interpreter "bash"
   #user "#{user}"
   code <<-EOH
+  sudo -iu hdfs hadoop fs -mkdir /user
   sudo -iu hdfs hadoop fs -mkdir  /user/#{user}
   sudo -iu hdfs hadoop fs -chown #{user} /user/#{user}
   EOH
