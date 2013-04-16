@@ -74,7 +74,7 @@ end
 
 script "Setting up and starting HDP 1.2 HDFS" do
   interpreter "bash"
-  user "#{user}"
+  #user "#{user}"
   code <<-EOH
   chown -R hdfs:hdfs /var/lib/hadoop
   sudo -iu hdfs hadoop namenode -format
@@ -89,7 +89,7 @@ end
 
 script "Setting up and starting HDP 1.2 MapReduce" do
   interpreter "bash"
-  user "#{user}"
+  #user "#{user}"
   code <<-EOH
   sudo -iu hdfs hadoop fs -mkdir /tmp
   sudo -iu hdfs hadoop fs -chmod -R 777 /tmp
@@ -111,7 +111,7 @@ end
 
 script "Setting up home directories" do
   interpreter "bash"
-  user "#{user}"
+  #user "#{user}"
   code <<-EOH
   sudo -iu hdfs hadoop fs -mkdir  /user/#{user}
   sudo -iu hdfs hadoop fs -chown #{user} /user/#{user}
