@@ -20,6 +20,10 @@
 # This recipe is for HDP 1.2 on CentOS 6.3 only
 # Most of this will refactored in a later version
 
+require 'chef/mixin/shell_out'
+require 'chef/mixin/language'
+include Chef::Mixin::ShellOut
+
 
 include_recipe "java::oracle"
 
