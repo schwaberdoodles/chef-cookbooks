@@ -22,7 +22,7 @@
 
 require 'chef/mixin/shell_out'
 require 'chef/mixin/language'
-include Chef::Mixin::ShellOut
+#include Chef::Mixin::ShellOut
 
 
 include_recipe "java::oracle"
@@ -85,7 +85,12 @@ script "Setting up and starting HDP 1.2 HDFS" do
   interpreter "bash"
   #user "#{user}"
   code <<-EOH
-  sudo -u hdfs hadoop namenode -format
+  sudo mkdir /hadoop
+  sudo mkdir /hadoop/nn
+  sudo mkdir /hadoop/sn
+  sudo mkdir /hadoop/data
+  sudo chown -R hdfs:hadoop /hadoop
+  sudo -iu hdfs hadoop namenode -format
   sleep 10
   sudo -u hdfs /usr/lib/hadoop/bin/hadoop-daemon.sh --config /etc/hadoop/conf start namenode
   sudo -u hdfs /usr/lib/hadoop/bin/hadoop-daemon.sh --config /etc/hadoop/conf start secondarynamenode
