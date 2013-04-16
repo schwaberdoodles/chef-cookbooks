@@ -11,7 +11,7 @@ default[:bigdatadev][:hadoop][:dist] = "hdp"
 default[:bigdatadev][:hadoop][:yum_repo_path] = "http://public-repo-1.hortonworks.com/HDP-1.2.0/repos/centos6/hdp.repo"
 default[:bigdatadev][:hadoop][:java_home] = "/usr/lib/jvm/java/"
 default[:bigdatadev][:hadoop][:user] = "vagrant"
-default[:bigdatadev][:hadoop][:install_user] = "vagrant"
+default[:bigdatadev][:hadoop][:install_user] = "root"
 default[:bigdatadev][:hadoop][:jdk_path] = "http://public-repo-1.hortonworks.com/ARTIFACTS/jdk-6u31-linux-x64.bin"
 default[:bigdatadev][:hadoop][:jdk] = "jdk-6u31-linux-x64"
 
