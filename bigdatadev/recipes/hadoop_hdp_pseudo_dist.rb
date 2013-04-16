@@ -108,7 +108,7 @@ end
 
 script "Setting up home directories" do
   interpreter "bash"
-  user "#{install_user}"
+  user "#{user}"
   code <<-EOH
   sudo -iu hdfs hadoop fs -mkdir  /user/#{user}
   sudo -iu hdfs hadoop fs -chown #{user} /user/#{user}
