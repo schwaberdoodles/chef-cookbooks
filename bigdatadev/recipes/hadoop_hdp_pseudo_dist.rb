@@ -74,20 +74,22 @@ end
 
 script "Setting up and starting HDP 1.2 HDFS" do
   interpreter "bash"
-  user "#{install_user}"
+  user "#{user}"
   code <<-EOH
   chown -R hdfs:hdfs /var/lib/hadoop
   sudo -iu hdfs hadoop namenode -format
   sleep 10
   sudo -u hdfs /usr/lib/hadoop/bin/hadoop-daemon.sh --config /etc/hadoop/conf start namenode
+  sleep 5
   sudo -u hdfs /usr/lib/hadoop/bin/hadoop-daemon.sh --config /etc/hadoop/conf start secondarynamenode
+  sleep 5
   sudo -u hdfs /usr/lib/hadoop/bin/hadoop-daemon.sh --config /etc/hadoop/conf start datanode
   EOH
 end
 
 script "Setting up and starting HDP 1.2 MapReduce" do
   interpreter "bash"
-  user "#{install_user}"
+  user "#{user}"
   code <<-EOH
   sudo -iu hdfs hadoop fs -mkdir /tmp
   sudo -iu hdfs hadoop fs -chmod -R 777 /tmp
