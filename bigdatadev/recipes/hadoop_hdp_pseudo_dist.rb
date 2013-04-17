@@ -123,7 +123,7 @@ script "Setting up and starting HDP 1.2 MapReduce" do
   sudo -u mapred /usr/lib/hadoop/bin/hadoop-daemon.sh --config /etc/hadoop/conf start tasktracker
   EOH
   
-  not_if { File.exists?("/hadoop/nn") }
+  not_if "hadoop fs -ls /var/lib/ | awk '{ print $3 }' | egrep 'hdfs'"
 end
 
 script "Setting up home directories" do
@@ -135,6 +135,6 @@ script "Setting up home directories" do
   sudo -iu hdfs hadoop fs -chown #{user} /user/#{user}
   EOH
   
-  not_if { File.exists?("/hadoop/data") }
+  not_if "hadoop fs -ls /user | awk '{ print $3 }' | egrep 'vagrant'"
 end
 
