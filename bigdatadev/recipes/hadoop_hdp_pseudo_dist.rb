@@ -140,3 +140,16 @@ script "Setting up home directories" do
   not_if "hadoop fs -ls /user | awk '{ print $3 }' | egrep 'vagrant'"
 end
 
+
+package "pig" do
+  action :install
+end
+
+package "hive" do
+  action :install
+end
+
+package "hive-server2" do
+  action :install
+end
+
