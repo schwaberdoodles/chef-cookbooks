@@ -151,5 +151,6 @@ end
 
 package "hive-server2" do
   action :install
+  action [ :enable, :start ]
 end
 
