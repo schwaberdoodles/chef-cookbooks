@@ -54,7 +54,7 @@ script "Installing HDP 1.2 pseudo dist" do
   sudo yum install hadoop-conf-pseudo.x86_64 -y
   EOH
   
-  not_if { File.exists?("/etc/yum.repos.d/hdp.repo") }
+  not_if "rpm -qa | egrep 'hadoop'"
 end
 
 template "/etc/hadoop/conf/core-site.xml" do
