@@ -83,6 +83,8 @@ template "/usr/lib/hadoop/bin/hadoop-config.sh" do
   mode 0644
 end
 
+# Will be ractored once an LWRP is written!! (sorry for the ugly script hacks)
+
 script "Setting up and starting HDP 1.2 HDFS" do
   interpreter "bash"
   #user "#{user}"
