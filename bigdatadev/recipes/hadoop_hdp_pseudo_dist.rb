@@ -53,6 +53,8 @@ script "Installing HDP 1.2 pseudo dist" do
   echo "Installing HDP 1.2. Please wait..."
   sudo yum install hadoop-conf-pseudo.x86_64 -y
   EOH
+  
+  not_if { File.exists?("/etc/yum.repos.d/hdp.repo") }
 end
 
 template "/etc/hadoop/conf/core-site.xml" do
@@ -96,6 +98,8 @@ script "Setting up and starting HDP 1.2 HDFS" do
   sudo -u hdfs /usr/lib/hadoop/bin/hadoop-daemon.sh --config /etc/hadoop/conf start secondarynamenode
   sudo -u hdfs /usr/lib/hadoop/bin/hadoop-daemon.sh --config /etc/hadoop/conf start datanode
   EOH
+  
+  not_if { File.exists?("/hadoop/nn") }
 end
 
 script "Setting up and starting HDP 1.2 MapReduce" do
@@ -118,6 +122,8 @@ script "Setting up and starting HDP 1.2 MapReduce" do
   sudo -u mapred /usr/lib/hadoop/bin/hadoop-daemon.sh --config /etc/hadoop/conf start jobtracker
   sudo -u mapred /usr/lib/hadoop/bin/hadoop-daemon.sh --config /etc/hadoop/conf start tasktracker
   EOH
+  
+  not_if { File.exists?("/hadoop/nn") }
 end
 
 script "Setting up home directories" do
@@ -128,5 +134,7 @@ script "Setting up home directories" do
   sudo -iu hdfs hadoop fs -mkdir  /user/#{user}
   sudo -iu hdfs hadoop fs -chown #{user} /user/#{user}
   EOH
+  
+  not_if { File.exists?("/hadoop/data") }
 end
 
