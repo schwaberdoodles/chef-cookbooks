@@ -54,7 +54,7 @@ script "Installing HDP 1.2 pseudo dist" do
   sudo yum install hadoop-conf-pseudo.x86_64 -y
   EOH
   
-  not_if { File.exists?("/etc/yum.repos.d/hdp.repo") }
+  not_if "rpm -qa | egrep 'hadoop'"
 end
 
 template "/etc/hadoop/conf/core-site.xml" do
@@ -82,6 +82,8 @@ template "/usr/lib/hadoop/bin/hadoop-config.sh" do
   source "hadoop-config-hdp.sh.erb"
   mode 0644
 end
+
+# Will be ractored once an LWRP is written!! (sorry for the ugly script hacks)
 
 script "Setting up and starting HDP 1.2 HDFS" do
   interpreter "bash"
@@ -123,7 +125,7 @@ script "Setting up and starting HDP 1.2 MapReduce" do
   sudo -u mapred /usr/lib/hadoop/bin/hadoop-daemon.sh --config /etc/hadoop/conf start tasktracker
   EOH
   
-  not_if { File.exists?("/hadoop/nn") }
+  not_if "hadoop fs -ls /var/lib/ | awk '{ print $3 }' | egrep 'hdfs'"
 end
 
 script "Setting up home directories" do
@@ -135,6 +137,22 @@ script "Setting up home directories" do
   sudo -iu hdfs hadoop fs -chown #{user} /user/#{user}
   EOH
   
-  not_if { File.exists?("/hadoop/data") }
+  not_if "hadoop fs -ls /user | awk '{ print $3 }' | egrep 'vagrant'"
 end
 
+
+package "pig" do
+  action :install
+end
+
+package "hive" do
+  action :install
+end
+
+package "hive-server2" do
+  action :install
+end
+
+service "hive-server2" do
+  action [ :enable, :start ]
+end
