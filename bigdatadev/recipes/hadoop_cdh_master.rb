@@ -25,7 +25,7 @@ package "curl"
 
 script "Setting up and start Cloudera Manager" do
   interpreter "bash"
-  user "root"
+  #user "root"
   code <<-EOH
   REPOCM=${REPOCM:-cm4}
   CM_REPO_HOST=${CM_REPO_HOST:-archive.cloudera.com}
@@ -51,7 +51,3 @@ script "Setting up and start Cloudera Manager" do
   EOH
 end
 
-template "/etc/hosts" do
-  source "hosts.erb"
-  mode 0644
-end
