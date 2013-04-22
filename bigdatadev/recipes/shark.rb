@@ -31,16 +31,16 @@ remote_file "/tmp/#{dist}-server-amd64.iso" do
 end
 
 
-sudo mkdir /usr/local/shark
+#sudo mkdir /usr/local/shark
 
-sudo mkdir /usr/local/scala
+#sudo mkdir /usr/local/scala
 
-sudo tar -zxvf shark-0.2.1-bin.tgz -C /usr/local/shark
+#sudo tar -zxvf shark-0.2.1-bin.tgz -C /usr/local/shark
 
-sudo tar -zxvf scala-2.9.2.tgz -C /usr/local/scala/
-sudo chown -R vagrant:vagrant /usr/local/scala/
-sudo chown -R vagrant:vagrant /usr/local/shark/
+#sudo tar -zxvf scala-2.9.2.tgz -C /usr/local/scala/
+#sudo chown -R vagrant:vagrant /usr/local/scala/
+#sudo chown -R vagrant:vagrant /usr/local/shark/
 
-export HIVE_HOME=/usr/local/shark/hive-0.9.0-bin/
-export SCALA_HOME=/usr/local/scala/scala-2.9.2
-export HADOOP_HOME=/var/lib/hadoop/
+#export HIVE_HOME=/usr/local/shark/hive-0.9.0-bin/
+#export SCALA_HOME=/usr/local/scala/scala-2.9.2
+#export HADOOP_HOME=/var/lib/hadoop/
