@@ -29,5 +29,6 @@ default[:bigdatadev][:hbase][:user] = "hbaseuser"
 
 default[:bigdatadev][:bdas][:scala][:wget_path] = "http://www.scala-lang.org/downloads/distrib/files/scala-2.9.2.tgz"
 default[:bigdatadev][:bdas][:shark][:wget_path] = "http://spark-project.org/download-shark-0.2.1-bin.tgz"
+default[:bigdatadev][:bdas][:spark][:wget_path] = "http://www.spark-project.org/download-spark-0.7.0-sources-tgz"
 default[:bigdatadev][:bdas][:scala][:home] = "/usr/local/scala"
 default[:bigdatadev][:bdas][:shark][:home] = "/usr/local/shark"

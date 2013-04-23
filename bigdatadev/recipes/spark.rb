@@ -17,30 +17,27 @@
 # limitations under the License.
 #
 
-scala_wget_path = 
-shark_wget_path =  
+spark_wget_path = 
 
-remote_file "/tmp/scala-2.9.2.tgz" do
-  source "#{scala_wget_path}"
-  not_if { File.exists?("/tmp/scala-2.9.2.tgz") }
-end
 
-remote_file "/tmp/#{dist}-server-amd64.iso" do
-  source "#{shark_wget_path}"
-  not_if { File.exists?("/tmp/#{dist}-server-amd64.iso") }
+remote_file "/tmp/spark-0.7.0-sources-tgz" do
+  source "#{spark_wget_path}"
+  not_if { File.exists?("/tmp/spark-0.7.0-sources-tgz") }
 end
 
 
-sudo mkdir /usr/local/shark
+sudo mkdir /usr/local/spark
 
-sudo mkdir /usr/local/scala
 
-sudo tar -zxvf shark-0.2.1-bin.tgz -C /usr/local/shark
+ sudo tar -zxvf spark-0.7.0-sources.tgz -C /usr/local/spark/
 
-sudo tar -zxvf scala-2.9.2.tgz -C /usr/local/scala/
-sudo chown -R vagrant:vagrant /usr/local/scala/
-sudo chown -R vagrant:vagrant /usr/local/shark/
+
+sudo chown -R vagrant:vagrant /usr/local/spark/
+
 
 export HIVE_HOME=/usr/local/shark/hive-0.9.0-bin/
 export SCALA_HOME=/usr/local/scala/scala-2.9.2
 export HADOOP_HOME=/var/lib/hadoop/
+
+cd /usr/local/spark/spark-0.7.0
+sbt/sbt package
