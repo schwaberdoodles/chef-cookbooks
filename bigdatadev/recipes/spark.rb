@@ -26,18 +26,18 @@ remote_file "/tmp/spark-0.7.0-sources-tgz" do
 end
 
 
-sudo mkdir /usr/local/spark
+# sudo mkdir /usr/local/spark
 
 
- sudo tar -zxvf spark-0.7.0-sources.tgz -C /usr/local/spark/
+# sudo tar -zxvf spark-0.7.0-sources.tgz -C /usr/local/spark/
 
 
-sudo chown -R vagrant:vagrant /usr/local/spark/
+# sudo chown -R vagrant:vagrant /usr/local/spark/
 
 
-export HIVE_HOME=/usr/local/shark/hive-0.9.0-bin/
-export SCALA_HOME=/usr/local/scala/scala-2.9.2
-export HADOOP_HOME=/var/lib/hadoop/
+# export HIVE_HOME=/usr/local/shark/hive-0.9.0-bin/
+# export SCALA_HOME=/usr/local/scala/scala-2.9.2
+# export HADOOP_HOME=/var/lib/hadoop/
 
-cd /usr/local/spark/spark-0.7.0
-sbt/sbt package
+# cd /usr/local/spark/spark-0.7.0
+# sbt/sbt package
