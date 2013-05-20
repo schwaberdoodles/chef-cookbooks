@@ -1,3 +1,8 @@
+
+[Please use the velankanisys-chef-pantry repo as this is no longer maintained]
+=============================================================================
+
+
 A set of Chef Cookbooks used by Velankani Solution Architects for Data Center Automation.
 
 	ucs-solo - A Cookbook for UCS Deployment Automation using chef-solo.
